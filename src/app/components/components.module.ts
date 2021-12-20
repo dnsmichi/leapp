@@ -31,6 +31,7 @@ import {MatExpansionModule} from "@angular/material/expansion";
 import {MatButtonToggleModule} from "@angular/material/button-toggle";
 import { FilterMenuComponent } from './filter-menu/filter-menu.component';
 import { SegmentDialogComponent } from './dialogs/segment-dialog/segment-dialog.component';
+import { ColumnDialogComponent } from './dialogs/column-dialog/column-dialog.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { SegmentDialogComponent } from './dialogs/segment-dialog/segment-dialog.
     CreateDialogComponent,
     EditDialogComponent,
     FilterMenuComponent,
-    SegmentDialogComponent
+    SegmentDialogComponent,
+    ColumnDialogComponent
   ],
   imports: [
     CommonModule,

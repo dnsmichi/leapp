@@ -5,19 +5,19 @@
   &nbsp;
   <i class="fal fa-thumbtack" *ngIf="workspaceService.getWorkspace().pinned.indexOf(session.sessionId) !== -1"></i>
 </td>
-<td (dblclick)="switchCredentials()" (click)="openOptionBar(session);" (contextmenu)="openContextMenu($event, session)" class="{{eOptionIds[session.sessionId] ? 'selected' : (session.status !== eSessionStatus.inactive ? 'active' : '')}}">
+<td (dblclick)="switchCredentials()" (click)="openOptionBar(session);" (contextmenu)="openContextMenu($event, session)" class="{{eOptionIds[session.sessionId] ? 'selected' : (session.status !== eSessionStatus.inactive ? 'active' : '')}}" *ngIf="globalColumns.role">
   <ng-container *ngIf="session.type !== eSessionType.awsIamUser">{{ session | detail }}</ng-container>
 </td>
-<td (dblclick)="switchCredentials()" (click)="openOptionBar(session);" (contextmenu)="openContextMenu($event, session)" class="{{eOptionIds[session.sessionId] ? 'selected' : (session.status !== eSessionStatus.inactive ? 'active' : '')}}">
+<td (dblclick)="switchCredentials()" (click)="openOptionBar(session);" (contextmenu)="openContextMenu($event, session)" class="{{eOptionIds[session.sessionId] ? 'selected' : (session.status !== eSessionStatus.inactive ? 'active' : '')}}" *ngIf="globalColumns.provider">
   <span class="badge badge-rounded badge-{{getSessionProviderClass(session.type)}}">{{getSessionProviderLabel(session.type)}}</span>
 </td>
-<td (dblclick)="switchCredentials()" (click)="openOptionBar(session);" (contextmenu)="openContextMenu($event, session)" class="{{eOptionIds[session.sessionId] ? 'selected' : (session.status !== eSessionStatus.inactive ? 'active' : '')}}">
+<td (dblclick)="switchCredentials()" (click)="openOptionBar(session);" (contextmenu)="openContextMenu($event, session)" class="{{eOptionIds[session.sessionId] ? 'selected' : (session.status !== eSessionStatus.inactive ? 'active' : '')}}" *ngIf="globalColumns.namedProfile">
   <ng-container *ngIf="session.type !== eSessionType.azure">
   {{getProfileName(getProfileId(session))}}
   <a (click)="copyProfile(getProfileName(getProfileId(session)))" tooltip="Copy Profile Name"><i class="fal fa-copy"></i></a>
   </ng-container>
 </td>
-<td (dblclick)="switchCredentials()" (click)="openOptionBar(session);" (contextmenu)="openContextMenu($event, session)" class="{{eOptionIds[session.sessionId] ? 'selected' : (session.status !== eSessionStatus.inactive ? 'active' : '')}}" *ngIf="!compactMode">
+<td (dblclick)="switchCredentials()" (click)="openOptionBar(session);" (contextmenu)="openContextMenu($event, session)" class="{{eOptionIds[session.sessionId] ? 'selected' : (session.status !== eSessionStatus.inactive ? 'active' : '')}}" *ngIf="!compactMode && globalColumns.region">
   <span class="badge badge-{{session.status === eSessionStatus.active ? 'black' : 'gray'}}">{{session.region}}</span>
 </td>
 <td (dblclick)="switchCredentials()" (click)="openOptionBar(session);" (contextmenu)="openContextMenu($event, session)" class="{{eOptionIds[session.sessionId] ? 'selected' : (session.status !== eSessionStatus.inactive ? 'active' : '')}}">

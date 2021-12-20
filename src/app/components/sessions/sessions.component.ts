@@ -5,13 +5,13 @@ import {AppService} from '../../services/app.service';
 import {HttpClient} from '@angular/common/http';
 import {BsModalService} from 'ngx-bootstrap/modal';
 import {
-  compactMode,
+  compactMode, globalColumns,
   globalFilteredSessions,
   globalFilterGroup,
-  GlobalFilters, globalHasFilter
+  GlobalFilters, globalHasFilter, IGlobalColumns
 } from '../command-bar/command-bar.component';
 import {Session} from '../../models/session';
-import {Observable} from 'rxjs';
+import {ColumnDialogComponent} from '../dialogs/column-dialog/column-dialog.component';
 
 export const optionBarIds = {};
 
@@ -26,6 +26,7 @@ export class SessionsComponent implements OnInit, OnDestroy {
   eGlobalFilteredSessions: Session[];
   eCompactMode: boolean;
   eGlobalFilterGroup: GlobalFilters;
+  eGlobalColumns: IGlobalColumns;
 
   // Data for the select
   modalAccounts = [];
@@ -62,11 +63,15 @@ export class SessionsComponent implements OnInit, OnDestroy {
     const subscription4 = globalFilterGroup.subscribe(value => {
       this.eGlobalFilterGroup = value;
     });
+    const subscription5 = globalColumns.subscribe(value => {
+      this.eGlobalColumns = value;
+    });
 
     this.subscriptions.push(subscription);
     this.subscriptions.push(subscription2);
     this.subscriptions.push(subscription3);
     this.subscriptions.push(subscription4);
+    this.subscriptions.push(subscription5);
   }
 
   ngOnInit() {
@@ -86,6 +91,10 @@ export class SessionsComponent implements OnInit, OnDestroy {
   createAccount() {
     // Go!
     this.router.navigate(['/managing', 'create-account']).then(_ => {});
+  }
+
+  openFilterColumn() {
+    this.modalService.show(ColumnDialogComponent, { animated: false, class: 'column-modal'});
   }
 
   setVisibility(name) {

@@ -1,0 +1,16 @@
+<a class="close-modal" (click)="closeModal()">&times;</a>
+<h2>Edit columns</h2>
+
+<form [formGroup]="columnForm" class="form center-vertical text-left" (submit)="setColumns();">
+
+  <mat-checkbox formControlName="role" (click)="$event.stopPropagation();" checked="{{eGlobalColumns.role ? 'checked' : ''}}"></mat-checkbox><span> Role</span><br>
+  <mat-checkbox formControlName="provider" (click)="$event.stopPropagation();" checked="{{eGlobalColumns.provider ? 'checked' : ''}}"></mat-checkbox><span> Provider</span><br>
+  <mat-checkbox formControlName="namedProfile" (click)="$event.stopPropagation();" checked="{{eGlobalColumns.namedProfile ? 'checked' : ''}}"></mat-checkbox><span> Named Profile</span><br>
+  <mat-checkbox formControlName="region" (click)="$event.stopPropagation();" checked="{{eGlobalColumns.region ? 'checked' : ''}}"></mat-checkbox><span> Region</span><br>
+
+  <br>
+  <button (click)="setColumns()">Set Columns</button>
+  <a (click)="closeModal()">Cancel</a>
+
+</form>
+

@@ -27,3 +27,15 @@ tr.active {
   img { height: 210px; }
   span { display: block; margin-top: 10px; font-size: 18px; color: $text-color; }
 }
+
+th {
+  a {
+    color: $text-color;
+    cursor: pointer;
+    text-decoration: none;
+    transition: opacity 0.3s ease;
+    &:hover {
+      opacity: 0.6;
+    }
+  }
+}

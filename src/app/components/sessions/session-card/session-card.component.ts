@@ -20,6 +20,7 @@ import {AwsIamUserService} from '../../../services/session/aws/methods/aws-iam-u
 import {LoggingService} from '../../../services/logging.service';
 import {optionBarIds} from '../sessions.component';
 import {MatMenuTrigger} from '@angular/material/menu';
+import {IGlobalColumns} from '../../command-bar/command-bar.component';
 
 @Component({
   // eslint-disable-next-line @angular-eslint/component-selector
@@ -35,6 +36,9 @@ export class SessionCardComponent implements OnInit {
 
   @Input()
   compactMode!: boolean;
+
+  @Input()
+  globalColumns: IGlobalColumns;
 
   @ViewChild('ssmModalTemplate', { static: false })
   ssmModalTemplate: TemplateRef<any>;

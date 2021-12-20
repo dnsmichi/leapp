@@ -25,6 +25,14 @@ export const compactMode = new BehaviorSubject<boolean>(false);
 export const globalFilterGroup = new BehaviorSubject<GlobalFilters>(null);
 export const globalHasFilter = new BehaviorSubject<boolean>(false);
 
+export interface IGlobalColumns {
+  role: boolean;
+  provider: boolean;
+  namedProfile: boolean;
+  region: boolean;
+}
+export const globalColumns = new BehaviorSubject<IGlobalColumns>(null);
+
 @Component({
   selector: 'app-command-bar',
   templateUrl: './command-bar.component.html',
@@ -58,6 +66,13 @@ export class CommandBarComponent implements OnInit, OnDestroy {
     this.compactMode = false;
 
     globalFilteredSessions.next(this.workspaceService.sessions);
+
+    globalColumns.next({
+      role: true,
+      provider: true,
+      namedProfile: true,
+      region: true
+    });
 
     this.providers = [
       { name: 'Amazon AWS', value: false },

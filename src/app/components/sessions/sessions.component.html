@@ -3,19 +3,20 @@
   <thead>
     <tr class="{{eCompactMode ? 'compact' : ''}}">
       <th>Session</th>
-      <th>Role</th>
-      <th>Provider</th>
-      <th>Named P{{eCompactMode ? '' : 'rofile'}}</th>
-      <th *ngIf="!eCompactMode">Region</th>
-      <th><span class="vertical-rule"></span>&nbsp;<i class="fal fa-th-list"></i></th>
+      <th *ngIf="eGlobalColumns.role">Role</th>
+      <th *ngIf="eGlobalColumns.provider">Provider</th>
+      <th *ngIf="eGlobalColumns.namedProfile">Named P{{eCompactMode ? '' : 'rofile'}}</th>
+      <th *ngIf="!eCompactMode && eGlobalColumns.region">Region</th>
+      <th><a (click)="openFilterColumn();"><span class="vertical-rule"></span>&nbsp;<i class="fal fa-th-list"></i></a></th>
     </tr>
   </thead>
   <tbody>
-    <tr class="active {{eCompactMode ? 'compact' : ''}}" app-session-card [compactMode]="eCompactMode" [session]="session" *ngFor="let session of eGlobalFilteredSessions | filtering:true"></tr>
-    <tr class="{{eCompactMode ? 'compact' : ''}}" app-session-card [compactMode]="eCompactMode" [session]="session" *ngFor="let session of eGlobalFilteredSessions | filtering:false | ordering"></tr>
+    <tr class="active {{eCompactMode ? 'compact' : ''}}" app-session-card [globalColumns]="eGlobalColumns" [compactMode]="eCompactMode" [session]="session" *ngFor="let session of eGlobalFilteredSessions | filtering:true"></tr>
+    <tr class="{{eCompactMode ? 'compact' : ''}}" app-session-card [globalColumns]="eGlobalColumns" [compactMode]="eCompactMode" [session]="session" *ngFor="let session of eGlobalFilteredSessions | filtering:false | ordering"></tr>
   </tbody>
 </table>
 </ng-container>
+
 <ng-container *ngIf="eGlobalFilteredSessions.length === 0 && eGlobalFilterGroup.searchFilter !== '' && !eGlobalFilterExtended">
   <div class="centered">
     <img src="assets/images/no-result-found.png" alt="" title="" />
@@ -23,6 +24,7 @@
     <span>No result found for "{{eGlobalFilterGroup.searchFilter}}".</span>
   </div>
 </ng-container>
+
 <ng-container *ngIf="eGlobalFilteredSessions.length === 0 && eGlobalFilterExtended">
   <div class="centered corrected">
     <img src="assets/images/no-result-found-filter.png" alt="" title="" />
@@ -30,6 +32,7 @@
     <span>No result found. Try to <u>remove</u> some filters.</span>
   </div>
 </ng-container>
+
 <ng-container *ngIf="eGlobalFilteredSessions.length === 0 && eGlobalFilterGroup.searchFilter === '' && !eGlobalFilterExtended">
   <div class="centered">
     <img src="assets/images/no-sessions.png" alt="" title="" />
