@@ -27,10 +27,9 @@ export class ColumnDialogComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     // Set new state
-    this.columnForm.get('role').setValue(this.eGlobalColumns.role);
-    this.columnForm.get('provider').setValue(this.eGlobalColumns.provider);
-    this.columnForm.get('namedProfile').setValue(this.eGlobalColumns.namedProfile);
-    this.columnForm.get('region').setValue(this.eGlobalColumns.region);
+    Object.keys(this.eGlobalColumns).forEach(key => {
+      this.columnForm.get(key).setValue(this.eGlobalColumns[key]);
+    });
 
     this.subscription = this.columnForm.valueChanges.subscribe((values: IGlobalColumns) => {
       this.values = values;

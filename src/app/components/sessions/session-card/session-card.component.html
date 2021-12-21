@@ -151,19 +151,21 @@
 </ng-template>
 
 <ng-template #defaultRegionModalTemplate>
-  <div class="modal-header">
-    <a class="back" aria-label="Close" (click)="modalRef.hide();"><i class="fa fa-arrow-left"></i></a>
-    <b>{{session.sessionName}}</b> - {{session | detail }} | <b>Edit {{session.type === eSessionType.azure ? 'Location' : 'Region'}}</b>
-  </div>
   <div class="modal-body">
 
-    <div class="ssm-tray">
+    <a class="close-modal" (click)="modalRef.hide();">&times;</a>
+    <h2>{{session.sessionName}}</h2>
+    <h3>{{session | detail }}</h3>
+
+    <div class="select-region-form">
 
       <b class="">Select a default region for the session:</b>
       <ng-select bindLabel="{{session.type === eSessionType.azure ? 'location' : 'region'}}" bindValue="{{session.type === eSessionType.azure ? 'location' : 'region'}}" [items]="regionOrLocations" [(ngModel)]="selectedDefaultRegion" placeholder="{{placeholder}}"></ng-select>
 
-      <button type="button" (click)="goBack();" class="pull-left disabled">Back</button>
-      <button type="button" (click)="changeRegion();" [disabled]="!selectedDefaultRegion" [ngClass]="(!selectedDefaultRegion) ? 'pull-right disabled': 'pull-right'">Save</button>
+      <br>
+      <button (click)="changeRegion()" [disabled]="!selectedDefaultRegion" [ngClass]="(!selectedDefaultRegion) ? 'btn-control disabled': 'btn-control'">Select</button>
+      <a (click)="goBack()">Cancel</a>
+
     </div>
   </div>
 </ng-template>
