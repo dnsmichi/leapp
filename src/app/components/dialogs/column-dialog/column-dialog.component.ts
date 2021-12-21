@@ -1,8 +1,8 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {BsModalRef} from 'ngx-bootstrap/modal';
 import {AppService} from '../../../services/app.service';
 import {FormControl, FormGroup} from '@angular/forms';
-import {globalColumns, IGlobalColumns} from "../../command-bar/command-bar.component";
+import {globalColumns, IGlobalColumns} from '../../command-bar/command-bar.component';
 
 @Component({
   selector: 'app-column-dialog',
@@ -11,32 +11,32 @@ import {globalColumns, IGlobalColumns} from "../../command-bar/command-bar.compo
 })
 export class ColumnDialogComponent implements OnInit, OnDestroy {
 
-  columnForm = new FormGroup({
-    role: new FormControl(true),
-    provider: new FormControl(true),
-    namedProfile: new FormControl(true),
-    region: new FormControl(true)
-  });
-
   eGlobalColumns: IGlobalColumns;
+
+  columnForm = new FormGroup({
+    role: new FormControl(),
+    provider: new FormControl(),
+    namedProfile: new FormControl(),
+    region: new FormControl()
+  });
 
   private subscription;
   private values;
-  private columnSubscription;
 
-  constructor(private bsModalRef: BsModalRef, private appService: AppService) {
+  constructor(private bsModalRef: BsModalRef, private appService: AppService) {}
+
+  ngOnInit(): void {
+    // Set new state
+    this.columnForm.get('role').setValue(this.eGlobalColumns.role);
+    this.columnForm.get('provider').setValue(this.eGlobalColumns.provider);
+    this.columnForm.get('namedProfile').setValue(this.eGlobalColumns.namedProfile);
+    this.columnForm.get('region').setValue(this.eGlobalColumns.region);
+
     this.subscription = this.columnForm.valueChanges.subscribe((values: IGlobalColumns) => {
-      globalColumns.next(values);
       this.values = values;
       console.log(values);
     });
-
-    this.columnSubscription = globalColumns.subscribe(value => {
-      this.eGlobalColumns = value;
-    });
   }
-
-  ngOnInit(): void {}
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();

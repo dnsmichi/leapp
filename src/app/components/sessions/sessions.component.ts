@@ -94,7 +94,7 @@ export class SessionsComponent implements OnInit, OnDestroy {
   }
 
   openFilterColumn() {
-    this.modalService.show(ColumnDialogComponent, { animated: false, class: 'column-modal'});
+    const modalReference = this.modalService.show(ColumnDialogComponent, { initialState: { eGlobalColumns: this.eGlobalColumns }, animated: false, class: 'column-modal'});
   }
 
   setVisibility(name) {
