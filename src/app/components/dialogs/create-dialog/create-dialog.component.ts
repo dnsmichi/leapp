@@ -7,10 +7,16 @@ import {WorkspaceService} from '../../../services/workspace.service';
 import {SessionType} from '../../../models/session-type';
 import {environment} from '../../../../environments/environment';
 import * as uuid from 'uuid';
-import {AwsIamUserSessionRequest, AwsIamUserService} from '../../../services/session/aws/methods/aws-iam-user.service';
-import {AwsIamRoleChainedSessionRequest, AwsIamRoleChainedService} from '../../../services/session/aws/methods/aws-iam-role-chained.service';
+import {AwsIamUserService, AwsIamUserSessionRequest} from '../../../services/session/aws/methods/aws-iam-user.service';
+import {
+  AwsIamRoleChainedService,
+  AwsIamRoleChainedSessionRequest
+} from '../../../services/session/aws/methods/aws-iam-role-chained.service';
 import {LeappParseError} from '../../../errors/leapp-parse-error';
-import {AwsIamRoleFederatedSessionRequest, AwsIamRoleFederatedService} from '../../../services/session/aws/methods/aws-iam-role-federated.service';
+import {
+  AwsIamRoleFederatedService,
+  AwsIamRoleFederatedSessionRequest
+} from '../../../services/session/aws/methods/aws-iam-role-federated.service';
 import {AzureService, AzureSessionRequest} from '../../../services/session/azure/azure.service';
 import {LoggingService} from '../../../services/logging.service';
 
@@ -71,7 +77,8 @@ export class CreateDialogComponent implements OnInit {
     mfaDevice: new FormControl(''),
     awsProfile: new FormControl('', [Validators.required]),
     azureLocation: new FormControl('', [Validators.required]),
-    assumerSession: new FormControl('', [Validators.required])
+    assumerSession: new FormControl('', [Validators.required]),
+    selectAccessStrategy: new FormControl(SessionType.awsIamRoleFederated, [Validators.required])
   });
 
   /* Setup the first account for the application */
@@ -183,12 +190,8 @@ export class CreateDialogComponent implements OnInit {
   setProvider(name) {
     this.provider = name;
     this.providerSelected = true;
-    if (name === SessionType.azure) {
-      this.sessionType = SessionType.azure;
-    }
-    if (name === SessionType.awsIamRoleFederated) {
-      this.typeSelection = true;
-    }
+    this.sessionType = name;
+    this.typeSelection = name.toString().indexOf('aws') > -1;
   }
 
   /**
@@ -197,9 +200,15 @@ export class CreateDialogComponent implements OnInit {
    * @param strategy
    */
   setAccessStrategy(strategy) {
+    console.log(strategy);
+
     this.sessionType = strategy;
     this.provider = strategy;
     this.typeSelection = false;
+
+    if(strategy === SessionType.awsIamRoleFederated) {
+      this.hasSsoUrl = true;
+    }
   }
 
   /**
@@ -219,12 +228,28 @@ export class CreateDialogComponent implements OnInit {
   }
 
   /**
-   * Go to Session Selection screen or to first stage of wizard
-   * depending if if there are sessions already or not
-   *
+   * Go to Session Selection screen by closing the modal
    */
   goBack() {
-    this.router.navigate(['/dashboard']).then(_ => {});
+    this.appService.closeModal();
+  }
+
+  getNameForProvider(provider: SessionType) {
+    switch (provider) {
+      case SessionType.azure: return 'Microsoft Azure session';
+      case SessionType.google: return 'Google Cloud session';
+      case SessionType.alibaba: return 'Alibaba Cloud session';
+      default: return 'Amazon AWS session';
+    }
+  }
+
+  getIconForProvider(provider: SessionType) {
+    switch (provider) {
+      case SessionType.azure: return 'azure-logo.svg';
+      case SessionType.google: return 'google.png';
+      case SessionType.alibaba: return 'alibaba.png';
+      default: return 'aws-logo.svg';
+    }
   }
 
   /**

@@ -97,6 +97,7 @@ img  {
 }
 
 a { text-decoration: none; cursor: pointer; * { cursor: pointer; } }
+.btn-link { text-decoration: underline; color: $silver-dark; }
 
 hr { margin: 10px 0; display: block; height: 1px; border-top: 1px solid $silver-50; }
 
@@ -363,6 +364,7 @@ hr { margin: 10px 0; display: block; height: 1px; border-top: 1px solid $silver-
   cursor: pointer;
   transition: opacity 0.3s ease;
   text-decoration: none;
+  z-index: 1;
 
   &:hover {
     opacity: 0.6;

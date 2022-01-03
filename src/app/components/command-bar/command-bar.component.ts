@@ -140,4 +140,8 @@ export class CommandBarComponent implements OnInit, OnDestroy {
   openSaveSegmentDialog() {
     this.bsModalService.show(SegmentDialogComponent, { animated: false, class: 'segment-modal'});
   }
+
+  logout() {
+    this.appService.logout().then(_ => {});
+  }
 }

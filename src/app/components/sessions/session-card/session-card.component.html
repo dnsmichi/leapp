@@ -115,21 +115,22 @@
 </ng-container>
 
 <ng-template #ssmModalTemplate>
-  <div class="modal-header">
-    <a class="back" aria-label="Close" (click)="modalRef.hide();"><i class="fa fa-arrow-left"></i></a>
-    <b>{{session.sessionName}}</b> - {{ session | detail }} | <b>SSM Session</b>
-  </div>
   <div class="modal-body">
 
-    <div class="ssm-tray">
+    <a class="close-modal" (click)="modalRef.hide();">&times;</a>
+    <h2>{{session.sessionName}}</h2>
+    <h3>{{session | detail }}</h3>
 
-      <b class="">Select a Region:</b>
+    <div class="ssm-tray-form">
+
+      <b>Select a Region:</b>
       <ng-select bindLabel="region" bindValue="region" [items]="awsRegions" [(ngModel)]="selectedSsmRegion" placeholder="Select a Region for finding instances" (change)="changeSsmRegion($event, session);"></ng-select>
 
       <div class="loader" *ngIf="ssmLoading"><i class="fa fa-spinner fa-spin"></i></div>
       <div class="list-of-ssm" *ngIf="!ssmLoading">
         <ng-container *ngIf="!ssmLoading && !firstTimeSsm">
-          <b>Select an EC2 Instance:</b><br>
+          <b>Select an EC2 Instance:</b>
+          <br>
           <input class="form-control" type="text" placeholder="searchFilter by..." (keyup)="searchSSMInstance($event)" />
         </ng-container>
 
@@ -137,7 +138,7 @@
           <li *ngFor="let instance of instances" class="ssm-card">
             <div>
               <span><b>{{instance.Name.length >= 24 ? instance.Name.substr(0, 21) + '...' : instance.Name}}</b> - {{instance.IPAddress}}</span>
-              <button class="btn" (click)="startSsmSession(session.sessionId, instance.InstanceId)">
+              <button class="btn-control btn-sm" (click)="startSsmSession(session.sessionId, instance.InstanceId)">
                 <i class="fa fa-spinner fa-spin" *ngIf="instance.loading"></i>
                 <span *ngIf="!instance.loading">Connect</span>
               </button>
@@ -159,7 +160,7 @@
 
     <div class="select-region-form">
 
-      <b class="">Select a default region for the session:</b>
+      <b>Select a default region for the session:</b>
       <ng-select bindLabel="{{session.type === eSessionType.azure ? 'location' : 'region'}}" bindValue="{{session.type === eSessionType.azure ? 'location' : 'region'}}" [items]="regionOrLocations" [(ngModel)]="selectedDefaultRegion" placeholder="{{placeholder}}"></ng-select>
 
       <br>
@@ -171,23 +172,24 @@
 </ng-template>
 
 <ng-template #defaultProfileModalTemplate>
-  <div class="modal-header">
-    <a class="back" aria-label="Close" (click)="modalRef.hide();"><i class="fa fa-arrow-left"></i></a>
-    <b>{{session.sessionName}}</b> - {{ session | detail }} | <b>Edit Profile</b>
-  </div>
   <div class="modal-body">
 
-    <div class="ssm-tray">
+    <a class="close-modal" (click)="modalRef.hide();">&times;</a>
+    <h2>{{session.sessionName}}</h2>
+    <h3>{{session | detail }}</h3>
 
-      <b class="">Select a profile for the session:</b>
+    <div class="named-profile-form">
+
+      <b>Select a profile for the session:</b>
       <ng-select bindLabel="name"
                  [addTag]="addNewProfile"
                  [items]="profiles"
                  [(ngModel)]="selectedProfile"
                  placeholder="select a profile"></ng-select>
 
-      <button type="button" (click)="goBack();" class="pull-left disabled">Back</button>
-      <button type="button" (click)="changeProfile();" [disabled]="!selectedProfile" [ngClass]="(!selectedProfile) ? 'pull-right disabled': 'pull-right'">Save</button>
+      <br>
+      <button type="button" (click)="changeProfile();" [disabled]="!selectedProfile" [ngClass]="(!selectedProfile) ? 'btn-control disabled': 'btn-control'">Save Profile</button>
+      <a (click)="goBack();">Cancel</a>
     </div>
   </div>
 </ng-template>

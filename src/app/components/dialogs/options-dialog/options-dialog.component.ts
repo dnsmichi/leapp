@@ -127,7 +127,7 @@ export class OptionsDialogComponent implements OnInit {
             this.loggingService.logger('User have set a proxy url: the app must be restarted to update the configuration.', LoggerLevel.info, this);
             this.appService.restart();
           }
-        });
+        }, 'Restart', 'Cancel');
       } else {
         this.appService.closeModal();
         this.loggingService.logger('Option saved.', LoggerLevel.info, this, JSON.stringify(this.form.getRawValue(), null, 3));
@@ -196,7 +196,7 @@ export class OptionsDialogComponent implements OnInit {
     }
 
     // Ask for deletion
-    this.appService.confirmDialog(`Deleting this Idp url will also remove these sessions: <br><ul>${sessionsNames.join('')}</ul>Do you want to proceed?`, (res) => {
+    this.appService.confirmDialog(`Deleting this IdP URL will also remove these sessions: <br><ul>${sessionsNames.join('')}</ul>Do you want to proceed?`, (res) => {
       if (res !== Constants.confirmClosed) {
         this.loggingService.logger(`Removing idp url with id: ${id}`, LoggerLevel.info, this);
 
@@ -208,7 +208,7 @@ export class OptionsDialogComponent implements OnInit {
 
         this.workspace = this.workspaceService.getWorkspace();
       }
-    });
+    }, 'Delete IdP URL', 'Cancel');
   }
 
   async manageAwsProfile(id: string | number) {
@@ -282,6 +282,6 @@ export class OptionsDialogComponent implements OnInit {
 
         this.workspace = this.workspaceService.getWorkspace();
       }
-    });
+    }, 'Delete Profile', 'Cancel');
   }
 }

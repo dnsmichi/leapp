@@ -6,5 +6,9 @@
   width: 100%;
 }
 
-h4 { color: $text-color; }
-div,p { color: $text-color; }
+.content {
+  .message {
+    max-height: 318px;
+    overflow-y: auto;
+  }
+}

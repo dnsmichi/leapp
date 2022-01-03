@@ -159,7 +159,7 @@ export class SessionCardComponent implements OnInit {
         this.logSessionData(session, 'Session Deleted');
         this.clearOptionIds();
       }
-    });
+    }, 'Delete Session', 'Cancel');
   }
 
   /**
@@ -251,8 +251,6 @@ export class SessionCardComponent implements OnInit {
    * @param session - The sessions in which the aws region need to change
    */
   async changeSsmRegion(event, session: Session) {
-    event.preventDefault();
-    event.stopPropagation();
 
     // We have a valid SSM region
     if (this.selectedSsmRegion) {

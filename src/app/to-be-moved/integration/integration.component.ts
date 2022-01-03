@@ -185,7 +185,7 @@ export class IntegrationComponent implements OnInit, BrowserWindowClosing {
         this.workspaceService.deleteAwsSsoIntegration(awsSsoConfiguration.id);
         this.modifying = 0;
       }
-    });
+    }, 'Delete Configuration', 'Cancel');
   }
 
   isOnline(awsSsoConfiguration: AwsSsoIntegration) {

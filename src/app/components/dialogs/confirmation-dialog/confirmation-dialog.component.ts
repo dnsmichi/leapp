@@ -14,6 +14,12 @@ export class ConfirmationDialogComponent implements OnInit {
   @Input()
   callback: any;
 
+  @Input()
+  confirmText: string;
+
+  @Input()
+  cancelText: string;
+
   /* Just a restyled modal to show a confirmation for delete actions */
   constructor(private bsModalRef: BsModalRef) { }
 

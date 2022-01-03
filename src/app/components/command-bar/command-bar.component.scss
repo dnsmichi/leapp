@@ -43,6 +43,12 @@
     justify-content: flex-start;
     align-items: center;
   }
+
+  .line-end {
+    min-width: 58px;
+    display: flex;
+    justify-content: space-between;
+  }
 }
 
 .search-bar {

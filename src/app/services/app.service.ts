@@ -340,13 +340,13 @@ export class AppService {
    * @param message - the message to show
    * @param callback - the callback for the ok button to launch
    */
-  confirmDialog(message: string, callback: any) {
+  confirmDialog(message: string, callback: any, confirmText?: string, cancelText?: string) {
     for (let i = 1; i <= this.modalService.getModalsCount(); i++) {
       this.modalService.hide(i);
     }
 
     this.getCurrentWindow().show();
-    this.modalService.show(ConfirmationDialogComponent, { backdrop: 'static', animated: false, class: 'confirm-modal', initialState: { message, callback}});
+    this.modalService.show(ConfirmationDialogComponent, { backdrop: 'static', animated: false, class: 'confirm-modal', initialState: { message, callback, confirmText, cancelText }});
 
   }
 

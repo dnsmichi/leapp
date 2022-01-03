@@ -19,7 +19,7 @@ import {SessionCardComponent} from './sessions/session-card/session-card.compone
 import {FilteringPipe} from './sessions/pipes/filtering.pipe';
 import {OrderingPipe} from './sessions/pipes/ordering.pipe';
 import {QueryingPipe} from './sessions/pipes/querying.pipe';
-import {DetailPipe} from './sessions/session-card/detail.pipe';
+import {DetailPipe} from './sessions/pipes/detail.pipe';
 import { CommandBarComponent } from './command-bar/command-bar.component';
 import { SideBarComponent } from './side-bar/side-bar.component';
 import {OptionsDialogComponent} from './dialogs/options-dialog/options-dialog.component';

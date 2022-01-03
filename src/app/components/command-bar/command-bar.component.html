@@ -5,18 +5,21 @@
   <form [formGroup]="filterForm">
 
     <div class="main-bar">
-      <button class="icon-button line-start" (click)="showCreateDialog();"><i class="fal fa-plus-circle"></i></button>
+      <button class="icon-button line-start" (click)="showCreateDialog();" tooltip="Add a new Session Strategy"><i class="fal fa-plus-circle"></i></button>
 
-      <button class="icon-button" (click)="toggleFilters();"><mat-icon>filter_list</mat-icon></button>
+      <button class="icon-button" (click)="toggleFilters();" tooltip="Filter the session list"><mat-icon>filter_list</mat-icon></button>
 
       <div class="form-control-input-icon">
         <input formControlName="searchFilter" type="text" class="form-control search-bar" placeholder="Search session" />
         <i class="fal fa-search"></i>
       </div>
 
-      <button class="icon-button" (click)="false;"><i class="fal fa-redo"></i></button>
+      <button class="icon-button" (click)="false;" tooltip="Refresh all Strategies"><i class="fal fa-redo"></i></button>
 
-      <button class="icon-button line-end" (click)="showOptionDialog();"><i class="fal fa-cog"></i></button>
+      <div class="line-end">
+        <button class="icon-button" (click)="showOptionDialog();" tooltip="Show Leapp's options"><i class="fal fa-cog"></i></button>
+        <button class="icon-button" (click)="logout();" tooltip="Logout from your IdPs"><i class="fal fa-power-off"></i></button>
+      </div>
     </div>
 
     <div class="tag-filters">

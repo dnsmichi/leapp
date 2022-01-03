@@ -103,7 +103,9 @@ td:nth-child(1) {
   }
 }
 
-.select-region-form {
+.select-region-form,
+.named-profile-form,
+.ssm-tray-form {
   margin-top: 20px;
 
   a {
