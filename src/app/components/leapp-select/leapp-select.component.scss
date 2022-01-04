@@ -1,0 +1,21 @@
+@import "../../../assets/scss/mixins/palette";
+@import "../../../assets/scss/mixins/utility";
+@import "../../../assets/scss/global";
+
+.create-new {
+  border-top: 1px solid $silver-50;
+  color: $silver-dark;
+  padding: 5px 0;
+
+  i {
+    color: $silver-dark;
+  }
+}
+
+.add {
+  cursor: pointer;
+  color: $text-color;
+  i {
+    color: $text-color;
+  }
+}

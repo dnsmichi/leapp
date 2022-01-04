@@ -155,12 +155,10 @@ export class CreateDialogComponent implements OnInit {
   }
 
   /**
-   * Add a new profile to list
-   *
-   * @param tag
+   * Add a new UUID
    */
-  addNewProfile(tag: string): { value: string; label: string } {
-    return { value: uuid.v4(), label: tag };
+  addNewUUID(): string {
+    return uuid.v4();
   }
 
   /**
@@ -250,6 +248,10 @@ export class CreateDialogComponent implements OnInit {
       case SessionType.alibaba: return 'alibaba.png';
       default: return 'aws-logo.svg';
     }
+  }
+
+  closeModal() {
+    this.appService.closeModal();
   }
 
   /**

@@ -32,6 +32,7 @@ import {MatButtonToggleModule} from "@angular/material/button-toggle";
 import { FilterMenuComponent } from './filter-menu/filter-menu.component';
 import { SegmentDialogComponent } from './dialogs/segment-dialog/segment-dialog.component';
 import { ColumnDialogComponent } from './dialogs/column-dialog/column-dialog.component';
+import { LeappSelectComponent } from './leapp-select/leapp-select.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { ColumnDialogComponent } from './dialogs/column-dialog/column-dialog.com
     EditDialogComponent,
     FilterMenuComponent,
     SegmentDialogComponent,
-    ColumnDialogComponent
+    ColumnDialogComponent,
+    LeappSelectComponent
   ],
   imports: [
     CommonModule,

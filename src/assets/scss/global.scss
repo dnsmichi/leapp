@@ -96,7 +96,7 @@ img  {
   background-color: $silver-dark;
 }
 
-a { text-decoration: none; cursor: pointer; * { cursor: pointer; } }
+a { text-decoration: none; cursor: pointer; color: $silver-dark; * { cursor: pointer; }}
 .btn-link { text-decoration: underline; color: $silver-dark; }
 
 hr { margin: 10px 0; display: block; height: 1px; border-top: 1px solid $silver-50; }
