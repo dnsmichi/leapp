@@ -5,12 +5,11 @@
   display: inline-block;
   width: 1px;
   height: 20px;
-  border-left: 1px solid $silver-50;
+  border-left: 1px solid;
   margin-right: 10px;
 }
 
 tr.active {
-  background: aquamarine;
 }
 
 .centered {
