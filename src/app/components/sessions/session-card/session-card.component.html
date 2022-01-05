@@ -29,6 +29,8 @@
 
 <div [matMenuTriggerFor]="menu" [style.position]="'absolute'" [style.left.px]="menuX" [style.top.px]="menuY"></div>
 <mat-menu #menu>
+  <span mat-menu-item class="not-displayed">dummy fix for github issue 3352</span>
+
   <button mat-menu-item (click)="startSession();">
     <i class="fal fa-play-circle"></i>&nbsp;
     <span>Start Session</span>
@@ -50,6 +52,18 @@
   </button>
 
   <div class="divider"></div>
+
+  <ng-container *ngIf="(session.type === eSessionType.awsIamRoleFederated || session.type === eSessionType.awsIamRoleChained || session.type === eSessionType.awsSsoRole)">
+    <button mat-menu-item (click)="copyCredentials(session, 1, $event);">
+      <i class="fal fa-copy"></i>&nbsp;
+      <span>Copy Account Number</span>
+    </button>
+    <button mat-menu-item (click)="copyCredentials(session, 2, $event);">
+      <i class="fal fa-copy"></i>&nbsp;
+      <span>Copy Role ARN</span>
+    </button>
+    <div class="divider"></div>
+  </ng-container>
 
   <button mat-menu-item (click)="openAmazonConsole($event, session);">
     <i class="fal fa-cloud"></i>&nbsp;
@@ -98,11 +112,6 @@
       <a class="icon-button" *ngIf="session.type !== eSessionType.azure" (click)="changeProfileModalOpen($event);" tooltip="Change Named Profile"><i class="fal fa-user-circle"></i></a>
       <a class="icon-button" (click)="ssmModalOpen($event, session);" *ngIf="session.type !== eSessionType.azure" tooltip="View SSM sessions"><i class="fal fa-list"></i></a>
       <a class="icon-button" *ngIf="session.type === eSessionType.awsIamUser && session.status !== eSessionStatus.active" (click)="editSession(session, $event);" tooltip="Edit Session"><i class="fal fa-list"></i></a>
-
-      <ng-container *ngIf="(session.type === eSessionType.awsIamRoleFederated || session.type === eSessionType.awsIamRoleChained || session.type === eSessionType.awsSsoRole)">
-        <a class="icon-button" (click)="copyCredentials(session, 1, $event);" tooltip="Copy Account Number"><i class="fal fa-copy"></i></a>
-        <a class="icon-button" (click)="copyCredentials(session, 2, $event);" tooltip="Copy Role ARN"><i class="fal fa-copy"></i></a>
-      </ng-container>
 
       <span class="separator"></span>
 

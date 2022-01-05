@@ -162,7 +162,9 @@ form {
     border-radius: $context-menu-border-radius;
 
     .mat-menu-item {
-      line-height: 40px;
-      height: 40px;
+      line-height: 36px;
+      height: 36px;
+      padding: 0 20px;
+      font-size: 15px;
     }
   }
