@@ -6,6 +6,8 @@
   width: 100%;
   .modal-content {
     padding: 0 0 20px;
+
+    h2 { margin: 0; }
   }
 }
 
@@ -36,6 +38,10 @@
 
 .margin-fix {
   margin: 0 20px 0;
+}
+
+.max-height-200 {
+  max-height: 200px;
 }
 
 @keyframes fadein {
