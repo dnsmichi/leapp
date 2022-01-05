@@ -113,3 +113,21 @@ td:nth-child(1) {
     margin-left: 10px;
   }
 }
+
+a.ng-star-inserted {
+  display: none;
+}
+
+span.badge-region {
+  border-radius: $region-tag-border-radius;
+  padding-top: 6px;
+  padding-right: 7px;
+  padding-left: 7px;
+  letter-spacing: .7px;
+  background-color: $region-tag-color !important;
+  color: $white-text-color !important;
+}
+
+span.badge-region.badge-black {
+  background-color: $region-tag-active-color !important;
+}
