@@ -86,14 +86,23 @@ img  {
 
 ::-webkit-scrollbar
 {
-  width: 12px;
-  background-color: $silver-25;
+  width: 6px;
+  height: 0;
+  background-color: $white-text-color;
+}
+
+::-webkit-scrollbar-track-piece {
+  background-color: $white-text-color;
 }
 
 ::-webkit-scrollbar-thumb
 {
   border-radius: 10px;
   background-color: $silver-dark;
+}
+::-webkit-scrollbar-thumb:horizontal
+{
+  background-color: transparent;
 }
 
 a { text-decoration: none; cursor: pointer; color: $silver-dark; * { cursor: pointer; }}
@@ -351,6 +360,11 @@ hr { margin: 10px 0; display: block; height: 1px; border-top: 1px solid $silver-
     .tag-filters {
       margin-left: -$left-compacted-sidebar;
       padding: 10px!important;
+    }
+    .left-shadow { top: 8px; left: 10px; }
+    .right-shadow { top: 8px; right: 74px; }
+    .tag-filters-area {
+      width: calc(100% - 64px);
     }
   }
 }

@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {AfterContentChecked, Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {BsModalService} from 'ngx-bootstrap/modal';
 import {OptionsDialogComponent} from '../dialogs/options-dialog/options-dialog.component';
 import {CreateDialogComponent} from '../dialogs/create-dialog/create-dialog.component';
@@ -38,7 +38,10 @@ export const globalColumns = new BehaviorSubject<IGlobalColumns>(null);
   templateUrl: './command-bar.component.html',
   styleUrls: ['./command-bar.component.scss']
 })
-export class CommandBarComponent implements OnInit, OnDestroy {
+export class CommandBarComponent implements OnInit, OnDestroy, AfterContentChecked {
+  @ViewChild('parent') parent: ElementRef;
+  @ViewChild('child') child: ElementRef;
+  overflowed = false;
 
   filterForm = new FormGroup({
     searchFilter: new FormControl(''),
@@ -111,6 +114,14 @@ export class CommandBarComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
+  ngAfterContentChecked(): void {
+    if(this.parent && this.child) {
+      const parentW = parseInt(this.parent.nativeElement.clientWidth, 10);
+      const childW = parseInt(this.child.nativeElement.clientWidth, 10);
+      this.overflowed = childW > parentW;
+    }
+  }
+
   showOptionDialog() {
     this.bsModalService.show(OptionsDialogComponent, { animated: false, class: 'confirm-modal'});
   }
@@ -141,7 +152,13 @@ export class CommandBarComponent implements OnInit, OnDestroy {
     this.bsModalService.show(SegmentDialogComponent, { animated: false, class: 'segment-modal'});
   }
 
-  logout() {
-    this.appService.logout().then(_ => {});
+  checkFormIsDirty() {
+    return this.filterForm.get('dateFilter').value ||
+           this.filterForm.get('providerFilter').value.length > 0 ||
+           this.filterForm.get('profileFilter').value.length > 0 ||
+           this.filterForm.get('regionFilter').value.length > 0 ||
+           this.filterForm.get('integrationFilter').value.length > 0 ||
+           this.filterForm.get('typeFilter').value.length > 0;
   }
+
 }

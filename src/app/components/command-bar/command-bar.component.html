@@ -18,21 +18,26 @@
 
       <div class="line-end">
         <button class="icon-button" (click)="showOptionDialog();" tooltip="Show Leapp's options"><i class="fal fa-cog"></i></button>
-        <button class="icon-button" (click)="logout();" tooltip="Logout from your IdPs"><i class="fal fa-power-off"></i></button>
       </div>
     </div>
 
     <div class="tag-filters">
-      <input formControlName="dateFilter" type="checkbox" class="hidden" />
-      <button class="toggle-button {{filterForm.get('dateFilter').value ? 'toggled' : ''}}" (click)="toggleDateFilter();"><i class="fal fa-exchange fa-rotate-90"></i> Order by date</button>
+      <span class="left-shadow" *ngIf="overflowed"></span>
+      <span class="right-shadow" *ngIf="overflowed"></span>
+      <div class="tag-filters-area" #parent>
 
-      <app-filter-menu [control]="'providerFilter'" [data]="providers" [icon]="'fal fa-cloud'" [name]="'Providers'" [form]="filterForm"></app-filter-menu>
-      <app-filter-menu [control]="'profileFilter'" [data]="profiles" [icon]="'fal fa-user-circle'" [name]="'Profile'" [form]="filterForm" [searchable]="true"></app-filter-menu>
-      <app-filter-menu [control]="'regionFilter'" [data]="regions" [icon]="'fal fa-globe'" [name]="'Region'" [form]="filterForm" [searchable]="true"></app-filter-menu>
-      <app-filter-menu [control]="'typeFilter'" [data]="types" [icon]="'fal fa-bookmark'" [name]="'Type'" [form]="filterForm" [categories]="['Amazon AWS', 'Microsoft Azure']"></app-filter-menu>
+        <div #child>
+          <input formControlName="dateFilter" type="checkbox" class="hidden" />
+          <button class="toggle-button {{filterForm.get('dateFilter').value ? 'toggled' : ''}}" (click)="toggleDateFilter();"><i class="fal fa-exchange fa-rotate-90"></i> Order by date</button>
 
-      <a (click)="openSaveSegmentDialog();">Save{{compactMode ? '': ' Segments'}}</a>
+          <app-filter-menu [control]="'providerFilter'" [data]="providers" [icon]="'fal fa-cloud'" [name]="'Providers'" [form]="filterForm"></app-filter-menu>
+          <app-filter-menu [control]="'profileFilter'" [data]="profiles" [icon]="'fal fa-user-circle'" [name]="'Profile'" [form]="filterForm" [searchable]="true"></app-filter-menu>
+          <app-filter-menu [control]="'regionFilter'" [data]="regions" [icon]="'fal fa-globe'" [name]="'Region'" [form]="filterForm" [searchable]="true"></app-filter-menu>
+          <app-filter-menu [control]="'typeFilter'" [data]="types" [icon]="'fal fa-bookmark'" [name]="'Type'" [form]="filterForm" [categories]="['Amazon AWS', 'Microsoft Azure']"></app-filter-menu>
+        </div>
+      </div>
 
+      <a class="save-segments" (click)="openSaveSegmentDialog();" *ngIf="checkFormIsDirty();">Save{{compactMode ? '': ' Segments'}}</a>
     </div>
 
   </form>

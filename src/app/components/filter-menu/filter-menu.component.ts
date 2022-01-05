@@ -71,7 +71,7 @@ export class FilterMenuComponent implements OnInit {
 
   dataLabel() {
     const result = this.data.filter(d => d.value).map(d => d.name);
-    return result.length > 0 ? result.join(', ') : this.name;
+    return result.length > 0 ? (result.length > 2 ? `${this.name} · ${result.length}`: result.join(', ')) : this.name;
   }
 
   resetData(event) {
