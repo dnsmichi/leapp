@@ -4,7 +4,10 @@
 
 .status-item { font-size: 12px; }
 
-.active { color: $success!important; }
+.active {
+  background-color: $active-card;
+  color: $success-session!important;
+}
 .offline { color: $silver-25!important; }
 
 a { color: $text-color; }
@@ -52,7 +55,7 @@ a { color: $text-color; }
 }
 
 td.selected {
-  background: $dark-sky-blue;
+  background: $selected-card;
   color: $white-text-color;
   * {
     color: $white-text-color;
@@ -130,4 +133,8 @@ span.badge-region {
 
 span.badge-region.badge-black {
   background-color: $region-tag-active-color !important;
+}
+
+i.active {
+  background-color: unset!important;
 }
