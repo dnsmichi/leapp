@@ -81,6 +81,10 @@ img  {
   -webkit-app-region: no-drag;
 }
 
+::placeholder {
+  color: $silver-75;
+}
+
 :focus
 {
   outline: none !important;
