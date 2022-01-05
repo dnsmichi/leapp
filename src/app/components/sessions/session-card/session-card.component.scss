@@ -13,7 +13,7 @@
 a { color: $text-color; }
 
 .option-bar {
-  padding: $standard-padding;
+  padding: $standard-padding $standard-padding $standard-padding 0;
   position: fixed;
   display: flex;
   align-items: center;
@@ -28,30 +28,41 @@ a { color: $text-color; }
   a {
     display: inline-flex;
     margin: 0 10px;
+    i { color: $medium-dark; }
+    &:hover {
+      i {
+        color: #3c3c3c;
+        opacity: 1;
+      }
+    }
   }
   .separator {
     display: inline-flex;
     width: 1px;
-    height: 20px;
-    background: $silver-dark;
+    height: 24px;
+    background: $silver-50;
     margin: 0 10px;
+    position: relative;
+    top: 4px;
   }
 }
 
 .start-session, .stop-session {
   display: inline-flex;
   text-decoration: none;
-  width: 120px!important;
+  font-weight: 500;
+  width: 134px!important;
   color: $text-color;
   i {
     font-size: 30px!important;
-    color: $main-color-light
+    color: $main-color-light!important;
+    margin-right: 15px;
   }
 }
 
 .session-name {
   color: $silver-dark;
-  font-size: 10px;
+  font-size: 13px;
 }
 
 td.selected {
