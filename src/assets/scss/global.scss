@@ -19,7 +19,7 @@ $left-compacted-sidebar: 130px;
 $form-button-padding: 10px 20px;
 $toggle-button-padding: 5px 10px;
 $padding-form-control: 5px 10px;
-$font-size-form-control: 14px;
+$font-size-form-control: 16px;
 $form-control-height: 40px!important;
 
 $icon-button-width: 20px;
@@ -59,6 +59,12 @@ html, body { height: 100%; }
   }
   .mat-tab-body-wrapper {
     padding: 0 20px;
+    min-height: 366px;
+  }
+  .modal-content {
+    .ng-dropdown-panel .ng-dropdown-panel-items {
+      max-height: 120px;
+    }
   }
 }
 
