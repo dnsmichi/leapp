@@ -5,12 +5,11 @@
   display: inline-block;
   width: 1px;
   height: 20px;
-  border-left: 1px solid;
+  border-left: 1px solid $silver-50;
   margin-right: 10px;
 }
 
-tr.active {
-}
+tr.active { }
 
 .centered {
   width: 100%;
