@@ -18,7 +18,7 @@
   </ng-container>
 </td>
 <td (dblclick)="switchCredentials()" (click)="openOptionBar(session);" (contextmenu)="openContextMenu($event, session)" class="{{eOptionIds[session.sessionId] ? 'selected' : (session.status !== eSessionStatus.inactive ? 'active' : '')}}" *ngIf="!compactMode && globalColumns.region">
-  <span class="badge badge-{{session.status === eSessionStatus.active ? 'black' : 'gray'}}">{{session.region}}</span>
+  <span class="badge badge-region badge-{{session.status === eSessionStatus.active ? 'black' : 'gray'}}">{{session.region}}</span>
 </td>
 <td (dblclick)="switchCredentials()" (click)="openOptionBar(session);" (contextmenu)="openContextMenu($event, session)" class="{{eOptionIds[session.sessionId] ? 'selected' : (session.status !== eSessionStatus.inactive ? 'active' : '')}}">
   <i class="status-item fas fa-circle {{session.status === eSessionStatus.active ? 'active' : 'offline'}}" *ngIf="session.status !== eSessionStatus.pending"></i>
