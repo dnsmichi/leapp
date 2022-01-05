@@ -1,6 +1,6 @@
 @import "mixins/palette.scss";
 
-$border-radius: 5px;
+$border-radius: 10px;
 $modal-border-radius: 20px;
 $context-menu-border-radius: 20px;
 
@@ -56,6 +56,9 @@ html, body { height: 100%; }
       background: rgba(0,0,0,.04);
     }
   }
+  .mat-tab-body-wrapper {
+    padding: 0 20px;
+  }
 }
 
 
@@ -108,7 +111,7 @@ img  {
 a { text-decoration: none; cursor: pointer; color: $silver-dark; * { cursor: pointer; }}
 .btn-link { text-decoration: underline; color: $silver-dark; }
 
-hr { margin: 10px 0; display: block; height: 1px; border-top: 1px solid $silver-50; }
+hr { margin: 5px 0 0 0; display: block; height: 1px; border-top: 1px solid $silver-50; }
 
 .clear { clear: both; }
 

@@ -32,7 +32,8 @@ form {
     height: $form-control-height;
     background: $silver-25;
     border-radius: $border-radius;
-    color: $silver-dark;
+    border: 1px solid $silver-25;
+    color: $text-color;
     font-size: $font-size-form-control;
     padding: $padding-form-control;
     transition: all 0.3s ease;
@@ -40,6 +41,8 @@ form {
     &:focus {
       background: $white-text-color;
       border: 1px solid $text-color;
+      box-shadow: none;
+      outline: $text-color solid 1px!important;
       color: $text-color;
     }
   }
@@ -136,6 +139,7 @@ form {
 
   .mat-checkbox-layout {
     width: auto!important;
+    padding-right: 10px!important;
   }
 
   .mat-checkbox-checked:not(.mat-checkbox-disabled).mat-accent .mat-ripple-element,

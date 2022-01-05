@@ -4,6 +4,9 @@
 .confirm-modal {
   max-width: 520px;
   width: 100%;
+  .modal-content {
+    padding: 0 0 20px;
+  }
 }
 
 .proxy-length-1 { width: 18%!important; }
@@ -29,6 +32,10 @@
 .panel{
   animation: fadein .8s;
   overflow-x: hidden;
+}
+
+.margin-fix {
+  margin: 0 20px 0;
 }
 
 @keyframes fadein {

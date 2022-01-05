@@ -53,7 +53,7 @@
 
             <div class="form-group">
               <div class="form-field">
-                <mat-checkbox formControlName="showAuthCheckbox" [(ngModel)]="showProxyAuthentication"></mat-checkbox> Use authentication?
+                <mat-checkbox formControlName="showAuthCheckbox" [(ngModel)]="showProxyAuthentication"></mat-checkbox> Use authentication
               </div>
             </div>
 
@@ -170,5 +170,5 @@
 
     </mat-tab-group>
 
-    <button type="button" (click)="saveOptions();" [disabled]="!form.valid">Done</button>
+    <button type="button" (click)="saveOptions();" [disabled]="!form.valid" class="margin-fix">Done</button>
   </form>
