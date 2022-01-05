@@ -6,7 +6,7 @@
 
 .active {
   background-color: $active-card;
-  color: $success-session!important;
+  color: $text-color;
 }
 .offline { color: $silver-25!important; }
 
@@ -76,10 +76,10 @@ td.selected {
   }
 }
 td.active {
-  background: $focused-element;
+  /*background: $focused-element;*/
 }
 td:nth-child(1) {
-  font-size: 16px;
+  font-size: 15px;
   color: $text-color;
   img { width: 30px; }
 }
@@ -149,3 +149,9 @@ span.badge-region.badge-black {
 i.active {
   background-color: unset!important;
 }
+
+i.fas.active {
+  color: $success-session!important;
+}
+
+.strong { }
