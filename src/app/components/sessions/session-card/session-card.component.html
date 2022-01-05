@@ -54,13 +54,9 @@
   <div class="divider"></div>
 
   <ng-container *ngIf="(session.type === eSessionType.awsIamRoleFederated || session.type === eSessionType.awsIamRoleChained || session.type === eSessionType.awsSsoRole)">
-    <button mat-menu-item (click)="copyCredentials(session, 1, $event);">
-      <i class="fal fa-copy"></i>&nbsp;
-      <span>Copy Account Number</span>
-    </button>
-    <button mat-menu-item (click)="copyCredentials(session, 2, $event);">
-      <i class="fal fa-copy"></i>&nbsp;
-      <span>Copy Role ARN</span>
+    <button mat-menu-item [matMenuTriggerFor]="change">
+      <i class="fal fa-copy"></i>
+      <span>&nbsp;&nbsp;&nbsp;Copy Property</span>
     </button>
     <div class="divider"></div>
   </ng-container>
@@ -102,6 +98,16 @@
 
 </mat-menu>
 
+<mat-menu #change>
+  <button mat-menu-item (click)="copyCredentials(session, 1, $event);">
+    <i class="fab fa-aws"></i>&nbsp;
+    <span>Account Number</span>
+  </button>
+  <button mat-menu-item (click)="copyCredentials(session, 2, $event);">
+    <i class="fab fa-aws"></i>&nbsp;
+    <span>Role ARN</span>
+  </button>
+</mat-menu>
 
 <ng-container *ngIf="eOptionIds[session.sessionId]">
   <div class="option-bar" (click)="clearOptionIds();">
