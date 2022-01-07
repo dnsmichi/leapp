@@ -75,9 +75,7 @@ td.selected {
     filter: brightness(0) invert(1);
   }
 }
-td.active {
-  /*background: $focused-element;*/
-}
+
 td:nth-child(1) {
   font-size: 15px;
   color: $text-color;
@@ -154,4 +152,48 @@ i.fas.active {
   color: $success-session!important;
 }
 
-.strong { }
+i.fa-circle.status-item {
+  font-size: 13px;
+}
+
+td.active {
+  font-weight: normal!important;
+}
+
+td:nth-child(1) {
+  padding-left: 20px;
+  width: 29%;
+  .strong {
+    -webkit-text-stroke-width: 0.5px;
+  }
+}
+
+td:nth-child(2) {
+  width: 20.4%;
+  font-size: 13px;
+  font-weight: lighter;
+  .strong {
+    font-weight: normal!important;
+  }
+}
+
+td:nth-child(3) {
+  width: 15%;
+}
+
+td:nth-child(4) {
+  width: 16%;
+  font-size: 13px;
+  font-weight: lighter;
+  .strong {
+    font-weight: normal!important;
+  }
+}
+
+td:nth-child(5) {
+  width: 12.5%;
+}
+
+td:nth-child(6) {
+  padding-left: 3%;
+}

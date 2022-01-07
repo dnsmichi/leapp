@@ -27,6 +27,7 @@ tr.active { }
 }
 
 th {
+  padding-bottom: 14px!important;
   a {
     color: $text-color;
     cursor: pointer;
@@ -36,4 +37,19 @@ th {
       opacity: 0.6;
     }
   }
+}
+
+i.fal.fa-th-list {
+  color: $silver-dark;
+  font-size: 17px;
+}
+
+span.vertical-rule {
+  margin-right: 33%!important;
+  margin-block: -4px!important;
+  height: 22px!important;
+}
+
+th:nth-child(1) {
+  padding-left: 22px!important;
 }
