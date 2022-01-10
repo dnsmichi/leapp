@@ -5,7 +5,7 @@
 
       <mat-tab>
         <ng-template mat-tab-label>
-          <mat-icon class="mat-tab-icon">settings</mat-icon>
+          <i class="mat-tab-icon moon-Settings"></i>
           <span class="mat-tab-label-text">General</span>
         </ng-template>
 
@@ -16,14 +16,14 @@
             <div class="form-group">
               <div class="form-field">
                 <label>AWS Region</label>
-                <ng-select formControlName="regionsSelect" bindLabel="region" bindValue="region" [items]="regions" [(ngModel)]="selectedRegion" dropdownPosition="down"></ng-select>
+                <ng-select formControlName="regionsSelect" bindLabel="region" bindValue="region" [items]="regions" [(ngModel)]="selectedRegion" [appendTo]="'body'"></ng-select>
               </div>
             </div>
 
             <div class="form-group">
               <div class="form-field">
                 <label>Azure Location</label>
-                <ng-select formControlName="locationsSelect" bindLabel="location" bindValue="location" [items]="locations" [(ngModel)]="selectedLocation" dropdownPosition="down"></ng-select>
+                <ng-select formControlName="locationsSelect" bindLabel="location" bindValue="location" [items]="locations" [(ngModel)]="selectedLocation" [appendTo]="'body'"></ng-select>
               </div>
             </div>
           </div>
@@ -36,10 +36,7 @@
 
             <div class="form-group">
               <div class="form-field">
-                <select formControlName="proxyProtocol" class="form-control  proxy-length-1" [value]="proxyProtocol">
-                  <option value="http">HTTP</option>
-                  <option value="https">HTTPS</option>
-                </select>
+                <ng-select formControlName="proxyProtocol" [items]="['HTTP', 'HTTPS']" [(ngModel)]="proxyProtocol" [appendTo]="'body'" class="proxy-length-1"></ng-select>
 
                 <span class="proxy-length-2">://</span>
 
@@ -75,7 +72,7 @@
 
       <mat-tab>
         <ng-template mat-tab-label>
-          <mat-icon class="mat-tab-icon">terminal</mat-icon>
+          <i class="mat-tab-icon moon-Terminal"></i>
           <span class="mat-tab-label-text">IdP Url</span>
         </ng-template>
 
@@ -111,11 +108,9 @@
         </div>
       </mat-tab>
 
-
-
       <mat-tab>
         <ng-template mat-tab-label>
-          <mat-icon class="mat-tab-icon">people</mat-icon>
+          <i class="mat-tab-icon moon-Team"></i>
           <span class="mat-tab-label-text">Profiles</span>
         </ng-template>
         <div class="no-padding no-margin panel">
@@ -150,7 +145,7 @@
 
       <mat-tab>
         <ng-template mat-tab-label>
-          <mat-icon class="mat-tab-icon">extension</mat-icon>
+          <i class="mat-tab-icon moon-Puzzle"></i>
           <span class="mat-tab-label-text">Integrations</span>
         </ng-template>
         <div class="no-padding no-margin panel">
@@ -160,7 +155,7 @@
 
       <mat-tab>
         <ng-template mat-tab-label>
-          <mat-icon class="mat-tab-icon">account_box</mat-icon>
+          <i class="mat-tab-icon moon-User"></i>
           <span class="mat-tab-label-text">Account</span>
         </ng-template>
         <div class="no-padding no-margin panel">
