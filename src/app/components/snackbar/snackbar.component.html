@@ -8,6 +8,6 @@
 
   <div [innerHTML]="data.html" class="large float"></div>
 
-  <a (click)="close($event);" class="small float" *ngIf="data.className === 'toast-error'">&times;</a>
+  <a (click)="close($event);" class="small float" *ngIf="data.className === 'toast-error'"><i class="moon-Close"></i></a>
   <div class="clear"></div>
 </div>

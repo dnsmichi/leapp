@@ -1,4 +1,4 @@
-<button class="toggle-button" [matMenuTriggerFor]="matMenu"><i class="{{icon}}"></i> {{dataLabel()}}<a class="cancel-tag" *ngIf="dataActive();" (click)="resetData($event);">&times;</a></button>
+<button class="toggle-button" [matMenuTriggerFor]="matMenu"><i class="{{icon}}"></i> {{dataLabel()}}<a class="cancel-tag" *ngIf="dataActive();" (click)="resetData($event);"><i class="moon-Close"></i></a></button>
 <mat-menu #matMenu="matMenu">
   <div class="search-bar" (click)="$event.preventDefault(); $event.stopPropagation();" *ngIf="searchable">
     <div class="icon"><i class="fal fa-search"></i></div>
