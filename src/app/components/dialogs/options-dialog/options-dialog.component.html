@@ -84,7 +84,7 @@
             <div class="form-group">
               <div class="form-field form-control-input-button max-width">
                 <input formControlName="idpUrl" type="text" class="form-control max-width" placeholder="Add SAML 2.0 IdP URL" [value]="idpUrlValue ? idpUrlValue.url : ''" >
-                <button type="button" (click)="manageIdpUrl(idpUrlValue ? idpUrlValue.id: -1);"><i class="fal {{editingIdpUrl ? 'fa-pencil' : 'fa-plus-circle'}}"></i></button>
+                <button type="button" (click)="manageIdpUrl(idpUrlValue ? idpUrlValue.id: -1);"><i class="{{editingIdpUrl ? 'moon-Edit' : 'moon-Add'}}"></i></button>
               </div>
             </div>
 
@@ -95,8 +95,8 @@
                   <tr *ngIf="idpUrl">
                     <td>{{idpUrl.url}}</td>
                     <td>
-                      <button class="icon-button inline" type="button" (click)="editIdpUrl(idpUrl.id);"><i class="fal fa-pencil"></i></button>
-                      <button class="icon-button inline" type="button" (click)="deleteIdpUrl(idpUrl.id);"><i class="fal fa-trash"></i></button>
+                      <button class="icon-button inline" type="button" (click)="editIdpUrl(idpUrl.id);"><i class="moon-Edit"></i></button>
+                      <button class="icon-button inline" type="button" (click)="deleteIdpUrl(idpUrl.id);"><i class="moon-Delete"></i></button>
                     </td>
                   </tr>
                 </ng-container>
@@ -119,7 +119,7 @@
           <div class="form-group">
             <div class="form-field form-control-input-button max-width">
               <input formControlName="awsProfile" type="text" class="form-control max-width" placeholder="Add new Named Profile" [value]="awsProfileValue ? awsProfileValue.name : ''" >
-              <button class="button" type="button" (click)="manageAwsProfile(awsProfileValue ? awsProfileValue.id: -1);"><i class="fal {{editingAwsProfile ? 'fa-pencil' : 'fa-plus-circle'}}"></i></button>
+              <button class="button" type="button" (click)="manageAwsProfile(awsProfileValue ? awsProfileValue.id: -1);"><i class="{{editingAwsProfile ? 'moon-Edit' : 'moon-Add'}}"></i></button>
             </div>
           </div>
 
@@ -131,8 +131,8 @@
                   <td>{{profile.name}}</td>
                   <td>
                     <ng-container *ngIf="profile.name !== 'default'">
-                      <button class="icon-button inline" type="button" (click)="editAwsProfile(profile.id);"><i class="fal fa-pencil"></i></button>
-                      <button class="icon-button inline" type="button" (click)="deleteAwsProfile(profile.id);"><i class="fal fa-trash"></i></button>
+                      <button class="icon-button inline" type="button" (click)="editAwsProfile(profile.id);"><i class="moon-Edit"></i></button>
+                      <button class="icon-button inline" type="button" (click)="deleteAwsProfile(profile.id);"><i class="moon-Delete size-up"></i></button>
                     </ng-container>
                   </td>
                 </tr>
