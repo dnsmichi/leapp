@@ -101,7 +101,7 @@ td:nth-child(1) {
   .compact td:nth-child(1),
   .compact td:nth-child(2),
   .compact td:nth-child(4) {
-    font-size: 12px!important;
+    //font-size: 12px!important;
 
     span {
       text-overflow: ellipsis;
@@ -109,7 +109,7 @@ td:nth-child(1) {
       white-space: nowrap;
       display: inline-block;
       width: 96px;
-      font-weight: bold;
+      //font-weight: bold;
       position: relative;
       top: 3px;
     }
@@ -191,5 +191,22 @@ td:nth-child(4) {
   font-weight: lighter;
   .strong {
     font-weight: normal!important;
+  }
+}
+
+::ng-deep {
+  .compact {
+    td {
+      padding: 0 0 0 20px!important;
+    }
+    td:nth-child(2),
+    td:nth-child(4) {
+      font-size: 13px!important;
+      font-weight: lighter!important;
+
+      .strong {
+        font-weight: normal !important;
+      }
+    }
   }
 }

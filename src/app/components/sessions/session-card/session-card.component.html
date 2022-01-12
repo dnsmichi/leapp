@@ -2,7 +2,6 @@
   <img src="assets/images/{{getSessionTypeIcon(session.type)}}.png" alt="" title="" />
   &nbsp;
   <span class="{{session.status === eSessionStatus.active ? 'strong' : ''}}">{{session.sessionName}}</span>
-  &nbsp;
   <i class="moon-Pin" *ngIf="workspaceService.getWorkspace().pinned.indexOf(session.sessionId) !== -1"></i>
 </td>
 <td (dblclick)="switchCredentials()" (click)="openOptionBar(session);" (contextmenu)="openContextMenu($event, session)" class="{{eOptionIds[session.sessionId] ? 'selected' : (session.status !== eSessionStatus.inactive ? 'active' : '')}}" *ngIf="globalColumns.role">
