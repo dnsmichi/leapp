@@ -144,7 +144,8 @@ const generateMainWindow = () => {
   const createTrayWindow = () => {
     // Generate the App Window
     const opts = {...windowDefaultConfig.browserWindow, frame: false};
-    opts['titleBarStyle'] = 'customButtonsOnHover';
+    opts['titleBarStyle'] = 'CustomOnHover';
+    opts['titleBarOverlay'] = true;
     opts['minimizable'] = false;
     opts['maximizable'] = false;
     opts['closable'] = false;
