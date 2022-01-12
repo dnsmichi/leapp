@@ -1,7 +1,7 @@
 import * as path from 'path';
 import {environment} from '../src/environments/environment';
 
-const {app, BrowserWindow, globalShortcut, ipcMain } = require('electron');
+const {app, BrowserWindow, globalShortcut, ipcMain, Tray } = require('electron');
 const { autoUpdater } = require('electron-updater');
 
 const url = require('url');
@@ -74,6 +74,9 @@ const generateMainWindow = () => {
 
   let win;
   let forceQuit = false;
+  let taskbar;
+  let trayOpen = false;
+  let trayWin;
 
   const createWindow = () => {
     // Generate the App Window
@@ -107,6 +110,20 @@ const generateMainWindow = () => {
       app.quit();
     });
 
+    ipc.on('resize-window', (evt, data) => {
+      if(evt.sender.getOwnerBrowserWindow().id === win.id) {
+        if (data.compactMode) {
+          win.setMinimumSize(560, 680);
+          win.setSize(560, 680);
+          win.resizable = false;
+        } else {
+          win.setMinimumSize(1200, 680);
+          win.setSize(1200, 680);
+          win.resizable = true;
+        }
+      }
+    });
+
     app.on('browser-window-focus', () => {
       globalShortcut.register('CommandOrControl+R', () => {
         console.log('CommandOrControl+R is pressed: Shortcut Disabled');
@@ -124,6 +141,61 @@ const generateMainWindow = () => {
     remote.enable(win.webContents);
   };
 
+  const createTrayWindow = () => {
+    // Generate the App Window
+    const opts = {...windowDefaultConfig.browserWindow, frame: false};
+    opts['titleBarStyle'] = 'customButtonsOnHover';
+    opts['minimizable'] = false;
+    opts['maximizable'] = false;
+    opts['closable'] = false;
+
+    trayWin = new BrowserWindow(opts);
+    trayWin.setMenuBarVisibility(false); // Hide Window Menu to make it compliant with MacOSX
+    trayWin.removeMenu(); // Remove Window Menu inside App, to make it compliant with Linux
+    trayWin.setMenu(null);
+    trayWin.loadURL(url.format({ pathname: windowDefaultConfig.dir + '/index.html', protocol: 'file:', slashes: true }));
+
+    const taskbarWidth = 362;
+    const taskbarHeight = 480;
+
+    // Set position of taskbar
+    // Need to be modified to accommodate for various scenarios
+    trayWin.setPosition(taskbar.getBounds().x - taskbarWidth + taskbar.getBounds().width, taskbar.getBounds().y + taskbar.getBounds().height);
+
+    // Set new minimum windows for opened tool.
+    trayWin.setMinimumSize(taskbarWidth, taskbarHeight);
+    trayWin.setSize(taskbarWidth, taskbarHeight);
+
+    // Open the dev tools only if not in production
+    if (!environment.production) {
+      // Open web tools for diagnostics
+      trayWin.webContents.once('dom-ready', () => {});
+    }
+
+    remote.enable(trayWin.webContents);
+  };
+
+  const createTray = () => {
+    if(!taskbar) {
+      taskbar = new Tray(windowDefaultConfig.dir + `/assets/images/LeappMini.png`);
+      taskbar.setToolTip('Leapp');
+      taskbar.on('click', () => {
+        trayOpen = !trayOpen;
+        if(trayOpen) {
+          // open
+          createTrayWindow();
+        } else {
+          // close
+          if(trayWin) {
+            trayWin.setClosable(true);
+            trayWin.close();
+            trayWin = null;
+          }
+        }
+      });
+    }
+  };
+
   app.on('activate', () => {
     if (win === undefined) {
       createWindow();
@@ -139,6 +211,7 @@ const generateMainWindow = () => {
 
   app.on('ready', () => {
     createWindow();
+    createTray();
     buildAutoUpdater(win);
   });
 

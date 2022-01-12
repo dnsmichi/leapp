@@ -115,6 +115,10 @@ export class AppService {
     return this.electronService.httpsProxyAgent;
   }
 
+  getPath() {
+    return this.electronService.path;
+  }
+
   /**
    * Return the dialog native object
    */

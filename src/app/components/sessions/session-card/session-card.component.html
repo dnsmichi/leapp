@@ -3,7 +3,7 @@
   &nbsp;
   <span class="{{session.status === eSessionStatus.active ? 'strong' : ''}}">{{session.sessionName}}</span>
   &nbsp;
-  <i class="fal fa-thumbtack" *ngIf="workspaceService.getWorkspace().pinned.indexOf(session.sessionId) !== -1"></i>
+  <i class="moon-Pin" *ngIf="workspaceService.getWorkspace().pinned.indexOf(session.sessionId) !== -1"></i>
 </td>
 <td (dblclick)="switchCredentials()" (click)="openOptionBar(session);" (contextmenu)="openContextMenu($event, session)" class="{{eOptionIds[session.sessionId] ? 'selected' : (session.status !== eSessionStatus.inactive ? 'active' : '')}}" *ngIf="globalColumns.role">
   <span class="{{session.status === eSessionStatus.active ? 'strong' : ''}}">
@@ -17,7 +17,7 @@
     <span class="{{session.status === eSessionStatus.active ? 'strong' : ''}}">
       <ng-container *ngIf="session.type !== eSessionType.azure">
       {{getProfileName(getProfileId(session))}}
-      <a (click)="copyProfile(getProfileName(getProfileId(session)))" tooltip="Copy Profile Name"><i class="fal fa-copy"></i></a>
+      <a (click)="copyProfile(getProfileName(getProfileId(session)))" tooltip="Copy Profile Name"><i class="moon-Copy"></i></a>
       </ng-container>
     </span>
 </td>
@@ -43,15 +43,15 @@
   <div class="divider"></div>
 
   <button mat-menu-item (click)="changeRegionModalOpen($event, session);">
-    <i class="fal fa-globe"></i>&nbsp;
+    <i class="moon-Region"></i>&nbsp;
     <span>Change Region</span>
   </button>
   <button mat-menu-item (click)="changeProfileModalOpen($event);">
-    <i class="fal fa-user-circle"></i>&nbsp;
+    <i class="moon-User"></i>&nbsp;
     <span>Change Named Profile</span>
   </button>
   <button mat-menu-item (click)="ssmModalOpen($event, session);">
-    <i class="fal fa-list"></i>&nbsp;
+    <i class="moon-Server"></i>&nbsp;
     <span>View SSM Sessions</span>
   </button>
 
@@ -59,44 +59,44 @@
 
   <ng-container *ngIf="(session.type === eSessionType.awsIamRoleFederated || session.type === eSessionType.awsIamRoleChained || session.type === eSessionType.awsSsoRole)">
     <button mat-menu-item [matMenuTriggerFor]="change">
-      <i class="fal fa-copy"></i>
-      <span>&nbsp;&nbsp;&nbsp;Copy Property</span>
+      <i class="moon-Copy"></i>
+      <span>&nbsp;&nbsp;&nbsp;Copy</span>
     </button>
     <div class="divider"></div>
   </ng-container>
 
   <button mat-menu-item (click)="openAmazonConsole($event, session);">
-    <i class="fal fa-cloud"></i>&nbsp;
+    <i class="moon-Cloud"></i>&nbsp;
     <span>View Amazon Console</span>
   </button>
   <button mat-menu-item (click)="openTerminal($event, session);">
-    <i class="fal fa-terminal"></i>&nbsp;
+    <i class="moon-Terminal"></i>&nbsp;
     <span>Open Terminal</span>
   </button>
 
   <div class="divider"></div>
 
   <button mat-menu-item (click)="editSession(session, $event);">
-    <i class="fal fa-pencil"></i>&nbsp;
+    <i class="moon-Edit"></i>&nbsp;
     <span>Edit Session</span>
   </button>
 
   <ng-container *ngIf="workspaceService.getWorkspace().pinned.indexOf(session.sessionId) === -1">
   <button mat-menu-item (click)="pinSession(session, $event);">
-      <i class="fal fa-thumbtack"></i>&nbsp;
+      <i class="moon-Pin"></i>&nbsp;
       <span>Pin Session</span>
   </button>
   </ng-container>
 
   <ng-container *ngIf="workspaceService.getWorkspace().pinned.indexOf(session.sessionId) !== -1">
   <button mat-menu-item (click)="unpinSession(session, $event);">
-      <i class="fal fa-thumbtack"></i>&nbsp;
+      <i class="moon-Pin"></i>&nbsp;
       <span>Unpin Session</span>
   </button>
   </ng-container>
 
   <button mat-menu-item (click)="deleteSession(session, $event);">
-    <i class="fal fa-trash"></i>&nbsp;
+    <i class="moon-Delete"></i>&nbsp;
     <span>Delete Session</span>
   </button>
 
@@ -115,18 +115,18 @@
 
 <ng-container *ngIf="eOptionIds[session.sessionId]">
   <div class="option-bar" (click)="clearOptionIds();">
-    <a class="icon-button start-session" (click)="startSession();" *ngIf="session.status === eSessionStatus.inactive"><i class="fad fa-play-circle"></i>{{compactMode ? '' : '&nbsp;Start Session'}}</a>
-    <a class="icon-button stop-session" (click)="stopSession();" *ngIf="session.status === eSessionStatus.active"><i class="fad fa-stop-circle"></i>{{compactMode ? '' : '&nbsp;Stop Session'}}</a>
+    <a class="icon-button start-session" (click)="startSession();" *ngIf="session.status === eSessionStatus.inactive"><i class="moon-Play-filled"></i>{{compactMode ? '' : '&nbsp;Start Session'}}</a>
+    <a class="icon-button stop-session" (click)="stopSession();" *ngIf="session.status === eSessionStatus.active"><i class="moon-Stop"></i>{{compactMode ? '' : '&nbsp;Stop Session'}}</a>
     <div>
-      <a class="icon-button" (click)="changeRegionModalOpen($event, session);" tooltip="Change Region"><i class="fal fa-globe"></i></a>
-      <a class="icon-button" *ngIf="session.type !== eSessionType.azure" (click)="changeProfileModalOpen($event);" tooltip="Change Named Profile"><i class="fal fa-user-circle"></i></a>
-      <a class="icon-button" (click)="ssmModalOpen($event, session);" *ngIf="session.type !== eSessionType.azure" tooltip="View SSM sessions"><i class="fal fa-list"></i></a>
-      <a class="icon-button" *ngIf="session.type === eSessionType.awsIamUser && session.status !== eSessionStatus.active" (click)="editSession(session, $event);" tooltip="Edit Session"><i class="fal fa-list"></i></a>
+      <a class="icon-button" (click)="changeRegionModalOpen($event, session);" tooltip="Change Region"><i class="moon-Region"></i></a>
+      <a class="icon-button" *ngIf="session.type !== eSessionType.azure" (click)="changeProfileModalOpen($event);" tooltip="Change Named Profile"><i class="moon-User"></i></a>
+      <a class="icon-button" (click)="ssmModalOpen($event, session);" *ngIf="session.type !== eSessionType.azure" tooltip="View SSM sessions"><i class="moon-Row"></i></a>
+      <a class="icon-button" *ngIf="session.type === eSessionType.awsIamUser && session.status !== eSessionStatus.active" (click)="editSession(session, $event);" tooltip="Edit Session"><i class="moon-Edit"></i></a>
 
       <span class="separator"></span>
 
-      <a class="icon-button" (click)="pinSession(session, $event);" tooltip="Pin Session"><i class="fal fa-thumbtack"></i></a>
-      <a class="icon-button" (click)="deleteSession(session, $event);" tooltip="Delete Session"><i class="fal fa-trash"></i></a>
+      <a class="icon-button" (click)="pinSession(session, $event);" tooltip="Pin Session"><i class="moon-Pin"></i></a>
+      <a class="icon-button" (click)="deleteSession(session, $event);" tooltip="Delete Session"><i class="moon-Delete"></i></a>
     </div>
 
     <!--<div class="session-name"><strong>{{session.sessionName}}</strong><br>{{session | detail}}</div>-->

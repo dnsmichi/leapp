@@ -435,3 +435,10 @@ i.fal.fa-plus-circle {
   border-right-color: transparent;
   border-left-color: transparent;
 }
+
+.show-in-taskbar-only {
+  display: none;
+}
+
+/* Media query for task bar as the last thing to do */
+@import "media-query";
