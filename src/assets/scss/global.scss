@@ -1,4 +1,5 @@
 @import "mixins/palette.scss";
+@import "media-query";
 
 $border-radius: 10px;
 $modal-border-radius: 20px;
@@ -439,6 +440,3 @@ i.fal.fa-plus-circle {
 .show-in-taskbar-only {
   display: none;
 }
-
-/* Media query for task bar as the last thing to do */
-@import "media-query";

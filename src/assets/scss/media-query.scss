@@ -22,6 +22,40 @@
   .right, .sessions {
     width: 100%!important;
   }
+
+  .sessions {
+    .centered {
+      margin-top: -34%!important;
+    }
+  }
+
+  .option-bar {
+    left: 0!important;
+  }
+
+  .session-name {
+    display: none!important;
+  }
+
+  .opt-bar-session-button {
+    height: 48px;
+    width: 40px !important;
+    overflow-x: hidden;
+    overflow-y: visible;
+    display: flex;
+    align-content: center;
+    align-items: center;
+    top: 0!important;
+  }
+
+  .start-session {
+    height: 48px!important;
+    overflow-y: visible;
+    span {
+      display: none;
+    }
+  }
+
   .search-bar {
     width: 218px!important;
   }

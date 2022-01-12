@@ -47,17 +47,29 @@ a { color: $text-color; }
   }
 }
 
+.stop-session i {
+   color: $bright-red!important;
+ }
+.start-session i {
+  color: $main-color-light!important;
+}
+
 .start-session, .stop-session {
   display: inline-flex;
   text-decoration: none;
   font-weight: 500;
-  width: 134px!important;
+  font-size: 15px;
+  min-width: 143px!important;
   color: $text-color;
   i {
     font-size: 30px!important;
-    color: $main-color-light!important;
     margin-right: 15px;
   }
+}
+
+.opt-bar-session-button {
+  position: relative;
+  top: 5px;
 }
 
 .session-name {
