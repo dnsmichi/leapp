@@ -1,2 +1,11 @@
+@import "../../../assets/scss/global";
+@import "../../../assets/scss/mixins/palette";
 
-
+::ng-deep {
+  .mat-line {
+    font-size: 15px;
+  }
+  .mat-list-item-content i {
+    font-size: 20px;
+  }
+}
