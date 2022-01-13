@@ -49,9 +49,12 @@ span.vertical-rule {
   margin-right: 0!important;
   margin-block: -4px!important;
   height: 22px!important;
-  //top: 21px;
 }
 
 th:nth-child(1) {
   padding-left: 22px!important;
+}
+
+.compact th a span.vertical-rule {
+  margin-block: -1px!important;
 }

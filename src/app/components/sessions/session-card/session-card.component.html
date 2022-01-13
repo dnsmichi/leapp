@@ -1,8 +1,10 @@
 <td (dblclick)="switchCredentials()" (click)="openOptionBar(session);" (contextmenu)="openContextMenu($event, session)" class="{{eOptionIds[session.sessionId] ? 'selected' : (session.status !== eSessionStatus.inactive ? 'active' : '')}}">
-  <img src="assets/images/{{getSessionTypeIcon(session.type)}}.png" alt="" title="" />
-  &nbsp;
-  <span class="{{session.status === eSessionStatus.active ? 'strong' : ''}}">{{session.sessionName}}</span>
-  <i class="moon-Pin" *ngIf="workspaceService.getWorkspace().pinned.indexOf(session.sessionId) !== -1"></i>
+  <div class="session-name-td">
+    <img src="assets/images/{{getSessionTypeIcon(session.type)}}.png" alt="" title="" />
+    &nbsp;
+    <span class="{{session.status === eSessionStatus.active ? 'strong' : ''}}">{{session.sessionName}}</span>
+    <i class="moon-Pin" *ngIf="workspaceService.getWorkspace().pinned.indexOf(session.sessionId) !== -1"></i>
+  </div>
 </td>
 <td (dblclick)="switchCredentials()" (click)="openOptionBar(session);" (contextmenu)="openContextMenu($event, session)" class="{{eOptionIds[session.sessionId] ? 'selected' : (session.status !== eSessionStatus.inactive ? 'active' : '')}}" *ngIf="globalColumns.role">
   <span class="{{session.status === eSessionStatus.active ? 'strong' : ''}}">
