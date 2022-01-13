@@ -1,9 +1,11 @@
 @import "../../../../assets/scss/mixins/palette";
 @import "../../../../assets/scss/modals";
 
-.column-modal {
-  max-width: 300px;
-  width: 100%;
+::ng-deep {
+  .column-modal {
+    max-width: 520px!important;
+    width: 100%;
+  }
 }
 
 form {

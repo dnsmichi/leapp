@@ -2,10 +2,11 @@
 @import "../../../../assets/scss/mixins/utility";
 @import "../../../../assets/scss/global";
 
-.confirm-modal {
-  max-width: 400px;
-  width: 100%;
-  margin: 20px 15px;
+::ng-deep {
+  .create-modal {
+    max-width: 520px!important;
+    width: 100%;
+  }
 }
 
 .strategy-list {

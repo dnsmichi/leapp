@@ -1,7 +1,8 @@
 @import "../../../../assets/scss/mixins/palette";
 @import "../../../../assets/scss/mixins/utility";
+@import "../../../../assets/scss/modals";
 
-.confirm-modal {
+.option-modal {
   max-width: 520px;
   width: 100%;
   .modal-content {

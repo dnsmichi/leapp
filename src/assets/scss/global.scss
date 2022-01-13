@@ -2,6 +2,7 @@
 @import "media-query";
 
 $border-radius: 10px;
+$filter-border-radius: 5px;
 $modal-border-radius: 20px;
 $context-menu-border-radius: 20px;
 $region-tag-border-radius: 3px;
@@ -18,11 +19,12 @@ $modal-padding: 20px;
 $left-compacted-sidebar: 130px;
 
 $form-button-padding: 10px 20px;
-$toggle-button-padding: 5px 10px;
+$toggle-button-padding: 3px 8px;
 $padding-form-control: 5px 10px;
 $font-size-form-control: 16px;
 $form-control-height: 40px!important;
 
+$icon-button-size: 25px;
 $icon-button-width: 20px;
 $icon-button-height: 20px;
 $icon-button-width-small: 14px;
@@ -182,8 +184,8 @@ hr { margin: 5px 0 0 0; display: block; height: 1px; border-top: 1px solid $silv
   cursor: pointer;
 
   i, mat-icon {
-    color: $silver-dark;
-    font-size: $icon-button-width;
+    color: $table-text;
+    font-size: $icon-button-size;
   }
 
   &:hover {
@@ -402,8 +404,8 @@ hr { margin: 5px 0 0 0; display: block; height: 1px; border-top: 1px solid $silv
   position: absolute;
   top: 20px;
   right: 20px;
-  font-size: 30px;
-  color: $text-color;
+  font-size: 24px;
+  color: $table-text;
   cursor: pointer;
   transition: opacity 0.3s ease;
   text-decoration: none;
@@ -439,4 +441,8 @@ i.fal.fa-plus-circle {
 
 .show-in-taskbar-only {
   display: none;
+}
+
+.filter-button {
+  border-radius: $filter-border-radius!important;
 }

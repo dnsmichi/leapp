@@ -1,4 +1,4 @@
-<button class="toggle-button" [matMenuTriggerFor]="matMenu"><i class="{{icon}}"></i> {{dataLabel()}}<a class="cancel-tag" *ngIf="dataActive();" (click)="resetData($event);"><i class="moon-Close"></i></a></button>
+<button class="toggle-button filter-button" [matMenuTriggerFor]="matMenu"><i class="{{icon}}"></i> {{dataLabel()}}<a class="cancel-tag" *ngIf="dataActive();" (click)="resetData($event);"><i class="moon-Close"></i></a></button>
 <mat-menu #matMenu="matMenu">
   <div class="search-bar" (click)="$event.preventDefault(); $event.stopPropagation();" *ngIf="searchable">
     <div class="icon"><i class="fal fa-search"></i></div>
@@ -16,7 +16,7 @@
     </ng-container>
     <ng-container *ngIf="categories && categories.length > 0">
       <ng-container *ngFor="let category of categories">
-        <small>{{category}}</small><br>
+        <small class="category">{{category}}</small><br>
         <ng-container *ngFor="let element of data">
           <ng-container *ngIf="element.show && element.category === category">
             <mat-checkbox (click)="$event.stopPropagation();" (change)="element.value = $event.checked; updateValue($event, data, form);" checked="{{element.value ? 'checked' : ''}}"></mat-checkbox><span>{{element.name}}</span>

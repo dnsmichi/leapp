@@ -121,3 +121,7 @@ ng-select select-dropdown > div {
     text-transform: uppercase!important;
   }
 }
+
+.ng-select .ng-select-container .ng-value-container .ng-placeholder {
+  text-transform: none;
+}

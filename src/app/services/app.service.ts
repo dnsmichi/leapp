@@ -350,7 +350,7 @@ export class AppService {
     }
 
     this.getCurrentWindow().show();
-    this.modalService.show(ConfirmationDialogComponent, { backdrop: 'static', animated: false, class: 'confirm-modal', initialState: { message, callback, confirmText, cancelText }});
+    this.modalService.show(ConfirmationDialogComponent, { animated: false, class: 'confirm-modal', initialState: { message, callback, confirmText, cancelText }});
 
   }
 

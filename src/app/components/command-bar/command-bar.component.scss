@@ -103,3 +103,21 @@
   z-index: 1;
   box-shadow: inset -23px 0 25px -25px rgba(0,0,0,0.2);
 }
+
+.moon-Add {
+  color: $text-color!important;
+}
+
+.toggled-filter {
+  background: #f3f3f3 !important;
+  border-radius: 8px;
+  padding: 10px 7px !important;
+  height: 40px !important;
+  width: 40px !important;
+  text-align: center;
+  position: relative;
+  left: 3px;
+  margin: -10px;
+  transition: background 0.3s ease!important;
+  i { color: #252525!important; }
+}

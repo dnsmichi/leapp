@@ -126,10 +126,18 @@ form {
       background: $white-text-color;
       color: $text-color;
       padding: $toggle-button-padding;
-      border: 1px solid $silver-50;
+      border: 1px solid $table-text;
+      font-size: 15px;
+
+      i {
+        font-size: 20px;
+        position: relative;
+        top: 2px;
+      }
 
       &.toggled {
         background: $silver-25;
+        border: 1px solid $silver-25;
       }
     }
   }
@@ -144,15 +152,23 @@ form {
 
   .mat-checkbox-layout {
     width: auto!important;
-    padding-right: 10px!important;
+    padding-right: 3px!important;
   }
 
+  .mat-checkbox-frame {
+    border-radius: 0!important;
+    border-width: 1px!important;
+  }
   .mat-checkbox-checked:not(.mat-checkbox-disabled).mat-accent .mat-ripple-element,
   .mat-checkbox:active:not(.mat-checkbox-disabled).mat-accent .mat-ripple-element,
   .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background,
   .mat-checkbox-checked.mat-accent .mat-checkbox-background {
     background: $black;
   }
+.mat-checkbox-inner-container {
+  width: 18px!important;
+  height: 18px!important;
+}
 
   .mat-menu-panel {
     width: 300px;
