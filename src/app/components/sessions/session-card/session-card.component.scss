@@ -77,14 +77,19 @@ a { color: $text-color; }
   font-size: 13px;
 }
 
-td.selected {
-  background: $selected-card;
-  color: $white-text-color;
-  * {
+::ng-deep {
+  td.selected,
+  tr:hover td:not(.selected) {
+    background: $selected-card;
     color: $white-text-color;
-  }
-  img {
-    filter: brightness(0) invert(1);
+
+    * {
+      color: $white-text-color;
+    }
+
+    img {
+      filter: brightness(0) invert(1);
+    }
   }
 }
 
@@ -186,7 +191,7 @@ td:nth-child(1) {
 td:nth-child(2),
 td:nth-child(4) {
   font-size: 13px;
-  font-weight: lighter;
+  font-weight: normal;
   .strong {
     font-weight: normal!important;
   }
@@ -206,7 +211,7 @@ td:nth-child(4) {
     td:nth-child(2),
     td:nth-child(4) {
       font-size: 13px!important;
-      font-weight: lighter!important;
+      font-weight: normal!important;
       .strong {
         font-weight: normal !important;
       }
@@ -217,4 +222,10 @@ td:nth-child(4) {
 .loader {
   text-align: center;
   padding: 10px;
+}
+
+::ng-deep {
+  tr:hover td:not(.selected) {
+    background: $selected-card-hover;
+  }
 }
