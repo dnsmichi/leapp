@@ -16,32 +16,19 @@ export class SideBarComponent implements OnInit {
   constructor(private workspaceService: WorkspaceService) {
     this.folders = this.workspaceService.getFolders();
     this.segments = this.workspaceService.getSegments();
-
-    // For testing
-    this.folders = [
-      { name: 'beSharp', ids: [] },
-      { name: 'Noovolari', ids: [] },
-      { name: 'DevOps', ids: [] },
-      { name: 'Marketing', ids: [] },
-      { name: 'Infrastructure', ids: [] }
-    ];
-
-    this.segments = [
-      { name: 'Region Based', filterGroup: null },
-      { name: 'Architecture', filterGroup: null },
-      { name: 'Commons', filterGroup: null },
-      { name: 'Testing', filterGroup: null }
-    ];
   }
 
-  ngOnInit(): void {
+  ngOnInit(): void {}
+
+  resetFilters() {
+
   }
 
-  addFolder(event) {
-    event.stopPropagation();
+  showOnlyPinned() {
+
   }
 
-  addSegment(event) {
-    event.stopPropagation();
+  applySegmentFilter(segment: Segment) {
+
   }
 }
