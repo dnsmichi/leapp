@@ -45,6 +45,11 @@ html, body { height: 100%; }
   .ng-dropdown-footer {
     border-top: none!important;
   }
+  .mat-menu-item i {
+    font-size: 20px;
+    position: relative;
+    top: 2px;
+  }
   .mat-menu-item:hover:not([disabled]),
   .mat-menu-item.cdk-program-focused:not([disabled]),
   .mat-menu-item.cdk-keyboard-focused:not([disabled]),
