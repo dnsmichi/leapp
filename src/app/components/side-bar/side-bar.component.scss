@@ -3,9 +3,13 @@
 
 ::ng-deep {
   .mat-line {
-    font-size: 15px;
+    font-size: 15px!important;
   }
-  .mat-list-item-content i {
-    font-size: 20px;
+  .mat-list-item-content {
+    i {
+      font-size: 20px;
+      margin-right: 8px;
+    }
   }
+
 }
