@@ -2,9 +2,11 @@
 @import "../../../../assets/scss/mixins/utility";
 @import "../../../../assets/scss/global";
 
-.segment-modal {
-  max-width: 520px;
-  width: 100%;
+::ng-deep {
+  .segment-modal {
+    max-width: 520px!important;
+    width: 100%;
+  }
 }
 
 form {
@@ -32,4 +34,9 @@ form {
   i {
    color: $text-color;
   }
+}
+
+small {
+  color: $small-color;
+  font-size: 12px;
 }

@@ -479,7 +479,7 @@ export class SessionCardComponent implements OnInit {
         iamRoleChainedSessionString +
         '</ul><br>Removing the sessions will also remove the iamRoleChained sessions associated with it. Do you want to proceed?';
     } else {
-      return 'Do you really want to delete this sessions?';
+      return 'Do you really want to delete this session?';
     }
   }
 }

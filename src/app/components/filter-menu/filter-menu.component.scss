@@ -1,5 +1,6 @@
 @import "../../../assets/scss/global";
 @import "../../../assets/scss/form";
+@import "../../../assets/scss/mixins/palette";
 
 .filter-menu {
   padding: 10px 20px;
@@ -9,14 +10,22 @@
 }
 
 .menu-buttons {
-  padding: 0 20px;
+  padding: 15px 15px 7px 15px;
   a {
-    color: $silver-dark;
+    color: $table-text;
+    font-weight: 500;
     margin-left: $standard-padding;
+  }
+  button {
+    padding: 5px 10px;
   }
 }
 
-span { margin-left: 10px; }
+span {
+  display: inline-block;
+  margin-left: 10px;
+  margin-bottom: 8px;
+}
 
 .search-bar {
   border-bottom: 1px solid $silver-50;
@@ -50,6 +59,14 @@ span { margin-left: 10px; }
 .cancel-tag {
   font-size: 16px;
   margin-left: 10px;
-  color: $text-color;
   cursor: pointer;
+
+  i { color: $table-text; position: relative; top: 2px; }
+}
+
+.category {
+  font-weight: 500;
+  color: $table-text;
+  margin-bottom: 10px;
+  display: inline-block;
 }

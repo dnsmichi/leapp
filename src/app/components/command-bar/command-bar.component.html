@@ -1,5 +1,5 @@
 <div class="left">
-  <button class="icon-button line-end" (click)="toggleCompactMode();"><mat-icon>chrome_reader_mode</mat-icon></button>
+  <button class="icon-button line-end" (click)="toggleCompactMode();"><i class="moon-Sidebar"></i></button>
 </div>
 <div class="right {{filterExtended ? 'extended' : ''}}">
   <form [formGroup]="filterForm">
@@ -9,7 +9,7 @@
 
       <button class="icon-button line-start hide-in-taskbar" (click)="showCreateDialog();" tooltip="Add a new Session Strategy"><i class="moon-Add"></i></button>
 
-      <button class="icon-button hide-in-taskbar" (click)="toggleFilters();" tooltip="Filter the session list"><i class="moon-Filter"></i></button>
+      <button class="icon-button hide-in-taskbar {{filterExtended ? 'toggled-filter' : ''}}" (click)="toggleFilters();" tooltip="Filter the session list"><i class="moon-Filter"></i></button>
 
       <div class="form-control-input-icon">
         <input formControlName="searchFilter" type="text" class="form-control search-bar" placeholder="Search session" />
@@ -30,12 +30,12 @@
 
         <div #child>
           <input formControlName="dateFilter" type="checkbox" class="hidden" />
-          <button class="toggle-button {{filterForm.get('dateFilter').value ? 'toggled' : ''}}" (click)="toggleDateFilter();"><i class="fal fa-exchange fa-rotate-90"></i> Order by date</button>
+          <button class="toggle-button filter-button {{filterForm.get('dateFilter').value ? 'toggled' : ''}}" (click)="toggleDateFilter();"><i class="moon-Order"></i> Order by date</button>
 
-          <app-filter-menu [control]="'providerFilter'" [data]="providers" [icon]="'fal fa-cloud'" [name]="'Providers'" [form]="filterForm"></app-filter-menu>
-          <app-filter-menu [control]="'profileFilter'" [data]="profiles" [icon]="'fal fa-user-circle'" [name]="'Profile'" [form]="filterForm" [searchable]="true"></app-filter-menu>
-          <app-filter-menu [control]="'regionFilter'" [data]="regions" [icon]="'fal fa-globe'" [name]="'Region'" [form]="filterForm" [searchable]="true"></app-filter-menu>
-          <app-filter-menu [control]="'typeFilter'" [data]="types" [icon]="'fal fa-bookmark'" [name]="'Type'" [form]="filterForm" [categories]="['Amazon AWS', 'Microsoft Azure']"></app-filter-menu>
+          <app-filter-menu [control]="'providerFilter'" [data]="providers" [icon]="'moon-Cloud'" [name]="'Providers'" [form]="filterForm"></app-filter-menu>
+          <app-filter-menu [control]="'profileFilter'" [data]="profiles" [icon]="'moon-User'" [name]="'Profile'" [form]="filterForm" [searchable]="true"></app-filter-menu>
+          <app-filter-menu [control]="'regionFilter'" [data]="regions" [icon]="'moon-Region'" [name]="'Region'" [form]="filterForm" [searchable]="true"></app-filter-menu>
+          <app-filter-menu [control]="'typeFilter'" [data]="types" [icon]="'moon-Bookmark'" [name]="'Type'" [form]="filterForm" [categories]="['Amazon AWS', 'Microsoft Azure']"></app-filter-menu>
         </div>
       </div>
 

@@ -1,9 +1,11 @@
 @import "../../../../assets/scss/modals";
 @import "../../../../assets/scss/mixins/palette";
 
-.confirm-modal {
-  max-width: 300px;
-  width: 100%;
+::ng-deep {
+  .confirm-modal {
+    max-width: 520px!important;
+    width: 100%;
+  }
 }
 
 p { color: $text-color; }

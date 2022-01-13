@@ -219,8 +219,10 @@
   to { left: -10px; }
 }
 
-.confirm-modal {
-  max-width: 400px;
-  width: 100%;
-  margin: 20px 15px;
+::ng-deep {
+  .edit-modal {
+    max-width: 520px!important;
+    width: 100%;
+    margin: 20px 15px;
+  }
 }

@@ -1,11 +1,11 @@
 <a class="close-modal" (click)="closeModal()"><i class="moon-Close"></i></a>
-<h2>Save new Segment</h2>
+<h4>Save new Segment</h4>
 
 <form [formGroup]="form" class="form center-vertical text-left" (submit)="saveSegment();">
 
   <ng-select #ngSelectComponent
     type="text"
-    placeholder="Choose a name for the Segment"
+    placeholder="Enter new segment name"
     formControlName="segmentName"
     bindLabel="name"
     bindValue="name"
@@ -17,7 +17,8 @@
       <div class="create-new add" (click)="addNewSegment()" *ngIf="checkNewSegment()"><i class="fal fa-plus-circle"></i>&nbsp;Add "<strong>{{temporaryName}}</strong>"</div>
     </ng-template>
   </ng-select>
-
+  <small>This segment will show in your sidebar.</small>
+  <br>
   <br>
   <button (click)="saveSegment()">Save Segment</button>
   <a (click)="closeModal()">Cancel</a>
