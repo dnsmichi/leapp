@@ -21,6 +21,7 @@ import {LoggingService} from '../../../services/logging.service';
 import {optionBarIds} from '../sessions.component';
 import {MatMenuTrigger} from '@angular/material/menu';
 import {IGlobalColumns} from '../../command-bar/command-bar.component';
+import {EditDialogComponent} from '../../dialogs/edit-dialog/edit-dialog.component';
 
 @Component({
   // eslint-disable-next-line @angular-eslint/component-selector
@@ -85,6 +86,7 @@ export class SessionCardComponent implements OnInit {
               private fileService: FileService,
               private router: Router,
               private ssmService: SsmService,
+              private bsModalService: BsModalService,
               private sessionProviderService: SessionFactoryService,
               private loggingService: LoggingService,
               private modalService: BsModalService) {}
@@ -172,7 +174,8 @@ export class SessionCardComponent implements OnInit {
     this.clearOptionIds();
     event.preventDefault();
     event.stopPropagation();
-    // this.router.navigate(['/managing', 'edit-account'], {queryParams: { sessionId: session.sessionId }}).then(_ => {});
+
+    this.bsModalService.show(EditDialogComponent, { animated: false, class: 'edit-modal'});
   }
 
   /**

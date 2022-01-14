@@ -47,7 +47,7 @@
     <i class="moon-Region"></i>&nbsp;
     <span>Change Region</span>
   </button>
-  <button mat-menu-item (click)="changeProfileModalOpen($event);">
+  <button mat-menu-item (click)="changeProfileModalOpen($event);" *ngIf="(session.type === eSessionType.awsIamRoleFederated || session.type === eSessionType.awsIamRoleChained || session.type === eSessionType.awsSsoRole)">
     <i class="moon-User"></i>&nbsp;
     <span>Change Named Profile</span>
   </button>
@@ -79,7 +79,7 @@
   <div class="divider"></div>
   -->
 
-  <button mat-menu-item (click)="editSession(session, $event);">
+  <button mat-menu-item (click)="editSession(session, $event);" *ngIf="session.type === eSessionType.awsIamUser">
     <i class="moon-Edit"></i>&nbsp;
     <span>Edit Session</span>
   </button>
