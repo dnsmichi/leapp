@@ -2,6 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import {WorkspaceService} from '../../services/workspace.service';
 import Folder from '../../models/folder';
 import Segment from '../../models/Segment';
+import {
+  globalFilteredSessions,
+  globalHasFilter,
+  globalResetFilter
+} from '../command-bar/command-bar.component';
+import {Session} from '../../models/session';
 
 @Component({
   selector: 'app-side-bar',
@@ -18,14 +24,18 @@ export class SideBarComponent implements OnInit {
     this.segments = this.workspaceService.getSegments();
   }
 
-  ngOnInit(): void {}
-
-  resetFilters() {
+  ngOnInit(): void {
 
   }
 
-  showOnlyPinned() {
+  resetFilters() {
+    globalFilteredSessions.next(this.workspaceService.sessions);
+    globalHasFilter.next(false);
+    globalResetFilter.next(true);
+  }
 
+  showOnlyPinned() {
+    globalFilteredSessions.next(this.workspaceService.sessions.filter((s: Session) => this.workspaceService.getWorkspace().pinned.indexOf(s.sessionId) !== -1));
   }
 
   applySegmentFilter(segment: Segment) {

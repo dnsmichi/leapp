@@ -74,7 +74,7 @@ export class FilterMenuComponent implements OnInit {
     return result.length > 0 ? (result.length > 2 ? `${this.name} · ${result.length}`: result.join(', ')) : this.name;
   }
 
-  resetData(event) {
+  resetData(event, form: FormGroup) {
     event.preventDefault();
     event.stopPropagation();
 
@@ -82,5 +82,6 @@ export class FilterMenuComponent implements OnInit {
       d.value = false;
       return d;
     });
+    form.get(this.control).setValue(this.data);
   }
 }

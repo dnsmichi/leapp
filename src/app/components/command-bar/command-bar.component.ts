@@ -9,6 +9,7 @@ import {FormControl, FormGroup} from '@angular/forms';
 import {BehaviorSubject} from 'rxjs';
 import {Session} from '../../models/session';
 import {AppService} from '../../services/app.service';
+import {SessionType} from '../../models/session-type';
 
 export interface GlobalFilters {
   searchFilter: string;
@@ -24,6 +25,7 @@ export const globalFilteredSessions = new BehaviorSubject<Session[]>([]);
 export const compactMode = new BehaviorSubject<boolean>(false);
 export const globalFilterGroup = new BehaviorSubject<GlobalFilters>(null);
 export const globalHasFilter = new BehaviorSubject<boolean>(false);
+export const globalResetFilter = new BehaviorSubject<boolean>(false);
 
 export interface IGlobalColumns {
   role: boolean;
@@ -53,16 +55,19 @@ export class CommandBarComponent implements OnInit, OnDestroy, AfterContentCheck
     typeFilter: new FormControl([])
   });
 
-  providers: {name: string; value: boolean}[];
+  providers: {id: string; name: string; value: boolean}[];
   profiles: {id: string; name: string; value: boolean}[];
   integrations: any[];
-  types: {category: string; name: string; value: boolean}[];
+  types: {id: SessionType; category: string; name: string; value: boolean}[];
   regions: {name: string; value: boolean}[];
 
   filterExtended: boolean;
   compactMode: boolean;
 
   private subscription;
+  private subscription2;
+  private subscription3;
+  private subscription4;
 
   constructor(private bsModalService: BsModalService, private workspaceService: WorkspaceService, private appService: AppService) {
     this.filterExtended = false;
@@ -78,18 +83,18 @@ export class CommandBarComponent implements OnInit, OnDestroy, AfterContentCheck
     });
 
     this.providers = [
-      { name: 'Amazon AWS', value: false },
-      { name: 'Microsoft Azure', value: false }
+      { id: 'aws', name: 'Amazon AWS', value: false },
+      { id: 'azure', name: 'Microsoft Azure', value: false }
     ];
 
     this.integrations = [];
 
     this.types = [
-      { category: 'Amazon AWS', name: 'IAM Role Federated', value: false },
-      { category: 'Amazon AWS', name: 'IAM User', value: false },
-      { category: 'Amazon AWS', name: 'IAM Role Chained', value: false },
-      { category: 'Amazon AWS', name: 'IAM Single Sign-On', value: false },
-      { category: 'Microsoft Azure', name: 'Azure Subscription', value: false }
+      { id: SessionType.awsIamRoleFederated, category: 'Amazon AWS', name: 'IAM Role Federated', value: false },
+      { id: SessionType.awsIamUser, category: 'Amazon AWS', name: 'IAM User', value: false },
+      { id: SessionType.awsIamRoleChained, category: 'Amazon AWS', name: 'IAM Role Chained', value: false },
+      { id: SessionType.awsSsoRole, category: 'Amazon AWS', name: 'IAM Single Sign-On', value: false },
+      { id: SessionType.azure, category: 'Microsoft Azure', name: 'Azure Subscription', value: false }
     ];
 
     this.profiles = this.workspaceService.getProfiles().map(element => ({ name: element.name, id: element.id, value: false }));
@@ -101,17 +106,60 @@ export class CommandBarComponent implements OnInit, OnDestroy, AfterContentCheck
 
     this.subscription = this.filterForm.valueChanges.subscribe((values: GlobalFilters) => {
       globalFilterGroup.next(values);
-      if(values.searchFilter === '') {
-        return globalFilteredSessions.next(this.workspaceService.sessions);
-      } else {
-        globalFilteredSessions.next(this.workspaceService.sessions.filter(session => session.sessionName.toLowerCase().indexOf(values.searchFilter.toLowerCase()) > -1));
-      }
+      this.applyFiltersToSessions(values, this.workspaceService.sessions);
+    });
+
+    this.subscription2 = globalHasFilter.subscribe(value => {
+      this.filterExtended = value;
+    });
+
+    this.subscription3 = globalResetFilter.subscribe(_ => {
+      this.filterForm.get('searchFilter').setValue('');
+      this.filterForm.get('dateFilter').setValue(true);
+      this.filterForm.get('providerFilter').setValue([]);
+      this.filterForm.get('profileFilter').setValue([]);
+      this.filterForm.get('regionFilter').setValue([]);
+      this.filterForm.get('integrationFilter').setValue([]);
+      this.filterForm.get('typeFilter').setValue([]);
+
+      this.providers = this.providers.map(p => {
+        p.value = false; return p;
+      });
+
+      this.profiles = this.profiles.map(p => {
+        p.value = false; return p;
+      });
+
+      this.regions = this.regions.map(r => {
+        r.value = false; return r;
+      });
+
+      this.types = this.types.map(t => {
+        t.value = false; return t;
+      });
+    });
+
+    this.subscription4 = this.workspaceService.sessions$.subscribe(sessions => {
+      const actualFilterValues: GlobalFilters = {
+        dateFilter: this.filterForm.get('dateFilter').value,
+        integrationFilter: this.filterForm.get('integrationFilter').value,
+        profileFilter: this.filterForm.get('profileFilter').value,
+        providerFilter: this.filterForm.get('providerFilter').value,
+        regionFilter: this.filterForm.get('regionFilter').value,
+        searchFilter: this.filterForm.get('searchFilter').value,
+        typeFilter: this.filterForm.get('typeFilter').value
+      };
+
+      this.applyFiltersToSessions(actualFilterValues, sessions);
     });
 
   }
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+    this.subscription2.unsubscribe();
+    this.subscription3.unsubscribe();
+    this.subscription4.unsubscribe();
   }
 
   ngAfterContentChecked(): void {
@@ -161,4 +209,99 @@ export class CommandBarComponent implements OnInit, OnDestroy, AfterContentCheck
            this.filterForm.get('typeFilter').value.length > 0;
   }
 
+  private applyFiltersToSessions(values: GlobalFilters, sessions: Session[]) {
+    console.log(values);
+    console.log(this.filterForm.get('providerFilter').value);
+
+    let filteredSessions = sessions;
+    const searchText = this.filterForm.get('searchFilter').value;
+    if(searchText !== '') {
+      filteredSessions = filteredSessions.filter(session => {
+        let test = false;
+        test ||= session.sessionName.toLowerCase().indexOf(searchText.toLowerCase()) > -1;
+        test ||= session.type.toLowerCase().indexOf(searchText.toLowerCase()) > -1;
+        test ||= session.region.toLowerCase().indexOf(searchText.toLowerCase()) > -1;
+        test ||= (session as any).email?.toLowerCase().indexOf(searchText.toLowerCase()) > -1;
+        test ||= (session as any).roleArn?.toLowerCase().indexOf(searchText.toLowerCase()) > -1;
+        test ||= (session as any).idpArn?.toLowerCase().indexOf(searchText.toLowerCase()) > -1;
+        test ||= (session as any).roleSessionName?.toLowerCase().indexOf(searchText.toLowerCase()) > -1;
+        test ||= this.workspaceService.getProfileName((session as any).profileId)?.toLowerCase().indexOf(searchText.toLowerCase()) > -1;
+        return test;
+      });
+    }
+    if(this.filterForm.get('dateFilter').value) {
+      filteredSessions = this.orderByDate(filteredSessions);
+    } else {
+      filteredSessions = filteredSessions.sort((a, b) => a.sessionName.localeCompare(b.sessionName));
+    }
+    if(this.filterForm.get('providerFilter').value.filter(v => v.value).length > 0) {
+      filteredSessions = filteredSessions.filter((session) => {
+        let test = false;
+        this.providers.forEach(provider => {
+          if(provider.value) {
+            test ||= session.type.indexOf(provider.id) > -1;
+          }
+        });
+        return test;
+      });
+    }
+    if(this.filterForm.get('profileFilter').value.filter(v => v.value).length > 0) {
+      filteredSessions = filteredSessions.filter((session) => {
+        let test = false;
+        this.profiles.forEach(profile => {
+          if(profile.value) {
+            if((session as any).profileId) {
+              test ||= (session as any).profileId.indexOf(profile.id) > -1;
+            }
+          }
+        });
+        return test;
+      });
+    }
+    if(this.filterForm.get('regionFilter').value.filter(v => v.value).length > 0) {
+      filteredSessions = filteredSessions.filter((session) => {
+        let test = false;
+        this.regions.forEach(region => {
+          if(region.value) {
+            test ||= session.region.indexOf(region.name) > -1;
+          }
+        });
+        return test;
+      });
+    }
+    if(this.filterForm.get('integrationFilter').value.filter(v => v.value).length > 0) {
+      filteredSessions = filteredSessions.filter((session) => {
+        this.integrations.forEach(integration => {
+            //TODO implement integration filter
+        });
+        return true;
+      });
+    }
+    if(this.filterForm.get('typeFilter').value.filter(v => v.value).length > 0) {
+      filteredSessions = filteredSessions.filter((session) => {
+        let test = false;
+        this.types.forEach(type => {
+          if(type.value) {
+            test ||= session.type.indexOf(type.id) > -1;
+          }
+        });
+        return test;
+      });
+    }
+
+    filteredSessions = filteredSessions.sort((x, y) => {
+      if ((this.workspaceService.getWorkspace().pinned.indexOf(x.sessionId) !== -1) === (this.workspaceService.getWorkspace().pinned.indexOf(y.sessionId) !== -1)) {
+        return 0;
+      } else if(this.workspaceService.getWorkspace().pinned.indexOf(x.sessionId) !== -1) {
+        return -1;
+      } else {
+        return 1;
+      }
+    });
+    return globalFilteredSessions.next(filteredSessions);
+  }
+
+  private orderByDate(filteredSession: Session[]) {
+    return filteredSession.sort((a,b) => new Date(a.startDateTime).getTime() - new Date(b.startDateTime).getTime());
+  }
 }
