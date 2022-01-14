@@ -9,7 +9,23 @@
     i {
       font-size: 20px;
       margin-right: 8px;
+      position: relative;
+      top: 3px;
     }
   }
+  .moon-More {
+    display: none;
+    float: right;
+    opacity: 0;
+    transition: all 1s ease;
+  }
+  .mat-list-item-content:hover i.moon-More {
+    display: inline-block!important;
+    color: $text-color;
+    opacity: 1;
+  }
 
+  .visible-option-menu {
+    flex-grow: 1;
+  }
 }

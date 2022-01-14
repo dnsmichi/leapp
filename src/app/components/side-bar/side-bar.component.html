@@ -17,7 +17,7 @@
 
       <mat-list-item *ngFor="let segment of segments">
         <ng-container (click)="applySegmentFilter(segment);">
-          <div mat-line><i class="moon-Tag"></i> {{segment.name}}</div>
+          <div mat-line class="visible-option-menu"><i class="moon-Tag"></i> {{segment.name}} <i class="moon-More"></i></div>
         </ng-container>
       </mat-list-item>
 

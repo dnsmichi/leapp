@@ -35,11 +35,13 @@ export class SegmentDialogComponent implements OnInit, OnDestroy {
     private workspaceService: WorkspaceService
   ) {
     this.temporaryName = '';
-    this.segments = workspaceService.getSegments();
+    this.segments = [...workspaceService.getSegments()];
     this.subscription = globalFilterGroup.subscribe(value => this.currentFilterGroup = value);
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.log(this.currentFilterGroup);
+  }
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
@@ -57,7 +59,7 @@ export class SegmentDialogComponent implements OnInit, OnDestroy {
   saveSegment() {
     const segments = this.workspaceService.getSegments();
     const index = segments.findIndex(s => s.name.indexOf(this.selectedSegment.name) > -1);
-    if(index > -1) {
+    if(index === -1) {
       segments.push({ name: this.selectedSegment.name, filterGroup: this.currentFilterGroup });
     } else {
       segments[index].filterGroup = this.currentFilterGroup;
