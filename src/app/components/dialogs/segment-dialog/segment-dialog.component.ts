@@ -50,7 +50,7 @@ export class SegmentDialogComponent implements OnInit, OnDestroy {
   addNewSegment(): void {
     const newSegment = { name: this.temporaryName, filterGroup: this.currentFilterGroup };
     console.log(newSegment);
-    this.selectedSegment = newSegment;
+    this.selectedSegment = newSegment.name;
     this.segments.push(newSegment);
     this.segments = [...this.segments];
     this.ngSelectComponent.handleClearClick();
@@ -58,9 +58,9 @@ export class SegmentDialogComponent implements OnInit, OnDestroy {
 
   saveSegment() {
     const segments = this.workspaceService.getSegments();
-    const index = segments.findIndex(s => s.name.indexOf(this.selectedSegment.name) > -1);
+    const index = segments.findIndex(s => s.name.indexOf(this.selectedSegment) > -1);
     if(index === -1) {
-      segments.push({ name: this.selectedSegment.name, filterGroup: this.currentFilterGroup });
+      segments.push({ name: this.selectedSegment, filterGroup: this.currentFilterGroup });
     } else {
       segments[index].filterGroup = this.currentFilterGroup;
     }

@@ -13,13 +13,13 @@
       top: 3px;
     }
   }
-  .moon-More {
+  .moon-Close {
     display: none;
     float: right;
     opacity: 0;
     transition: all 1s ease;
   }
-  .mat-list-item-content:hover i.moon-More {
+  .mat-list-item-content:hover i.moon-Close {
     display: inline-block!important;
     color: $text-color;
     opacity: 1;

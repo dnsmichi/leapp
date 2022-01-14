@@ -16,9 +16,7 @@
       </mat-expansion-panel-header>
 
       <mat-list-item *ngFor="let segment of segments">
-        <ng-container (click)="applySegmentFilter(segment);">
-          <div mat-line class="visible-option-menu"><i class="moon-Tag"></i> {{segment.name}} <i class="moon-More"></i></div>
-        </ng-container>
+          <div mat-line class="visible-option-menu" (click)="applySegmentFilter(segment, $event);"><i class="moon-Tag"></i> {{segment.name}} <i class="moon-Close" (click)="deleteSegment(segment, $event);"></i></div>
       </mat-list-item>
 
     </mat-expansion-panel>

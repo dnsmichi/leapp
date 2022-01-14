@@ -287,4 +287,13 @@ export class WorkspaceService {
     workspace.sessions = sessions;
     this.persistWorkspace(workspace);
   }
+
+  removeSegment(segment: Segment) {
+    const workspace = this.getWorkspace();
+    const index = workspace.segments.findIndex(s => s.name === segment.name);
+    if(index > -1) {
+      workspace.segments.splice(index, 1);
+      this.persistWorkspace(workspace);
+    }
+  }
 }

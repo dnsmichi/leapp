@@ -10,15 +10,16 @@ import {BehaviorSubject} from 'rxjs';
 import {Session} from '../../models/session';
 import {AppService} from '../../services/app.service';
 import {SessionType} from '../../models/session-type';
+import Segment from "../../models/Segment";
 
 export interface GlobalFilters {
   searchFilter: string;
   dateFilter: boolean;
-  providerFilter: {name: string; value: boolean}[];
-  profileFilter: {name: string; value: boolean}[];
+  providerFilter: {id: string; name: string; value: boolean}[];
+  profileFilter: {id: string; name: string; value: boolean}[];
   regionFilter: {name: string; value: boolean}[];
   integrationFilter: {name: string; value: boolean}[];
-  typeFilter: {category: string; name: string; value: boolean}[];
+  typeFilter: {id: SessionType; category: string; name: string; value: boolean}[];
 }
 
 export const globalFilteredSessions = new BehaviorSubject<Session[]>([]);
@@ -26,6 +27,7 @@ export const compactMode = new BehaviorSubject<boolean>(false);
 export const globalFilterGroup = new BehaviorSubject<GlobalFilters>(null);
 export const globalHasFilter = new BehaviorSubject<boolean>(false);
 export const globalResetFilter = new BehaviorSubject<boolean>(false);
+export const globalSegmentFilter = new BehaviorSubject<Segment>(null)
 
 export interface IGlobalColumns {
   role: boolean;
@@ -68,6 +70,7 @@ export class CommandBarComponent implements OnInit, OnDestroy, AfterContentCheck
   private subscription2;
   private subscription3;
   private subscription4;
+  private subscription5;
 
   constructor(private bsModalService: BsModalService, private workspaceService: WorkspaceService, private appService: AppService) {
     this.filterExtended = false;
@@ -107,6 +110,7 @@ export class CommandBarComponent implements OnInit, OnDestroy, AfterContentCheck
     this.subscription = this.filterForm.valueChanges.subscribe((values: GlobalFilters) => {
       globalFilterGroup.next(values);
       this.applyFiltersToSessions(values, this.workspaceService.sessions);
+      console.log('performed');
     });
 
     this.subscription2 = globalHasFilter.subscribe(value => {
@@ -153,6 +157,10 @@ export class CommandBarComponent implements OnInit, OnDestroy, AfterContentCheck
       this.applyFiltersToSessions(actualFilterValues, sessions);
     });
 
+    this.subscription5 = globalSegmentFilter.subscribe((segment: Segment)=> {
+      this.updateFilterForm(segment.filterGroup);
+      console.log('invoked ', segment);
+    });
   }
 
   ngOnDestroy(): void {
@@ -160,6 +168,7 @@ export class CommandBarComponent implements OnInit, OnDestroy, AfterContentCheck
     this.subscription2.unsubscribe();
     this.subscription3.unsubscribe();
     this.subscription4.unsubscribe();
+    this.subscription5.unsubscribe();
   }
 
   ngAfterContentChecked(): void {
@@ -210,8 +219,6 @@ export class CommandBarComponent implements OnInit, OnDestroy, AfterContentCheck
   }
 
   private applyFiltersToSessions(values: GlobalFilters, sessions: Session[]) {
-    console.log(values);
-    console.log(this.filterForm.get('providerFilter').value);
 
     let filteredSessions = sessions;
     const searchText = this.filterForm.get('searchFilter').value;
@@ -303,5 +310,21 @@ export class CommandBarComponent implements OnInit, OnDestroy, AfterContentCheck
 
   private orderByDate(filteredSession: Session[]) {
     return filteredSession.sort((a,b) => new Date(a.startDateTime).getTime() - new Date(b.startDateTime).getTime());
+  }
+
+  private updateFilterForm(values: GlobalFilters) {
+    console.log('inside filter form');
+    /*this.filterForm.get('searchFilter').setValue(values.searchFilter);
+    this.filterForm.get('dateFilter').setValue(values.dateFilter);
+    this.filterForm.get('providerFilter').setValue(values.providerFilter);
+    this.filterForm.get('profileFilter').setValue(values.profileFilter);
+    this.filterForm.get('regionFilter').setValue(values.regionFilter);
+    this.filterForm.get('integrationFilter').setValue(values.integrationFilter);
+    this.filterForm.get('typeFilter').setValue(values.typeFilter);
+
+    this.providers = values.providerFilter;
+    this.profiles = values.profileFilter;
+    this.regions = values.regionFilter;
+    this.types = values.typeFilter; */
   }
 }

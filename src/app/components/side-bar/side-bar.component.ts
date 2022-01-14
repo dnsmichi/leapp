@@ -5,7 +5,7 @@ import Segment from '../../models/Segment';
 import {
   globalFilteredSessions, globalFilterGroup,
   globalHasFilter,
-  globalResetFilter
+  globalResetFilter, globalSegmentFilter
 } from '../command-bar/command-bar.component';
 import {Session} from '../../models/session';
 import {BehaviorSubject, Subscription} from "rxjs";
@@ -46,11 +46,21 @@ export class SideBarComponent implements OnInit, OnDestroy {
     globalFilteredSessions.next(this.workspaceService.sessions.filter((s: Session) => this.workspaceService.getWorkspace().pinned.indexOf(s.sessionId) !== -1));
   }
 
-  applySegmentFilter(segment: Segment) {
-    globalFilterGroup.next(segment.filterGroup);
+  applySegmentFilter(segment: Segment, event) {
+    event.preventDefault();
+    event.stopPropagation();
+    console.log(segment);
+    //globalFilterGroup.next(segment.filterGroup);
+    globalSegmentFilter.next(segment);
   }
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
+  }
+
+  deleteSegment(segment: Segment, event) {
+    event.preventDefault();
+    event.stopPropagation();
+    this.workspaceService.removeSegment(segment);
   }
 }
