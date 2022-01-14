@@ -117,10 +117,6 @@ td:nth-child(1) {
     }
   }
 
-  .compact th:nth-child(1) { width: 162px; }
-  .compact th:nth-child(4) { width: 75px; }
-  .compact th:nth-child(5) { width: 50px; }
-
   .compact .option-bar {
     left: 0;
     .start-session {
@@ -227,5 +223,29 @@ td:nth-child(4) {
 ::ng-deep {
   tr:hover td:not(.selected) {
     background: $selected-card-hover;
+  }
+}
+
+::ng-deep {
+  .compact td:nth-child(1) span {
+    width: 110px;
+  }
+  .compact td:nth-child(2) span {
+    width: 105px;
+  }
+  .compact td:nth-child(3) {
+    width: 120px!important;
+    span {
+      width: unset!important;
+    }
+  }
+  .compact td:nth-child(4) {
+    width: 60px!important;
+    span {
+      width: unset!important;
+    }
+  }
+  .compact td:nth-child(5) {
+    width: 60px!important;
   }
 }
