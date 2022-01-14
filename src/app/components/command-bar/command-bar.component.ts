@@ -157,9 +157,13 @@ export class CommandBarComponent implements OnInit, OnDestroy, AfterContentCheck
       this.applyFiltersToSessions(actualFilterValues, sessions);
     });
 
-    this.subscription5 = globalSegmentFilter.subscribe((segment: Segment)=> {
-      this.updateFilterForm(segment.filterGroup);
-      console.log('invoked ', segment);
+    this.subscription5 = globalSegmentFilter.subscribe((segment: Segment) => {
+      if(segment) {
+        const values = segment.filterGroup;
+        globalFilterGroup.next(values);
+        this.updateFilterForm(values);
+        this.applyFiltersToSessions(values, this.workspaceService.sessions);
+      }
     });
   }
 
@@ -313,8 +317,8 @@ export class CommandBarComponent implements OnInit, OnDestroy, AfterContentCheck
   }
 
   private updateFilterForm(values: GlobalFilters) {
-    console.log('inside filter form');
-    /*this.filterForm.get('searchFilter').setValue(values.searchFilter);
+    console.log('inside filter form', values);
+    this.filterForm.get('searchFilter').setValue(values.searchFilter);
     this.filterForm.get('dateFilter').setValue(values.dateFilter);
     this.filterForm.get('providerFilter').setValue(values.providerFilter);
     this.filterForm.get('profileFilter').setValue(values.profileFilter);
@@ -322,9 +326,17 @@ export class CommandBarComponent implements OnInit, OnDestroy, AfterContentCheck
     this.filterForm.get('integrationFilter').setValue(values.integrationFilter);
     this.filterForm.get('typeFilter').setValue(values.typeFilter);
 
-    this.providers = values.providerFilter;
-    this.profiles = values.profileFilter;
-    this.regions = values.regionFilter;
-    this.types = values.typeFilter; */
+    if(values.providerFilter.length > 0) {
+      this.providers = values.providerFilter;
+    }
+    if(values.profileFilter.length > 0) {
+      this.profiles = values.profileFilter;
+    }
+    if(values.regionFilter.length > 0) {
+      this.regions = values.regionFilter;
+    }
+    if(values.typeFilter.length > 0) {
+      this.types = values.typeFilter;
+    }
   }
 }
