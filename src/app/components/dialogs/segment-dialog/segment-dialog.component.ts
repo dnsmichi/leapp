@@ -58,7 +58,7 @@ export class SegmentDialogComponent implements OnInit, OnDestroy {
 
   saveSegment() {
     const segments = this.workspaceService.getSegments();
-    const index = segments.findIndex(s => s.name.indexOf(this.selectedSegment) > -1);
+    const index = segments.findIndex(s => s.name === this.selectedSegment);
     if(index === -1) {
       segments.push({ name: this.selectedSegment, filterGroup: this.currentFilterGroup });
     } else {

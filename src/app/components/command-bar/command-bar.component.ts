@@ -304,15 +304,27 @@ export class CommandBarComponent implements OnInit, OnDestroy, AfterContentCheck
 
     if(values.providerFilter.length > 0) {
       this.providers = values.providerFilter;
+      this.providers.forEach(provider => {
+        provider.show = true;
+      });
     }
     if(values.profileFilter.length > 0) {
       this.profiles = values.profileFilter;
+      this.profiles.forEach(profile => {
+        profile.show = true;
+      });
     }
     if(values.regionFilter.length > 0) {
       this.regions = values.regionFilter;
+      this.regions.forEach(region => {
+        region.show = true;
+      });
     }
     if(values.typeFilter.length > 0) {
       this.types = values.typeFilter;
+      this.types.forEach(type => {
+        type.show = true;
+      });
     }
   }
 

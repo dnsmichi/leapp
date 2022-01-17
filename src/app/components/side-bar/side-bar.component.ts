@@ -3,7 +3,7 @@ import {WorkspaceService} from '../../services/workspace.service';
 import Folder from '../../models/folder';
 import Segment from '../../models/Segment';
 import {
-  globalFilteredSessions, globalFilterGroup,
+  globalFilteredSessions,
   globalHasFilter,
   globalResetFilter, globalSegmentFilter
 } from '../command-bar/command-bar.component';

@@ -12,22 +12,39 @@
       font-size: 20px;
       margin-right: 8px;
       position: relative;
-      top: 3px;
+      top: -1px;
     }
+  }
+  .moon-Row {
+    top: -2px!important;
   }
   .moon-Close {
     display: none;
     float: right;
     opacity: 0;
-    transition: all 1s ease;
   }
   .mat-list-item-content:hover i.moon-Close {
     display: inline-block!important;
     color: $text-color;
     opacity: 1;
+    font-size: 18px;
+    margin-top: 6px;
+    margin-right: 3px;
+    transition: all 1s ease;
   }
 
   .visible-option-menu {
     flex-grow: 1;
+  }
+}
+
+::ng-deep {
+  .mat-list-text div span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-block;
+    width: 150px;
+    margin-top: 5px;
   }
 }
