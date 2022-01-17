@@ -30,10 +30,11 @@ export class SideBarComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.subscription = segmentFilter.subscribe(() => {
+    /* this.subscription = segmentFilter.subscribe(() => {
+      console.log('this.segments = ', this.segments);
       this.folders = this.workspaceService.getFolders();
       this.segments = this.workspaceService.getSegments();
-    });
+    }); */
   }
 
   resetFilters() {
