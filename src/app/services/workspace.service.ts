@@ -255,6 +255,11 @@ export class WorkspaceService {
     this.persistWorkspace(workspace);
   }
 
+  getSegment(segmentName: string) {
+    const workspace = this.getWorkspace();
+    return workspace.segments.find(s => s.name === segmentName);
+  }
+
   pinSession(session: Session) {
     const workspace = this.getWorkspace();
     if(workspace.pinned.indexOf(session.sessionId) === -1) {

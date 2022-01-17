@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {WorkspaceService} from '../../services/workspace.service';
 import Folder from '../../models/folder';
 import Segment from '../../models/Segment';
@@ -8,24 +8,36 @@ import {
   globalResetFilter, globalSegmentFilter
 } from '../command-bar/command-bar.component';
 import {Session} from '../../models/session';
+import {BehaviorSubject} from 'rxjs';
+
+export const segmentFilter = new BehaviorSubject<boolean>(false);
 
 @Component({
   selector: 'app-side-bar',
   templateUrl: './side-bar.component.html',
   styleUrls: ['./side-bar.component.scss']
 })
-
-export class SideBarComponent implements OnInit {
+export class SideBarComponent implements OnInit, OnDestroy {
 
   folders: Folder[];
   segments: Segment[];
+  subscription;
 
   constructor(private workspaceService: WorkspaceService) {
-    this.folders = this.workspaceService.getFolders();
-    this.segments = this.workspaceService.getSegments();
+    this.folders = JSON.parse(JSON.stringify(this.workspaceService.getFolders()));
+    this.segments = JSON.parse(JSON.stringify(this.workspaceService.getSegments()));
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.subscription = segmentFilter.subscribe(() => {
+      this.folders = JSON.parse(JSON.stringify(this.workspaceService.getFolders()));
+      this.segments = JSON.parse(JSON.stringify(this.workspaceService.getSegments()));
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
 
   resetFilters() {
     globalFilteredSessions.next(this.workspaceService.sessions);
@@ -40,9 +52,7 @@ export class SideBarComponent implements OnInit {
   applySegmentFilter(segment: Segment, event) {
     event.preventDefault();
     event.stopPropagation();
-    console.log(segment);
-    //globalFilterGroup.next(segment.filterGroup);
-    globalSegmentFilter.next(segment);
+    globalSegmentFilter.next(JSON.parse(JSON.stringify(segment)));
   }
 
   deleteSegment(segment: Segment, event) {

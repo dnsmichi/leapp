@@ -6,6 +6,7 @@ import {FormControl, FormGroup} from '@angular/forms';
 import Segment from '../../../models/Segment';
 import {globalFilterGroup} from '../../command-bar/command-bar.component';
 import {NgSelectComponent} from '@ng-select/ng-select';
+import {segmentFilter} from '../../side-bar/side-bar.component';
 
 @Component({
   selector: 'app-segment-dialog',
@@ -36,19 +37,17 @@ export class SegmentDialogComponent implements OnInit, OnDestroy {
   ) {
     this.temporaryName = '';
     this.segments = [...this.workspaceService.getSegments()];
-    this.subscription = globalFilterGroup.subscribe(value => this.currentFilterGroup = value);
+    this.subscription = globalFilterGroup.subscribe(value => this.currentFilterGroup = Object.assign({}, value));
   }
 
-  ngOnInit(): void {
-    console.log(this.currentFilterGroup);
-  }
+  ngOnInit(): void {}
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
 
   addNewSegment(): void {
-    const newSegment = { name: this.temporaryName, filterGroup: this.currentFilterGroup };
+    const newSegment = { name: this.temporaryName, filterGroup: Object.assign({}, this.currentFilterGroup) };
     console.log(newSegment);
     this.selectedSegment = newSegment.name;
     this.segments.push(newSegment);
@@ -65,6 +64,7 @@ export class SegmentDialogComponent implements OnInit, OnDestroy {
       segments[index].filterGroup = this.currentFilterGroup;
     }
     this.workspaceService.setSegments(segments);
+    segmentFilter.next(true);
     this.appService.closeModal();
   }
 
