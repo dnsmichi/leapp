@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {WorkspaceService} from '../../services/workspace.service';
 import Folder from '../../models/folder';
 import Segment from '../../models/Segment';
@@ -8,9 +8,6 @@ import {
   globalResetFilter, globalSegmentFilter
 } from '../command-bar/command-bar.component';
 import {Session} from '../../models/session';
-import {BehaviorSubject, Subscription} from "rxjs";
-
-export const segmentFilter = new BehaviorSubject<boolean>(false);
 
 @Component({
   selector: 'app-side-bar',
@@ -18,23 +15,17 @@ export const segmentFilter = new BehaviorSubject<boolean>(false);
   styleUrls: ['./side-bar.component.scss']
 })
 
-export class SideBarComponent implements OnInit, OnDestroy {
+export class SideBarComponent implements OnInit {
 
   folders: Folder[];
   segments: Segment[];
-  subscription: Subscription;
 
   constructor(private workspaceService: WorkspaceService) {
     this.folders = this.workspaceService.getFolders();
     this.segments = this.workspaceService.getSegments();
   }
 
-  ngOnInit(): void {
-    this.subscription = segmentFilter.subscribe(() => {
-      this.folders = this.workspaceService.getFolders();
-      this.segments = this.workspaceService.getSegments();
-    });
-  }
+  ngOnInit(): void {}
 
   resetFilters() {
     globalFilteredSessions.next(this.workspaceService.sessions);
@@ -52,10 +43,6 @@ export class SideBarComponent implements OnInit, OnDestroy {
     console.log(segment);
     //globalFilterGroup.next(segment.filterGroup);
     globalSegmentFilter.next(segment);
-  }
-
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
   }
 
   deleteSegment(segment: Segment, event) {

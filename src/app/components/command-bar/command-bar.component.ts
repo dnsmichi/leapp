@@ -22,8 +22,8 @@ export interface GlobalFilters {
   typeFilter: {show: boolean; id: SessionType; category: string; name: string; value: boolean}[];
 }
 
-export const globalFilteredSessions = new BehaviorSubject<Session[]>([]);
 export const compactMode = new BehaviorSubject<boolean>(false);
+export const globalFilteredSessions = new BehaviorSubject<Session[]>([]);
 export const globalFilterGroup = new BehaviorSubject<GlobalFilters>(null);
 export const globalHasFilter = new BehaviorSubject<boolean>(false);
 export const globalResetFilter = new BehaviorSubject<boolean>(false);

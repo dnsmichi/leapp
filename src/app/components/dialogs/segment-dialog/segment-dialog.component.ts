@@ -35,7 +35,7 @@ export class SegmentDialogComponent implements OnInit, OnDestroy {
     private workspaceService: WorkspaceService
   ) {
     this.temporaryName = '';
-    this.segments = [...workspaceService.getSegments()];
+    this.segments = [...this.workspaceService.getSegments()];
     this.subscription = globalFilterGroup.subscribe(value => this.currentFilterGroup = value);
   }
 
@@ -57,7 +57,7 @@ export class SegmentDialogComponent implements OnInit, OnDestroy {
   }
 
   saveSegment() {
-    const segments = this.workspaceService.getSegments();
+    const segments = [...this.workspaceService.getSegments()];
     const index = segments.findIndex(s => s.name === this.selectedSegment);
     if(index === -1) {
       segments.push({ name: this.selectedSegment, filterGroup: this.currentFilterGroup });
