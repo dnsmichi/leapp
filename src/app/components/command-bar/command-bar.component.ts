@@ -10,7 +10,7 @@ import {BehaviorSubject} from 'rxjs';
 import {Session} from '../../models/session';
 import {AppService} from '../../services/app.service';
 import {SessionType} from '../../models/session-type';
-import Segment from "../../models/Segment";
+import Segment from '../../models/Segment';
 
 export interface GlobalFilters {
   searchFilter: string;
@@ -27,7 +27,7 @@ export const compactMode = new BehaviorSubject<boolean>(false);
 export const globalFilterGroup = new BehaviorSubject<GlobalFilters>(null);
 export const globalHasFilter = new BehaviorSubject<boolean>(false);
 export const globalResetFilter = new BehaviorSubject<boolean>(false);
-export const globalSegmentFilter = new BehaviorSubject<Segment>(null)
+export const globalSegmentFilter = new BehaviorSubject<Segment>(null);
 
 export interface IGlobalColumns {
   role: boolean;
@@ -85,24 +85,7 @@ export class CommandBarComponent implements OnInit, OnDestroy, AfterContentCheck
       region: true
     });
 
-    this.providers = [
-      { id: 'aws', name: 'Amazon AWS', value: false },
-      { id: 'azure', name: 'Microsoft Azure', value: false }
-    ];
-
-    this.integrations = [];
-
-    this.types = [
-      { id: SessionType.awsIamRoleFederated, category: 'Amazon AWS', name: 'IAM Role Federated', value: false },
-      { id: SessionType.awsIamUser, category: 'Amazon AWS', name: 'IAM User', value: false },
-      { id: SessionType.awsIamRoleChained, category: 'Amazon AWS', name: 'IAM Role Chained', value: false },
-      { id: SessionType.awsSsoRole, category: 'Amazon AWS', name: 'IAM Single Sign-On', value: false },
-      { id: SessionType.azure, category: 'Microsoft Azure', name: 'Azure Subscription', value: false }
-    ];
-
-    this.profiles = this.workspaceService.getProfiles().map(element => ({ name: element.name, id: element.id, value: false }));
-
-    this.regions = this.appService.getRegions().map(element => ({ name: element.region, value: false }));
+    this.setInitialArrayFilters();
   }
 
   ngOnInit(): void {
@@ -110,7 +93,6 @@ export class CommandBarComponent implements OnInit, OnDestroy, AfterContentCheck
     this.subscription = this.filterForm.valueChanges.subscribe((values: GlobalFilters) => {
       globalFilterGroup.next(values);
       this.applyFiltersToSessions(values, this.workspaceService.sessions);
-      console.log('performed');
     });
 
     this.subscription2 = globalHasFilter.subscribe(value => {
@@ -118,29 +100,15 @@ export class CommandBarComponent implements OnInit, OnDestroy, AfterContentCheck
     });
 
     this.subscription3 = globalResetFilter.subscribe(_ => {
+      this.setInitialArrayFilters();
+
       this.filterForm.get('searchFilter').setValue('');
       this.filterForm.get('dateFilter').setValue(true);
-      this.filterForm.get('providerFilter').setValue([]);
-      this.filterForm.get('profileFilter').setValue([]);
-      this.filterForm.get('regionFilter').setValue([]);
-      this.filterForm.get('integrationFilter').setValue([]);
-      this.filterForm.get('typeFilter').setValue([]);
-
-      this.providers = this.providers.map(p => {
-        p.value = false; return p;
-      });
-
-      this.profiles = this.profiles.map(p => {
-        p.value = false; return p;
-      });
-
-      this.regions = this.regions.map(r => {
-        r.value = false; return r;
-      });
-
-      this.types = this.types.map(t => {
-        t.value = false; return t;
-      });
+      this.filterForm.get('providerFilter').setValue(this.providers);
+      this.filterForm.get('profileFilter').setValue(this.profiles);
+      this.filterForm.get('regionFilter').setValue(this.regions);
+      this.filterForm.get('integrationFilter').setValue(this.integrations);
+      this.filterForm.get('typeFilter').setValue(this.types);
     });
 
     this.subscription4 = this.workspaceService.sessions$.subscribe(sessions => {
@@ -240,11 +208,13 @@ export class CommandBarComponent implements OnInit, OnDestroy, AfterContentCheck
         return test;
       });
     }
+
     if(this.filterForm.get('dateFilter').value) {
       filteredSessions = this.orderByDate(filteredSessions);
     } else {
       filteredSessions = filteredSessions.sort((a, b) => a.sessionName.localeCompare(b.sessionName));
     }
+
     if(this.filterForm.get('providerFilter').value.filter(v => v.value).length > 0) {
       filteredSessions = filteredSessions.filter((session) => {
         let test = false;
@@ -256,6 +226,7 @@ export class CommandBarComponent implements OnInit, OnDestroy, AfterContentCheck
         return test;
       });
     }
+
     if(this.filterForm.get('profileFilter').value.filter(v => v.value).length > 0) {
       filteredSessions = filteredSessions.filter((session) => {
         let test = false;
@@ -269,6 +240,7 @@ export class CommandBarComponent implements OnInit, OnDestroy, AfterContentCheck
         return test;
       });
     }
+
     if(this.filterForm.get('regionFilter').value.filter(v => v.value).length > 0) {
       filteredSessions = filteredSessions.filter((session) => {
         let test = false;
@@ -280,6 +252,7 @@ export class CommandBarComponent implements OnInit, OnDestroy, AfterContentCheck
         return test;
       });
     }
+
     if(this.filterForm.get('integrationFilter').value.filter(v => v.value).length > 0) {
       filteredSessions = filteredSessions.filter((session) => {
         this.integrations.forEach(integration => {
@@ -288,7 +261,9 @@ export class CommandBarComponent implements OnInit, OnDestroy, AfterContentCheck
         return true;
       });
     }
+
     if(this.filterForm.get('typeFilter').value.filter(v => v.value).length > 0) {
+      console.log('present');
       filteredSessions = filteredSessions.filter((session) => {
         let test = false;
         this.types.forEach(type => {
@@ -309,6 +284,7 @@ export class CommandBarComponent implements OnInit, OnDestroy, AfterContentCheck
         return 1;
       }
     });
+
     return globalFilteredSessions.next(filteredSessions);
   }
 
@@ -338,5 +314,26 @@ export class CommandBarComponent implements OnInit, OnDestroy, AfterContentCheck
     if(values.typeFilter.length > 0) {
       this.types = values.typeFilter;
     }
+  }
+
+  private setInitialArrayFilters() {
+    this.providers = [
+      { id: 'aws', name: 'Amazon AWS', value: false },
+      { id: 'azure', name: 'Microsoft Azure', value: false }
+    ];
+
+    this.integrations = [];
+
+    this.types = [
+      { id: SessionType.awsIamRoleFederated, category: 'Amazon AWS', name: 'IAM Role Federated', value: false },
+      { id: SessionType.awsIamUser, category: 'Amazon AWS', name: 'IAM User', value: false },
+      { id: SessionType.awsIamRoleChained, category: 'Amazon AWS', name: 'IAM Role Chained', value: false },
+      { id: SessionType.awsSsoRole, category: 'Amazon AWS', name: 'IAM Single Sign-On', value: false },
+      { id: SessionType.azure, category: 'Microsoft Azure', name: 'Azure Subscription', value: false }
+    ];
+
+    this.profiles = this.workspaceService.getProfiles().map(element => ({ name: element.name, id: element.id, value: false }));
+
+    this.regions = this.appService.getRegions().map(element => ({ name: element.region, value: false }));
   }
 }
