@@ -15,11 +15,11 @@ import Segment from '../../models/Segment';
 export interface GlobalFilters {
   searchFilter: string;
   dateFilter: boolean;
-  providerFilter: {id: string; name: string; value: boolean}[];
-  profileFilter: {id: string; name: string; value: boolean}[];
-  regionFilter: {name: string; value: boolean}[];
+  providerFilter: {show: boolean; id: string; name: string; value: boolean}[];
+  profileFilter: {show: boolean; id: string; name: string; value: boolean}[];
+  regionFilter: {show: boolean; name: string; value: boolean}[];
   integrationFilter: {name: string; value: boolean}[];
-  typeFilter: {id: SessionType; category: string; name: string; value: boolean}[];
+  typeFilter: {show: boolean; id: SessionType; category: string; name: string; value: boolean}[];
 }
 
 export const globalFilteredSessions = new BehaviorSubject<Session[]>([]);
@@ -57,11 +57,11 @@ export class CommandBarComponent implements OnInit, OnDestroy, AfterContentCheck
     typeFilter: new FormControl([])
   });
 
-  providers: {id: string; name: string; value: boolean}[];
-  profiles: {id: string; name: string; value: boolean}[];
+  providers: {show: boolean; id: string; name: string; value: boolean}[];
+  profiles: {show: boolean; id: string; name: string; value: boolean}[];
   integrations: any[];
-  types: {id: SessionType; category: string; name: string; value: boolean}[];
-  regions: {name: string; value: boolean}[];
+  types: {show: boolean; id: SessionType; category: string; name: string; value: boolean}[];
+  regions: {show: boolean; name: string; value: boolean}[];
 
   filterExtended: boolean;
   compactMode: boolean;
@@ -318,22 +318,22 @@ export class CommandBarComponent implements OnInit, OnDestroy, AfterContentCheck
 
   private setInitialArrayFilters() {
     this.providers = [
-      { id: 'aws', name: 'Amazon AWS', value: false },
-      { id: 'azure', name: 'Microsoft Azure', value: false }
+      { show: true, id: 'aws', name: 'Amazon AWS', value: false },
+      { show: true, id: 'azure', name: 'Microsoft Azure', value: false }
     ];
 
     this.integrations = [];
 
     this.types = [
-      { id: SessionType.awsIamRoleFederated, category: 'Amazon AWS', name: 'IAM Role Federated', value: false },
-      { id: SessionType.awsIamUser, category: 'Amazon AWS', name: 'IAM User', value: false },
-      { id: SessionType.awsIamRoleChained, category: 'Amazon AWS', name: 'IAM Role Chained', value: false },
-      { id: SessionType.awsSsoRole, category: 'Amazon AWS', name: 'IAM Single Sign-On', value: false },
-      { id: SessionType.azure, category: 'Microsoft Azure', name: 'Azure Subscription', value: false }
+      { show: true, id: SessionType.awsIamRoleFederated, category: 'Amazon AWS', name: 'IAM Role Federated', value: false },
+      { show: true, id: SessionType.awsIamUser, category: 'Amazon AWS', name: 'IAM User', value: false },
+      { show: true, id: SessionType.awsIamRoleChained, category: 'Amazon AWS', name: 'IAM Role Chained', value: false },
+      { show: true, id: SessionType.awsSsoRole, category: 'Amazon AWS', name: 'IAM Single Sign-On', value: false },
+      { show: true, id: SessionType.azure, category: 'Microsoft Azure', name: 'Azure Subscription', value: false }
     ];
 
-    this.profiles = this.workspaceService.getProfiles().map(element => ({ name: element.name, id: element.id, value: false }));
+    this.profiles = this.workspaceService.getProfiles().map(element => ({ name: element.name, id: element.id, value: false, show: true}));
 
-    this.regions = this.appService.getRegions().map(element => ({ name: element.region, value: false }));
+    this.regions = this.appService.getRegions().map(element => ({ name: element.region, value: false, show: true }));
   }
 }
