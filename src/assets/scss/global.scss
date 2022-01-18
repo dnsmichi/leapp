@@ -227,6 +227,8 @@ hr { margin: 5px 0 0 0; display: block; height: 1px; border-top: 1px solid $silv
   border-collapse: collapse;
   border-spacing: 0;
   border: none!important;
+  user-select: none;
+  cursor: pointer;
 
   tr {
     border: none;

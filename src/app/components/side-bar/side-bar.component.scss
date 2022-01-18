@@ -14,15 +14,17 @@
       position: relative;
       top: -1px;
     }
+
+    .moon-Close {
+      display: none;
+      float: right;
+      opacity: 0;
+    }
   }
   .moon-Row {
     top: -2px!important;
   }
-  .moon-Close {
-    display: none;
-    float: right;
-    opacity: 0;
-  }
+
   .mat-list-item-content:hover i.moon-Close {
     display: inline-block!important;
     color: $text-color;
@@ -47,4 +49,10 @@
     width: 150px;
     margin-top: 5px;
   }
+}
+
+.selected-segment {
+  background-color: $silver-25;
+  border-top: 1px solid $silver-50;
+  border-bottom: 1px solid $silver-50;
 }
