@@ -460,3 +460,16 @@ i.fal.fa-plus-circle {
 .filter-button {
   border-radius: $filter-border-radius!important;
 }
+
+::ng-deep {
+  .app-windows-detected {
+    .left, .right {
+      border-top: 1px solid $silver-75;
+    };
+    .compact {
+      .right .main-bar {
+        padding: 10px 38px 9px 20px;
+      }
+    }
+  }
+}
