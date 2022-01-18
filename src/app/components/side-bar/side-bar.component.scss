@@ -17,7 +17,8 @@
 
     .moon-Close {
       display: none;
-      float: right;
+      position: absolute;
+      top: 2px;
       opacity: 0;
     }
   }
@@ -53,6 +54,13 @@
 
 .selected-segment {
   background-color: $silver-25;
-  border-top: 1px solid $silver-50;
-  border-bottom: 1px solid $silver-50;
+  border-radius: 6px;
+  margin-left: 10px!important;
+  width: 218px!important;
+}
+
+::ng-deep {
+  .selected-segment .mat-list-item-content .mat-list-text {
+    margin-left: -10px;
+  }
 }
