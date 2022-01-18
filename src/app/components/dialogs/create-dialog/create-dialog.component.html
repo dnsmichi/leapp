@@ -92,16 +92,17 @@
           <!-- ================================================================== -->
           <!-- ==         ARN IAM ROLE FEDERATED & IAM ROLE CHAINED            == -->
           <!-- ================================================================== -->
-          <div class="form-field">
-            <label>Role ARN</label>
-            <input formControlName="roleArn" type="text" class="form-control" placeholder="Role ARN" />
-            <small class="text-error" *ngIf="(form.controls['roleArn'].dirty || form.controls['roleArn'].touched) && form.controls['roleArn'].errors">Insert the Role ARN</small>
-          </div>
-
-          <!-- ================================================================== -->
-          <!-- ==             SAML & IDP ARN FOR IAM ROLE FEDERATED            == -->
-          <!-- ================================================================== -->
+          <ng-container *ngIf="sessionType === eSessionType.awsIamRoleFederated || sessionType === eSessionType.awsIamRoleChained">
+            <div class="form-field">
+              <label>Role ARN</label>
+              <input formControlName="roleArn" type="text" class="form-control" placeholder="Role ARN" />
+              <small class="text-error" *ngIf="(form.controls['roleArn'].dirty || form.controls['roleArn'].touched) && form.controls['roleArn'].errors">Insert the Role ARN</small>
+            </div>
+          </ng-container>
           <ng-container *ngIf="sessionType === eSessionType.awsIamRoleFederated">
+            <!-- ================================================================== -->
+            <!-- ==             SAML & IDP ARN FOR IAM ROLE FEDERATED            == -->
+            <!-- ================================================================== -->
             <div class="form-field">
               <label>SAML 2.0 Url</label>
               <ng-select [items]="idpUrls"

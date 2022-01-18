@@ -1,6 +1,6 @@
 import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {AppService, LoggerLevel} from '../../../services/app.service';
+import {AppService, LoggerLevel, ToastLevel} from '../../../services/app.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AwsSessionService} from '../../../services/session/aws/aws-session.service';
 import {WorkspaceService} from '../../../services/workspace.service';
@@ -301,6 +301,9 @@ export class CreateDialogComponent implements OnInit {
         this.azureService.create(azureSessionRequest);
         break;
     }
+
+    this.appService.toast(`Session: ${this.form.value.name}, created.`, ToastLevel.success, '');
+    this.closeModal();
   }
 
   /**

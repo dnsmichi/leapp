@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {AppService, ToastLevel} from '../../../services/app.service';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -9,7 +9,6 @@ import {WorkspaceService} from '../../../services/workspace.service';
 import {KeychainService} from '../../../services/keychain.service';
 import {environment} from '../../../../environments/environment';
 import {SessionService} from '../../../services/session.service';
-import {LoggingService} from '../../../services/logging.service';
 
 @Component({
   selector: 'app-edit-dialog',
@@ -18,6 +17,9 @@ import {LoggingService} from '../../../services/logging.service';
 })
 export class EditDialogComponent implements OnInit {
   @ViewChild('roleInput', {static: false}) roleInput: ElementRef;
+
+  @Input()
+  selectedSessionId: string;
 
   accountType = SessionType.awsIamUser;
   provider = SessionType.awsIamRoleFederated;
@@ -45,24 +47,21 @@ export class EditDialogComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private workspaceService: WorkspaceService,
     private keychainService: KeychainService,
-    private sessionService: SessionService,
-    private loggingService: LoggingService
+    private sessionService: SessionService
   ) {}
 
   ngOnInit() {
-    this.activatedRoute.queryParams.subscribe(params => {
-      // Get the workspace and the account you need
-      this.selectedSession = this.workspaceService.sessions.find(session => session.sessionId === params.sessionId) as AwsIamUserSession;
+    // Get the workspace and the account you need
+    this.selectedSession = this.workspaceService.sessions.find(session => session.sessionId === this.selectedSessionId) as AwsIamUserSession;
 
-      // Get the region
-      this.regions = this.appService.getRegions();
-      this.selectedRegion = this.regions.find(r => r.region === this.selectedSession.region).region;
-      this.form.controls['awsRegion'].setValue(this.selectedRegion);
+    // Get the region
+    this.regions = this.appService.getRegions();
+    this.selectedRegion = this.regions.find(r => r.region === this.selectedSession.region).region;
+    this.form.controls['awsRegion'].setValue(this.selectedRegion);
 
-      // Get other readonly properties
-      this.form.controls['name'].setValue(this.selectedSession.sessionName);
-      this.form.controls['mfaDevice'].setValue(this.selectedSession.mfaDevice);
-    });
+    // Get other readonly properties
+    this.form.controls['name'].setValue(this.selectedSession.sessionName);
+    this.form.controls['mfaDevice'].setValue(this.selectedSession.mfaDevice);
   }
   /**
    * Save the edited account in the workspace
@@ -76,9 +75,9 @@ export class EditDialogComponent implements OnInit {
       this.keychainService.saveSecret(environment.appName, `${this.selectedSession.sessionId}-iam-user-aws-session-secret-access-key`, this.form.controls['secretKey'].value).then(_ => {});
 
       this.sessionService.update(this.selectedSession.sessionId, this.selectedSession);
-      this.loggingService.toast('Session updated correctly.', ToastLevel.success, 'Session Update');
 
-      this.router.navigate(['/dashboard']).then(_ => {});
+      this.appService.toast(`Session: ${this.form.value.name}, edited.`, ToastLevel.success, '');
+      this.closeModal();
     }
   }
 
@@ -88,7 +87,29 @@ export class EditDialogComponent implements OnInit {
   }
 
   goBack() {
-    this.router.navigate(['/dashboard']).then(_ => {});
+    this.appService.closeModal();
+  }
+
+  getNameForProvider(provider: SessionType) {
+    switch (provider) {
+      case SessionType.azure: return 'Microsoft Azure session';
+      case SessionType.google: return 'Google Cloud session';
+      case SessionType.alibaba: return 'Alibaba Cloud session';
+      default: return 'Amazon AWS session';
+    }
+  }
+
+  getIconForProvider(provider: SessionType) {
+    switch (provider) {
+      case SessionType.azure: return 'azure-logo.svg';
+      case SessionType.google: return 'google.png';
+      case SessionType.alibaba: return 'alibaba.png';
+      default: return 'aws-logo.svg';
+    }
+  }
+
+  closeModal() {
+    this.appService.closeModal();
   }
 
   openAccessStrategyDocumentation() {

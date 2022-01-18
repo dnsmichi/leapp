@@ -175,7 +175,7 @@ export class SessionCardComponent implements OnInit {
     event.preventDefault();
     event.stopPropagation();
 
-    this.bsModalService.show(EditDialogComponent, { animated: false, class: 'edit-modal'});
+    this.bsModalService.show(EditDialogComponent, { animated: false, class: 'edit-modal', initialState: { selectedSessionId: session.sessionId }});
   }
 
   /**

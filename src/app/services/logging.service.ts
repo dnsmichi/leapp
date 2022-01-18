@@ -83,12 +83,13 @@ export class LoggingService {
     }
   }
 
-  private openSnackBar(message: string, title: string, className: string) {
+  private openSnackBar(message: string, _: string, className: string) {
     if(this.snackbarRef) {
       this.snackbarRef.dismiss();
     }
+
     this.snackbarRef = this.matSnackBar.openFromComponent(SnackbarComponent, {
-      data: { html: '<strong>' + title + '</strong><br/>' + message, className },
+      data: { html: message, className },
       duration: className === 'toast-error' ? 0 : 3000,
       panelClass: [className],
       horizontalPosition: this.horizontalPosition,

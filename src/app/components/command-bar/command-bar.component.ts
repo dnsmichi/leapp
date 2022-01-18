@@ -159,10 +159,6 @@ export class CommandBarComponent implements OnInit, OnDestroy, AfterContentCheck
     this.bsModalService.show(CreateDialogComponent, { animated: false, class: 'create-modal'});
   }
 
-  showEditDialog() {
-    this.bsModalService.show(EditDialogComponent, { animated: false, class: 'edit-modal'});
-  }
-
   toggleCompactMode() {
     this.compactMode = !this.compactMode;
     compactMode.next(this.compactMode);
