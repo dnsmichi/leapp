@@ -10,7 +10,7 @@ import {InputDialogComponent} from './components/dialogs/input-dialog/input-dial
 import {IntegrationComponent} from './to-be-moved/integration/integration.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {NgSelectModule} from '@ng-select/ng-select';
-import {TrayMenuComponent} from './to-be-moved/tray-menu/tray-menu.component';
+import {TrayMenuComponent} from './components/tray-menu/tray-menu.component';
 import {TooltipModule} from 'ngx-bootstrap/tooltip';
 import {ModalModule} from 'ngx-bootstrap/modal';
 import {ErrorService} from './services/middleware/error.service';

@@ -212,7 +212,7 @@ const generateMainWindow = () => {
 
   app.on('ready', () => {
     createWindow();
-    createTray();
+    // createTray();
     buildAutoUpdater(win);
   });
 
