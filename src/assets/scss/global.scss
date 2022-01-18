@@ -344,11 +344,17 @@ hr { margin: 5px 0 0 0; display: block; height: 1px; border-top: 1px solid $silv
 .mat-list-base .mat-list-item.mat-list-item-with-avatar,
 .mat-list-base .mat-list-option.mat-list-item-with-avatar {
   height: 35px!important;
-  transition: all 0.3s ease;
+  /*transition: all 0.3s ease;*/
   font-size: 14px;
 
   &:hover {
     background: $silver-25;
+    border-radius: 6px;
+    margin-left: 10px!important;
+    width: 218px!important;
+    .mat-list-item-content .mat-list-text {
+      margin-left: -10px;
+    }
   }
 }
 
