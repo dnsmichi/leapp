@@ -31,6 +31,9 @@ import {EditDialogComponent} from '../../dialogs/edit-dialog/edit-dialog.compone
 
 })
 export class SessionCardComponent implements OnInit {
+  @Input ()
+  menutriggers;
+
   @Input()
   session!: Session;
 
