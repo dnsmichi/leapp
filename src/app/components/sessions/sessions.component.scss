@@ -9,8 +9,6 @@
   margin-right: 10px;
 }
 
-tr.active { }
-
 .centered {
   width: 100%;
   text-align: center;
@@ -39,10 +37,12 @@ th {
   }
 }
 
-i.fal.fa-th-list {
+i.moon-Table {
   color: $silver-dark;
-  font-size: 17px;
+  font-size: 23px;
   padding-left: 27px;
+  position: relative;
+  top: 4px;
 }
 
 span.vertical-rule {
@@ -59,6 +59,6 @@ th:nth-child(1) {
   margin-block: -1px!important;
 }
 
-.compact i.fal.fa-th-list {
+.compact i.moon-Table {
   padding-left: 22px;
 }

@@ -1,12 +1,12 @@
 <mat-list>
 
-  <mat-list-item (click)="resetFilters();">
+  <mat-list-item (click)="resetFilters();" class="{{this.showAll ? 'selected-segment' : ''}}">
     <div mat-line><i class="moon-Row"></i> <span>All Sessions</span></div>
   </mat-list-item>
-  <mat-list-item (click)="showOnlyPinned();">
+  <mat-list-item (click)="showOnlyPinned();" class="{{this.showPinned ? 'selected-segment' : ''}}">
     <div mat-line><i class="moon-Pin"></i> <span>Pinned</span></div>
   </mat-list-item>
-
+  <div class="space-between-mat-lists"></div>
   <mat-accordion>
     <mat-expansion-panel [expanded]="true">
       <mat-expansion-panel-header>
@@ -16,7 +16,7 @@
       </mat-expansion-panel-header>
 
       <mat-list-item *ngFor="let segment of segments" [ngClass]="selectedSegmentCheck(segment)">
-          <div mat-line class="visible-option-menu" (click)="applySegmentFilter(segment, $event);"><i class="moon-Tag"></i> <span>{{segment.name}}</span><i class="moon-Close" (click)="deleteSegment(segment, $event);"></i></div>
+          <div mat-line class="visible-option-menu" (click)="applySegmentFilter(segment, $event);"><i class="moon-Tag"></i> <span>{{segment.name}}</span><i class="moon-Close" (click)="showConfirmationDialog(segment, $event)"></i></div>
       </mat-list-item>
 
     </mat-expansion-panel>
