@@ -27,7 +27,7 @@ a { color: $text-color; }
   @include box-shadow(3px -1px 5px -3px $text-color);
   a {
     display: inline-flex;
-    margin: 0 10px;
+    margin: 0 12px;
     i { color: $medium-dark; }
     &:hover {
       i {
@@ -41,7 +41,7 @@ a { color: $text-color; }
     width: 1px;
     height: 24px;
     background: $silver-50;
-    margin: 0 10px;
+    margin: 0 17px;
     position: relative;
     top: 4px;
   }
@@ -69,10 +69,12 @@ a { color: $text-color; }
 
 .opt-bar-session-button {
   position: relative;
-  top: 5px;
+  top: 2px;
 }
 
 .session-name {
+  position: relative;
+  left: -1px;
   color: $silver-dark;
   font-size: 13px;
 }
@@ -252,9 +254,44 @@ td:nth-child(4) {
 
 .iam-session-selected {
   position: relative;
-  left: -20px;
+  left: -65px!important;
 }
 
-.session-name-td i.moon-Pin {
+.session-name-td i.moon-Pin,
+.session-name-td i.moon-Pin-filled {
   padding-left: 5px!important;
+}
+
+.opt-bar-middle-section {
+  position: relative;
+  left: -43px;
+  &.moon-Server {
+  }
+}
+
+.icon-button.start-session,
+.icon-button.stop-session {
+  position: relative!important;
+  left: 7px!important;
+}
+
+.opt-bar-middle-left-buttons {
+  display: inline-block;
+  a .moon-Region {
+    position: relative;
+    left: -6px;
+  }
+  a .moon-User {
+    position: relative;
+    left: -3px;
+  }
+}
+
+.opt-bar-middle-right-buttons {
+  display: inline-block;
+  margin-left: -5px;
+  a .moon-Delete {
+    position: relative;
+    left: 2px;
+  }
 }
