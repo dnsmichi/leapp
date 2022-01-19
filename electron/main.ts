@@ -1,7 +1,7 @@
 import * as path from 'path';
 import {environment} from '../src/environments/environment';
 
-const {app, BrowserWindow, globalShortcut, ipcMain, Tray } = require('electron');
+const {app, BrowserWindow, globalShortcut, ipcMain, Tray, Menu } = require('electron');
 const { autoUpdater } = require('electron-updater');
 
 const url = require('url');
@@ -33,11 +33,15 @@ const windowDefaultConfig = {
     }
   }
 };
-
 if(process.platform !== 'win32') {
   windowDefaultConfig.browserWindow['titleBarStyle'] = 'hidden';
   windowDefaultConfig.browserWindow['titleBarOverlay'] = true;
+} else {
+  windowDefaultConfig.browserWindow['titleBarStyle'] = 'hidden';
+  Menu.setApplicationMenu(null);
 }
+
+
 if(process.platform === 'darwin') {
   windowDefaultConfig.browserWindow['trafficLightPosition'] = {x: 20, y: 20};
 }

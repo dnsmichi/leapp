@@ -72,7 +72,7 @@ export class CommandBarComponent implements OnInit, OnDestroy, AfterContentCheck
   private subscription4;
   private subscription5;
 
-  constructor(private bsModalService: BsModalService, private workspaceService: WorkspaceService, private appService: AppService) {
+  constructor(private bsModalService: BsModalService, private workspaceService: WorkspaceService, public appService: AppService) {
     this.filterExtended = false;
     this.compactMode = false;
 

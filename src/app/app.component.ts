@@ -27,7 +27,7 @@ import {KeychainService} from './services/keychain.service';
 export class AppComponent implements OnInit {
   /* Main app file: launches the Angular framework inside Electron app */
   constructor(
-    private app: AppService,
+    public app: AppService,
     private workspaceService: WorkspaceService,
     private retrocompatibilityService: RetrocompatibilityService,
     private fileService: FileService,

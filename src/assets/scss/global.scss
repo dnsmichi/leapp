@@ -402,6 +402,16 @@ hr { margin: 5px 0 0 0; display: block; height: 1px; border-top: 1px solid $silv
   align-items: center;
 }
 
+::ng-deep {
+  .app-windows-detected {
+    .compact {
+      .left { width: 92px!important; }
+      .right { width: calc(100% - 92px) !important; }
+      .search-bar { width: 165px !important; }
+    }
+  }
+}
+
 .compact { .left { width: $left-compacted-sidebar!important; border-bottom: 1px solid $silver-75; } }
 .compact { .right { width: calc(100% - #{$left-compacted-sidebar})!important; } }
 .compact {
@@ -469,7 +479,88 @@ i.fal.fa-plus-circle {
   border-radius: $filter-border-radius!important;
 }
 
+
 .mat-expansion-panel-header {
-  height: 35px!important;
-  transform: unset!important;
+  height: 35px !important;
+  transform: unset !important;
+}
+
+.window-buttons, .windows-menu { display: none; }
+
+::ng-deep {
+  .app-windows-detected {
+    .windows-menu {
+      -webkit-user-drag: none;
+      -webkit-app-region: no-drag;
+      display: flex;
+      align-content: center;
+      align-items: center;
+      justify-content: flex-start;
+      position: absolute;
+      left: 15px;
+      top: 18px;
+    }
+    .window-buttons {
+      -webkit-user-drag: none;
+      -webkit-app-region: no-drag;
+      display: flex;
+      align-content: center;
+      align-items: center;
+      justify-content: flex-start;
+      position: absolute;
+      right: 0;
+      top: 16px;
+
+      .minimize, .maximize, .quit {
+        width: 42px;
+        height: 32px;
+        background: transparent;
+        color: $text-color;
+        text-align: center;
+        -webkit-user-drag: none;
+        -webkit-app-region: no-drag;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        justify-content: center;
+        justify-items: center;
+        align-items: center;
+
+        img {
+          width: 11px;
+          image-rendering: pixelated;
+          opacity: 0.6;
+        }
+
+        &:hover {
+          background: $silver-25;
+          opacity: 1;
+        }
+      }
+      .quit:hover {
+        background: #FD0007;
+        color: $white-text-color;
+        img { filter: invert(1); opacity: 1; }
+      }
+    }
+
+    button, a, input, i {
+      -webkit-user-drag: none;
+      -webkit-app-region: no-drag;
+    }
+
+    .right {
+      .line-end {
+        margin-right: 200px;
+        margin-left: auto;
+      }
+    }
+
+    .compact {
+      .right {
+        .main-bar {
+          padding: 10px 38px 9px 20px;
+        }
+      }
+    }
+  }
 }

@@ -572,4 +572,14 @@ export class AppService {
   toast(message: string, level: ToastLevel, title: string) {
     this.loggingService.toast(message, level, title);
   }
+
+  about() {
+    const version = this.getApp().getVersion();
+    this.getCurrentWindow().show();
+    this.getDialog().showMessageBox({
+      icon: __dirname + `/assets/images/Leapp.png`,
+      message: `Leapp\n` + `Version ${version} (${version})\n` + '© 2022 Noovolari',
+      buttons: ['Ok']
+    });
+  }
 }
