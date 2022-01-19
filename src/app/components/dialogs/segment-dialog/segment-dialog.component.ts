@@ -52,7 +52,6 @@ export class SegmentDialogComponent implements OnInit, OnDestroy {
     this.selectedSegment = newSegment.name;
     this.segments.push(newSegment);
     this.segments = [...this.segments];
-    this.ngSelectComponent.handleClearClick();
   }
 
   saveSegment() {

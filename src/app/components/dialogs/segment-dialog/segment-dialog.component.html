@@ -9,6 +9,7 @@
     formControlName="segmentName"
     bindLabel="name"
     bindValue="name"
+    [closeOnSelect]="true"
     (keyup)="setTemporaryName($event)"
     [items]="segments"
     [(ngModel)]="selectedSegment" dropdownPosition="down">
