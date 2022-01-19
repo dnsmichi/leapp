@@ -12,6 +12,7 @@ import {
 } from '../command-bar/command-bar.component';
 import {Session} from '../../models/session';
 import {ColumnDialogComponent} from '../dialogs/column-dialog/column-dialog.component';
+import {MatMenuTrigger} from '@angular/material/menu';
 
 export const optionBarIds = {};
 
@@ -36,10 +37,9 @@ export class SessionsComponent implements OnInit, OnDestroy {
   // Ssm instances
   ssmloading = true;
   ssmRegions = [];
-  instances = [];
-
 
   showOnly = 'ALL';
+  triggers: MatMenuTrigger[] = [];
 
   private subscriptions = [];
 

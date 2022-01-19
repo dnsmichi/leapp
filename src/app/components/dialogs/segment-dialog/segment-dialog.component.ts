@@ -49,12 +49,14 @@ export class SegmentDialogComponent implements OnInit, OnDestroy {
   addNewSegment(): void {
     const newSegment = { name: this.temporaryName, filterGroup: Object.assign({}, this.currentFilterGroup) };
     console.log(newSegment);
-    this.selectedSegment = newSegment.name;
+
     this.segments.push(newSegment);
     this.segments = [...this.segments];
   }
 
   saveSegment() {
+    console.log(this.selectedSegment);
+
     const segments = [...this.workspaceService.getSegments()];
     const index = segments.findIndex(s => s.name === this.selectedSegment);
     if(index === -1) {
@@ -63,7 +65,7 @@ export class SegmentDialogComponent implements OnInit, OnDestroy {
       segments[index].filterGroup = this.currentFilterGroup;
     }
     this.workspaceService.setSegments(segments);
-    segmentFilter.next(true);
+    segmentFilter.next(this.workspaceService.getSegments());
     this.appService.closeModal();
   }
 

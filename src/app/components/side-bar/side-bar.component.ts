@@ -8,17 +8,17 @@ import {
   globalResetFilter, globalSegmentFilter
 } from '../command-bar/command-bar.component';
 import {Session} from '../../models/session';
-import {BehaviorSubject} from 'rxjs';
-import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
-import {ConfirmationDialogComponent} from "../dialogs/confirmation-dialog/confirmation-dialog.component";
-import {Constants} from "../../models/constants";
+import {BehaviorSubject, Observable} from 'rxjs';
+import {BsModalRef, BsModalService} from 'ngx-bootstrap/modal';
+import {ConfirmationDialogComponent} from '../dialogs/confirmation-dialog/confirmation-dialog.component';
+import {Constants} from '../../models/constants';
 
 export interface SelectedSegment {
   name: string;
   selected: boolean;
 }
 
-export const segmentFilter = new BehaviorSubject<boolean>(false);
+export const segmentFilter = new BehaviorSubject<Segment[]>([]);
 
 @Component({
   selector: 'app-side-bar',
@@ -36,20 +36,16 @@ export class SideBarComponent implements OnInit, OnDestroy {
   modalRef: BsModalRef;
 
   constructor(private workspaceService: WorkspaceService, private bsModalService: BsModalService) {
-    this.folders = JSON.parse(JSON.stringify(this.workspaceService.getFolders()));
-    this.segments = JSON.parse(JSON.stringify(this.workspaceService.getSegments()));
-    this.selectedS = this.segments.map(segment => { return { name: segment.name, selected: false }});
     this.showAll = true;
     this.showPinned = false;
   }
 
   ngOnInit(): void {
-    console.log('onInit!');
-    this.subscription = segmentFilter.subscribe(() => {
-      this.folders = JSON.parse(JSON.stringify(this.workspaceService.getFolders()));
-      this.segments = JSON.parse(JSON.stringify(this.workspaceService.getSegments()));
-      console.log('these are the segments right now', this.segments);
+    this.subscription = segmentFilter.subscribe(segments => {
+      this.segments = segments;
+      this.selectedS = this.segments.map(segment => ({ name: segment.name, selected: false }));
     });
+    segmentFilter.next(this.workspaceService.getSegments());
   }
 
   ngOnDestroy(): void {
@@ -75,12 +71,14 @@ export class SideBarComponent implements OnInit, OnDestroy {
   applySegmentFilter(segment: Segment, event) {
     event.preventDefault();
     event.stopPropagation();
+
     this.showAll = false;
     this.showPinned = false;
     this.selectedS.forEach(s => s.selected = false);
+
     const selectedIndex = this.selectedS.findIndex(s => s.name === segment.name);
     this.selectedS[selectedIndex].selected = true;
-    console.log(this.selectedS);
+
     globalSegmentFilter.next(JSON.parse(JSON.stringify(segment)));
   }
 
@@ -103,7 +101,7 @@ export class SideBarComponent implements OnInit, OnDestroy {
       if(answerString === Constants.confirmed.toString()) {
         this.deleteSegment(segment, event);
       }
-    }
+    };
     this.modalRef = this.bsModalService.show(ConfirmationDialogComponent, {
       animated: false,
       initialState: {

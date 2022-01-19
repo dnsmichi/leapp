@@ -31,7 +31,6 @@ import {EditDialogComponent} from '../../dialogs/edit-dialog/edit-dialog.compone
 
 })
 export class SessionCardComponent implements OnInit {
-
   @Input()
   session!: Session;
 
@@ -89,7 +88,8 @@ export class SessionCardComponent implements OnInit {
               private bsModalService: BsModalService,
               private sessionProviderService: SessionFactoryService,
               private loggingService: LoggingService,
-              private modalService: BsModalService) {}
+              private modalService: BsModalService) {
+  }
 
   ngOnInit() {
     // Generate a singleton service for the concrete implementation of SessionService
@@ -429,9 +429,9 @@ export class SessionCardComponent implements OnInit {
   }
 
   openContextMenu(event, session) {
-    this.trigger.closeMenu();
     this.menuY = event.layerY - 10;
     this.menuX = event.layerX - 10;
+
     this.trigger.openMenu();
   }
 

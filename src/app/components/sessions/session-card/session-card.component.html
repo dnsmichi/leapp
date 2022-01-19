@@ -92,11 +92,11 @@
 <mat-menu #change>
   <button mat-menu-item (click)="changeRegionModalOpen($event, session);">
     <i class="moon-Region"></i>&nbsp;
-    <span>Change Region</span>
+    <span>Region</span>
   </button>
   <button mat-menu-item (click)="changeProfileModalOpen($event);" *ngIf="(session.type === eSessionType.awsIamRoleFederated || session.type === eSessionType.awsIamRoleChained || session.type === eSessionType.awsSsoRole || session.type === eSessionType.awsIamUser)">
     <i class="moon-User"></i>&nbsp;
-    <span>Change Named Profile</span>
+    <span>Named Profile</span>
   </button>
 </mat-menu>
 
