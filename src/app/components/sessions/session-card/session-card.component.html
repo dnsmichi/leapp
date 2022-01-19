@@ -133,7 +133,7 @@
 
       <div class="opt-bar-middle-right-buttons">
         <a class="icon-button" (click)="pinSession(session, $event);" *ngIf="this.workspaceService.getWorkspace().pinned.indexOf(session.sessionId) === -1" tooltip="Pin Session"><i class="moon-Pin"></i></a>
-        <a class="icon-button" (click)="unpinSession(session, $event);" *ngIf="this.workspaceService.getWorkspace().pinned.indexOf(session.sessionId) !== -1" tooltip="Unpin Session"><i class="moon-Pin"></i></a>
+        <a class="icon-button" (click)="unpinSession(session, $event);" *ngIf="this.workspaceService.getWorkspace().pinned.indexOf(session.sessionId) !== -1" tooltip="Unpin Session"><i class="moon-Pin-filled"></i></a>
         <a class="icon-button" (click)="deleteSession(session, $event);" tooltip="Delete Session"><i class="moon-Delete"></i></a>
       </div>
     </div>
