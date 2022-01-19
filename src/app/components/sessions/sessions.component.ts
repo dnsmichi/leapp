@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit, QueryList, ViewChildren} from '@angular/core';
 import {WorkspaceService} from '../../services/workspace.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AppService} from '../../services/app.service';
@@ -39,7 +39,6 @@ export class SessionsComponent implements OnInit, OnDestroy {
   ssmRegions = [];
 
   showOnly = 'ALL';
-  triggers: MatMenuTrigger[] = [];
 
   private subscriptions = [];
 

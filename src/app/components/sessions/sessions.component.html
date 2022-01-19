@@ -11,8 +11,8 @@
     </tr>
   </thead>
   <tbody>
-    <tr class="active {{eCompactMode ? 'compact' : ''}}" app-session-card [menutriggers]="triggers" [globalColumns]="eGlobalColumns" [compactMode]="eCompactMode" [session]="session" *ngFor="let session of eGlobalFilteredSessions | filtering:true"></tr>
-    <tr class="{{eCompactMode ? 'compact' : ''}}" app-session-card [menutriggers]="triggers" [globalColumns]="eGlobalColumns" [compactMode]="eCompactMode" [session]="session" *ngFor="let session of eGlobalFilteredSessions | filtering:false"></tr>
+    <tr class="active {{eCompactMode ? 'compact' : ''}}" app-session-card [globalColumns]="eGlobalColumns" [compactMode]="eCompactMode" [session]="session" *ngFor="let session of eGlobalFilteredSessions | filtering:true"></tr>
+    <tr class="{{eCompactMode ? 'compact' : ''}}" app-session-card [globalColumns]="eGlobalColumns" [compactMode]="eCompactMode" [session]="session" *ngFor="let session of eGlobalFilteredSessions | filtering:false"></tr>
   </tbody>
 </table>
 </ng-container>
