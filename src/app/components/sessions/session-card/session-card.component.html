@@ -43,14 +43,11 @@
 
   <div class="divider"></div>
 
-  <button mat-menu-item (click)="changeRegionModalOpen($event, session);">
-    <i class="moon-Region"></i>&nbsp;
-    <span>Change Region</span>
+  <button mat-menu-item [matMenuTriggerFor]="change">
+    <i class="moon-Star"></i>
+    <span>&nbsp;&nbsp;&nbsp;Change</span>
   </button>
-  <button mat-menu-item (click)="changeProfileModalOpen($event);" *ngIf="(session.type === eSessionType.awsIamRoleFederated || session.type === eSessionType.awsIamRoleChained || session.type === eSessionType.awsSsoRole || session.type === eSessionType.awsIamUser)">
-    <i class="moon-User"></i>&nbsp;
-    <span>Change Named Profile</span>
-  </button>
+
   <button mat-menu-item (click)="ssmModalOpen($event, session);">
     <i class="moon-Server"></i>&nbsp;
     <span>View SSM Sessions</span>
@@ -59,25 +56,12 @@
   <div class="divider"></div>
 
   <ng-container *ngIf="(session.type === eSessionType.awsIamRoleFederated || session.type === eSessionType.awsIamRoleChained || session.type === eSessionType.awsSsoRole)">
-    <button mat-menu-item [matMenuTriggerFor]="change">
+    <button mat-menu-item [matMenuTriggerFor]="copy">
       <i class="moon-Copy"></i>
       <span>&nbsp;&nbsp;&nbsp;Copy</span>
     </button>
     <div class="divider"></div>
   </ng-container>
-
-  <!--
-  <button mat-menu-item (click)="openAmazonConsole($event, session);">
-    <i class="moon-Cloud"></i>&nbsp;
-    <span>View Amazon Console</span>
-  </button>
-  <button mat-menu-item (click)="openTerminal($event, session);">
-    <i class="moon-Terminal"></i>&nbsp;
-    <span>Open Terminal</span>
-  </button>
-
-  <div class="divider"></div>
-  -->
 
   <button mat-menu-item (click)="editSession(session, $event);" *ngIf="session.type === eSessionType.awsIamUser">
     <i class="moon-Edit"></i>&nbsp;
@@ -106,6 +90,17 @@
 </mat-menu>
 
 <mat-menu #change>
+  <button mat-menu-item (click)="changeRegionModalOpen($event, session);">
+    <i class="moon-Region"></i>&nbsp;
+    <span>Change Region</span>
+  </button>
+  <button mat-menu-item (click)="changeProfileModalOpen($event);" *ngIf="(session.type === eSessionType.awsIamRoleFederated || session.type === eSessionType.awsIamRoleChained || session.type === eSessionType.awsSsoRole || session.type === eSessionType.awsIamUser)">
+    <i class="moon-User"></i>&nbsp;
+    <span>Change Named Profile</span>
+  </button>
+</mat-menu>
+
+<mat-menu #copy>
   <button mat-menu-item (click)="copyCredentials(session, 1, $event);">
     <i class="fab fa-aws"></i>&nbsp;
     <span>Account Number</span>

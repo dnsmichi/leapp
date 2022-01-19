@@ -133,6 +133,7 @@ export class SessionCardComponent implements OnInit {
   startSession() {
     this.sessionService.start(this.session.sessionId).then(_ => {});
     this.logSessionData(this.session, `Starting Session`);
+    this.trigger.closeMenu();
   }
 
   /**
@@ -141,6 +142,7 @@ export class SessionCardComponent implements OnInit {
   stopSession() {
     this.sessionService.stop(this.session.sessionId).then(_ => {});
     this.logSessionData(this.session, `Stopped Session`);
+    this.trigger.closeMenu();
   }
 
   /**
@@ -152,6 +154,7 @@ export class SessionCardComponent implements OnInit {
   deleteSession(session, event) {
     event.preventDefault();
     event.stopPropagation();
+    this.trigger.closeMenu();
 
     const dialogMessage = this.generateDeleteDialogMessage(session);
 
@@ -174,6 +177,7 @@ export class SessionCardComponent implements OnInit {
     this.clearOptionIds();
     event.preventDefault();
     event.stopPropagation();
+    this.trigger.closeMenu();
 
     this.bsModalService.show(EditDialogComponent, { animated: false, class: 'edit-modal', initialState: { selectedSessionId: session.sessionId }});
   }
@@ -184,6 +188,7 @@ export class SessionCardComponent implements OnInit {
   async copyCredentials(session: Session, type: number, event) {
     event.preventDefault();
     event.stopPropagation();
+    this.trigger.closeMenu();
 
     try {
       const workspace = this.workspaceService.getWorkspace();
@@ -225,6 +230,7 @@ export class SessionCardComponent implements OnInit {
   ssmModalOpen(event, session) {
     event.preventDefault();
     event.stopPropagation();
+    this.trigger.closeMenu();
 
     // Reset things before opening the modal
     this.instances = [];
@@ -242,6 +248,7 @@ export class SessionCardComponent implements OnInit {
   changeRegionModalOpen(event, session) {
     event.preventDefault();
     event.stopPropagation();
+    this.trigger.closeMenu();
 
     // open the modal
     this.modalRef = this.modalService.show(this.defaultRegionModalTemplate, { class: 'ssm-modal'});
@@ -377,7 +384,7 @@ export class SessionCardComponent implements OnInit {
   changeProfileModalOpen(event) {
     event.preventDefault();
     event.stopPropagation();
-
+    this.trigger.closeMenu();
     this.selectedProfile = null;
     this.modalRef = this.modalService.show(this.defaultProfileModalTemplate, { class: 'ssm-modal'});
   }
@@ -418,9 +425,11 @@ export class SessionCardComponent implements OnInit {
   copyProfile(profileName: string) {
     this.appService.copyToClipboard(profileName);
     this.loggingService.toast('Profile name copied!', ToastLevel.success, 'Information copied!');
+    this.trigger.closeMenu();
   }
 
   openContextMenu(event, session) {
+    this.trigger.closeMenu();
     this.menuY = event.layerY - 10;
     this.menuX = event.layerX - 10;
     this.trigger.openMenu();
@@ -430,12 +439,14 @@ export class SessionCardComponent implements OnInit {
     event.preventDefault();
     event.stopPropagation();
     this.workspaceService.pinSession(session);
+    this.trigger.closeMenu();
   }
 
   unpinSession(session: Session, event: MouseEvent) {
     event.preventDefault();
     event.stopPropagation();
     this.workspaceService.unpinSession(session);
+    this.trigger.closeMenu();
   }
 
   clearOptionIds() {
@@ -447,11 +458,13 @@ export class SessionCardComponent implements OnInit {
   openAmazonConsole(event: MouseEvent, session: Session) {
     event.preventDefault();
     event.stopPropagation();
+    this.trigger.closeMenu();
   }
 
   openTerminal(event: MouseEvent, session: Session) {
     event.preventDefault();
     event.stopPropagation();
+    this.trigger.closeMenu();
   }
 
   private logSessionData(session: Session, message: string): void {
