@@ -33,7 +33,7 @@
 
 
 <div [matMenuTriggerFor]="menu" [style.position]="'absolute'" [style.left.px]="menuX" [style.top.px]="menuY"></div>
-<mat-menu #menu>
+<mat-menu #menu [hasBackdrop]="false" role="menu">
   <span mat-menu-item class="not-displayed">dummy fix for github issue 3352</span>
 
   <button mat-menu-item (click)="startSession();">

@@ -432,12 +432,16 @@ export class SessionCardComponent implements OnInit {
   }
 
   openContextMenu(event, session) {
-    this.trigger.closeMenu()
+    this.appService.closeAllMenuTriggers();
+
     this.menuY = event.layerY - 10;
     this.menuX = event.layerX - 10;
 
     this.trigger.openMenu();
+    this.appService.setMenuTrigger(this.trigger);
   }
+
+
 
   pinSession(session: Session, event: MouseEvent) {
     event.preventDefault();
