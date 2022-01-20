@@ -72,6 +72,8 @@ export class CommandBarComponent implements OnInit, OnDestroy, AfterContentCheck
   private subscription4;
   private subscription5;
 
+  private currentSegment: Segment;
+
   constructor(private bsModalService: BsModalService, private workspaceService: WorkspaceService, public appService: AppService) {
     this.filterExtended = false;
     this.compactMode = false;
@@ -161,13 +163,19 @@ export class CommandBarComponent implements OnInit, OnDestroy, AfterContentCheck
 
   toggleCompactMode() {
     this.compactMode = !this.compactMode;
+    this.filterExtended = false;
     compactMode.next(this.compactMode);
+    globalHasFilter.next(this.filterExtended);
+    this.saveTemporarySegmentAndApply();
   }
 
   toggleFilters() {
     this.filterExtended = !this.filterExtended;
     globalHasFilter.next(this.filterExtended);
+    this.saveTemporarySegmentAndApply();
   }
+
+
 
   toggleDateFilter() {
     this.filterForm.get('dateFilter').setValue(!this.filterForm.get('dateFilter').value);
@@ -343,5 +351,25 @@ export class CommandBarComponent implements OnInit, OnDestroy, AfterContentCheck
     this.profiles = this.workspaceService.getProfiles().map(element => ({ name: element.name, id: element.id, value: false, show: true}));
 
     this.regions = this.appService.getRegions().map(element => ({ name: element.region, value: false, show: true }));
+  }
+
+  private saveTemporarySegmentAndApply() {
+    if (!this.filterExtended) {
+      this.currentSegment = JSON.parse(JSON.stringify({
+        name: 'temp',
+        filterGroup: {
+          dateFilter: this.filterForm.get('dateFilter').value,
+          integrationFilter: this.filterForm.get('integrationFilter').value,
+          profileFilter: this.filterForm.get('profileFilter').value,
+          providerFilter: this.filterForm.get('providerFilter').value,
+          regionFilter: this.filterForm.get('regionFilter').value,
+          searchFilter: this.filterForm.get('searchFilter').value,
+          typeFilter: this.filterForm.get('typeFilter').value
+        }
+      }));
+      globalResetFilter.next(true);
+    } else {
+      globalSegmentFilter.next(this.currentSegment);
+    }
   }
 }

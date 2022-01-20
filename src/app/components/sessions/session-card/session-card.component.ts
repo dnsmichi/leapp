@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, TemplateRef, ViewChild} from '@angular/core';
+import {Component, Input, OnInit, QueryList, TemplateRef, ViewChild, ViewChildren} from '@angular/core';
 import {Session} from '../../../models/session';
 import {AwsSessionService} from '../../../services/session/aws/aws-session.service';
 import {AppService, LoggerLevel, ToastLevel} from '../../../services/app.service';
@@ -432,6 +432,7 @@ export class SessionCardComponent implements OnInit {
   }
 
   openContextMenu(event, session) {
+    this.trigger.closeMenu()
     this.menuY = event.layerY - 10;
     this.menuX = event.layerX - 10;
 

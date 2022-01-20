@@ -82,6 +82,9 @@ html, body { height: 100%; }
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
+  .context-menu-drop-class {
+    display: none!important;
+  }
 }
 
 
@@ -406,7 +409,7 @@ hr { margin: 5px 0 0 0; display: block; height: 1px; border-top: 1px solid $silv
     .compact {
       .left { width: 92px!important; }
       .right { width: calc(100% - 92px) !important; }
-      .search-bar { width: 165px !important; }
+      .search-bar { width: 200px !important; }
     }
   }
 }
@@ -414,9 +417,13 @@ hr { margin: 5px 0 0 0; display: block; height: 1px; border-top: 1px solid $silv
 .compact { .left { width: $left-compacted-sidebar!important; border-bottom: 1px solid $silver-75; } }
 .compact { .right { width: calc(100% - #{$left-compacted-sidebar})!important; } }
 .compact {
-  .search-bar {
-    width: 200px!important;
+  .filtering {
+    display: none!important;
   }
+  .search-bar {
+    width: 270px!important;
+  }
+
 
   .extended {
     .tag-filters {
@@ -508,7 +515,7 @@ i.fal.fa-plus-circle {
       justify-content: flex-start;
       position: absolute;
       right: 0;
-      top: 16px;
+      top: 0;
 
       .minimize, .maximize, .quit {
         width: 42px;
@@ -549,13 +556,17 @@ i.fal.fa-plus-circle {
 
     .right {
       .line-end {
-        margin-right: 200px;
-        margin-left: auto;
+        margin-right: auto;
+        margin-left: 0;
       }
     }
 
     .compact {
       .right {
+        .line-end {
+          margin-right: 200px;
+          margin-left: auto;
+        }
         .main-bar {
           padding: 10px 38px 9px 20px;
         }
