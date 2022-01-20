@@ -43,6 +43,9 @@ export class SessionsComponent implements OnInit, OnDestroy {
 
   private subscriptions = [];
 
+  // For column ordering
+  status = false;
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -51,6 +54,8 @@ export class SessionsComponent implements OnInit, OnDestroy {
     private modalService: BsModalService,
     private appService: AppService
   ) {
+    console.log('Here the sessions ');
+    console.log(this.workspaceService.getWorkspace().sessions);
     const subscription = globalHasFilter.subscribe(value => {
       this.eGlobalFilterExtended = value;
     });
@@ -94,7 +99,11 @@ export class SessionsComponent implements OnInit, OnDestroy {
   }
 
   openFilterColumn() {
-    const modalReference = this.modalService.show(ColumnDialogComponent, { initialState: { eGlobalColumns: this.eGlobalColumns }, animated: false, class: 'column-modal'});
+    const modalReference = this.modalService.show(ColumnDialogComponent, {
+      initialState: {eGlobalColumns: this.eGlobalColumns},
+      animated: false,
+      class: 'column-modal'
+    });
   }
 
   setVisibility(name) {
@@ -103,5 +112,12 @@ export class SessionsComponent implements OnInit, OnDestroy {
     } else {
       this.showOnly = name;
     }
+  }
+
+  orderSessionsByName() {
+    console.log('ive been clicked')
+    console.log(this.eGlobalFilteredSessions);
+    //orderFilteredSessions.next(this.eGlobalFilteredSessions);
+    this.status = !this.status;
   }
 }

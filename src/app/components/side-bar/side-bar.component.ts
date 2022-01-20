@@ -96,7 +96,8 @@ export class SideBarComponent implements OnInit, OnDestroy {
   }
 
   showConfirmationDialog(segment: Segment, event) {
-    const message = 'Are you sure you want to delete the segment?';
+    const message = `Are you sure you want to delete the segment "${segment.name}"?`;
+    const confirmText = 'Delete';
     const callback = (answerString: string) => {
       if(answerString === Constants.confirmed.toString()) {
         this.deleteSegment(segment, event);
@@ -107,6 +108,7 @@ export class SideBarComponent implements OnInit, OnDestroy {
       initialState: {
         message,
         callback,
+        confirmText
       }
     });
   }
