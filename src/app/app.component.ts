@@ -113,6 +113,10 @@ export class AppComponent implements OnInit {
     await this.router.navigate(['/dashboard']);
   }
 
+  closeAllRightClickMenus() {
+    this.app.closeAllMenuTriggers();
+  }
+
   /**
    * This is an hook on the closing app to remove credential file and force stop using them
    */
@@ -191,4 +195,6 @@ export class AppComponent implements OnInit {
       }
     });
   }
+
+
 }

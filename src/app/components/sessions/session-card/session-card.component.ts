@@ -434,11 +434,13 @@ export class SessionCardComponent implements OnInit {
   openContextMenu(event, session) {
     this.appService.closeAllMenuTriggers();
 
-    this.menuY = event.layerY - 10;
-    this.menuX = event.layerX - 10;
+    setTimeout(() => {
+      this.menuY = event.layerY - 10;
+      this.menuX = event.layerX - 10;
 
-    this.trigger.openMenu();
-    this.appService.setMenuTrigger(this.trigger);
+      this.trigger.openMenu();
+      this.appService.setMenuTrigger(this.trigger);
+    }, 100);
   }
 
 
