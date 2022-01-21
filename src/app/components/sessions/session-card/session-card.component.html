@@ -151,6 +151,7 @@
     <div class="loader" *ngIf="ssmLoading"><i class="fa fa-spinner fa-spin"></i></div>
     <div class="list-of-ssm" *ngIf="!ssmLoading">
       <ng-container *ngIf="!ssmLoading && !firstTimeSsm">
+        <br>
         <b>Select an EC2 Instance:</b>
         <br>
         <input class="form-control" type="text" placeholder="searchFilter by..." (keyup)="searchSSMInstance($event)" />

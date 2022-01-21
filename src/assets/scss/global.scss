@@ -85,6 +85,9 @@ html, body { height: 100%; }
   .context-menu-drop-class {
     display: none!important;
   }
+  .cdk-overlay-container {
+    z-index: 1070!important;
+  }
 }
 
 
