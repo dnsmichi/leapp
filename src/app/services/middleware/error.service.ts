@@ -11,8 +11,8 @@ export class ErrorService implements ErrorHandler {
 
   handleError(error: any): void {
     error = error.rejection ? error.rejection : error;
-    //const loggingService = this.injector.get(LoggingService);
-    //loggingService.logger((error as LeappBaseError).message, (error as LeappBaseError).severity, (error as LeappBaseError).context, (error as LeappBaseError).stack);
-    //loggingService.toast((error as LeappBaseError).message, (error as LeappBaseError).severity, (error as LeappBaseError).name);
+    const loggingService = this.injector.get(LoggingService);
+    loggingService.logger((error as LeappBaseError).message, (error as LeappBaseError).severity, (error as LeappBaseError).context, (error as LeappBaseError).stack);
+    loggingService.toast((error as LeappBaseError).message, (error as LeappBaseError).severity, (error as LeappBaseError).name);
   }
 }

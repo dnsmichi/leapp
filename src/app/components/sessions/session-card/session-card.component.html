@@ -33,7 +33,7 @@
 
 
 <div [matMenuTriggerFor]="menu" [style.position]="'absolute'" [style.left.px]="menuX" [style.top.px]="menuY"></div>
-<mat-menu #menu>
+<mat-menu #menu [hasBackdrop]="false" role="menu">
   <span mat-menu-item class="not-displayed">dummy fix for github issue 3352</span>
 
   <button mat-menu-item (click)="startSession();">
@@ -151,6 +151,7 @@
     <div class="loader" *ngIf="ssmLoading"><i class="fa fa-spinner fa-spin"></i></div>
     <div class="list-of-ssm" *ngIf="!ssmLoading">
       <ng-container *ngIf="!ssmLoading && !firstTimeSsm">
+        <br>
         <b>Select an EC2 Instance:</b>
         <br>
         <input class="form-control" type="text" placeholder="searchFilter by..." (keyup)="searchSSMInstance($event)" />

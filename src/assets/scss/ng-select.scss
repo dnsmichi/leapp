@@ -65,12 +65,18 @@
   border-radius: $border-radius!important;
   display: block!important;
   font-size: $font-size-form-control!important;
+}
+.ng-select.uppercased .ng-option-label {
   text-transform: uppercase!important;
 }
 .ng-select.ng-select-single .ng-select-container .ng-value-container,
 .ng-select.ng-select-single .ng-select-container .ng-value-container .ng-value,
 {
   font-size: $font-size-form-control!important;
+}
+.ng-select.ng-select-single.uppercased .ng-select-container .ng-value-container,
+.ng-select.ng-select-single.uppercased .ng-select-container .ng-value-container .ng-value,
+{
   text-transform: uppercase!important;
 }
 
@@ -83,7 +89,6 @@
 }
 
 .ng-dropdown-panel .ng-dropdown-panel-items .ng-option {
-  text-transform: uppercase;
   background-color: $white-text-color!important;
   color: $text-color!important;
   padding: 2px 10px!important;
@@ -94,14 +99,22 @@
     font-size: $font-size-form-control!important;
   }
 }
+.uppercased .ng-dropdown-panel .ng-dropdown-panel-items .ng-option {
+  text-transform: uppercase;
+}
+
 .ng-dropdown-panel .ng-dropdown-panel-items .ng-option:hover {
   span {
     padding: 5px 10px!important;
     border-radius: 8px!important;
     display: block!important;
     font-size: $font-size-form-control!important;
-    text-transform: uppercase!important;
     background: $silver-25!important;
+  }
+}
+.uppercased .ng-dropdown-panel .ng-dropdown-panel-items .ng-option:hover {
+  span {
+    text-transform: uppercase!important;
   }
 }
 
@@ -118,10 +131,21 @@ ng-select select-dropdown > div {
     border-radius: 8px!important;
     display: block!important;
     font-size: $font-size-form-control!important;
+  }
+}
+
+.uppercased .ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-marked, {
+  span {
     text-transform: uppercase!important;
   }
 }
 
 .ng-select .ng-select-container .ng-value-container .ng-placeholder {
   text-transform: none;
+}
+
+.ng-select .ng-select-container .ng-value-container .ng-input>input {
+  width: 83%!important;
+  position: absolute;
+  top: 1px;
 }

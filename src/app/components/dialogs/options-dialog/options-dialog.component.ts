@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {AfterViewInit, Component, Input, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {Workspace} from '../../../models/workspace';
 import {FormControl, FormGroup} from '@angular/forms';
 import {AppService, LoggerLevel, ToastLevel} from '../../../services/app.service';
@@ -14,6 +14,7 @@ import {SessionFactoryService} from '../../../services/session-factory.service';
 import {SessionType} from '../../../models/session-type';
 import {AwsSessionService} from '../../../services/session/aws/aws-session.service';
 import {LoggingService} from '../../../services/logging.service';
+import {MatTabGroup} from '@angular/material/tabs';
 
 @Component({
   selector: 'app-options-dialog',
@@ -21,7 +22,13 @@ import {LoggingService} from '../../../services/logging.service';
   styleUrls: ['./options-dialog.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class OptionsDialogComponent implements OnInit {
+export class OptionsDialogComponent implements OnInit, AfterViewInit {
+
+  @Input()
+  selectedIndex;
+
+  @ViewChild('tabs', { static: false })
+  tabGroup: MatTabGroup;
 
   eConstants = Constants;
 
@@ -101,6 +108,14 @@ export class OptionsDialogComponent implements OnInit {
     this.selectedLocation = this.workspace.defaultLocation || environment.defaultLocation;
 
     this.appService.validateAllFormFields(this.form);
+
+
+  }
+
+  ngAfterViewInit() {
+    if(this.selectedIndex) {
+      this.tabGroup.selectedIndex = this.selectedIndex;
+    }
   }
 
   /**

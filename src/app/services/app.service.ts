@@ -8,6 +8,7 @@ import {Constants} from '../models/constants';
 import {BsModalService} from 'ngx-bootstrap/modal';
 import {ElectronService} from './electron.service';
 import {LoggingService} from './logging.service';
+import {MatMenuTrigger} from '@angular/material/menu';
 
 /*
 * External enum to the logger level so we can use this to define the type of log
@@ -66,6 +67,7 @@ export class AppService {
 
   /* This service is defined to provide different app wide methods as utilities */
   private newWin: any;
+  private triggers: MatMenuTrigger[];
 
   constructor(
     private fileService: FileService,
@@ -73,6 +75,7 @@ export class AppService {
     private electronService: ElectronService,
     private loggingService: LoggingService
   ) {
+    this.triggers = [];
 
     // Global Configure logger
     if (this.electronService.log) {
@@ -581,5 +584,16 @@ export class AppService {
       message: `Leapp\n` + `Version ${version} (${version})\n` + '© 2022 Noovolari',
       buttons: ['Ok']
     });
+  }
+
+  setMenuTrigger(trigger) {
+    this.triggers.push(trigger);
+  }
+
+  closeAllMenuTriggers() {
+    this.triggers.forEach(t => {
+      t.closeMenu();
+    });
+    this.triggers = [];
   }
 }

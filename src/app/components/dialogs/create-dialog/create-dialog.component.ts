@@ -19,6 +19,8 @@ import {
 } from '../../../services/session/aws/methods/aws-iam-role-federated.service';
 import {AzureService, AzureSessionRequest} from '../../../services/session/azure/azure.service';
 import {LoggingService} from '../../../services/logging.service';
+import {OptionsDialogComponent} from '../options-dialog/options-dialog.component';
+import {BsModalService} from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-create-dialog',
@@ -92,7 +94,8 @@ export class CreateDialogComponent implements OnInit {
     private awsIamRoleChainedService: AwsIamRoleChainedService,
     private awsSessionService: AwsSessionService,
     private azureService: AzureService,
-    private loggingService: LoggingService
+    private loggingService: LoggingService,
+    private bsModalService: BsModalService
   ) {}
 
   ngOnInit() {
@@ -105,7 +108,7 @@ export class CreateDialogComponent implements OnInit {
       // We get all the applicable idp urls
       if (workspace.idpUrls && workspace.idpUrls.length > 0) {
         workspace.idpUrls.forEach(idp => {
-          if (idp !== null) {
+          if (idp !== null && idp.id) {
             this.idpUrls.push({value: idp.id, label: idp.url});
           }
         });
@@ -114,7 +117,7 @@ export class CreateDialogComponent implements OnInit {
       // We got all the applicable profiles
       // Note: we don't use azure profile so we remove default azure profile from the list
       workspace.profiles.forEach(idp => {
-        if (idp !== null && idp.name !== environment.defaultAzureProfileName) {
+        if (idp !== null && idp.name !== environment.defaultAzureProfileName && idp.id) {
           this.profiles.push({value: idp.id, label: idp.name});
         }
       });
@@ -176,8 +179,40 @@ export class CreateDialogComponent implements OnInit {
    * Form validation mechanic
    */
   formValid() {
-    // TODO: validate form
-    return true;
+    let result = false;
+    switch (this.sessionType) {
+      case SessionType.awsIamRoleFederated:
+        result = this.form.get('name').valid &&
+                 this.selectedProfile &&
+                 this.form.get('awsRegion').valid &&
+                 this.form.get('roleArn').valid &&
+                 this.selectedIdpUrl &&
+                 this.form.get('idpArn').valid;
+        break;
+      case SessionType.awsIamRoleChained:
+        result = this.form.get('name').valid &&
+                 this.selectedProfile &&
+                 this.form.get('awsRegion').valid &&
+                 this.form.get('roleArn').valid &&
+                 this.form.get('roleSessionName').valid &&
+                 this.selectedSession;
+        break;
+      case SessionType.awsIamUser:
+        result = this.form.get('name').valid &&
+                 this.selectedProfile &&
+                 this.form.get('awsRegion').valid &&
+                 this.form.get('mfaDevice').valid &&
+                 this.form.get('accessKey').valid &&
+                 this.form.get('secretKey').valid;
+        break;
+      case SessionType.azure:
+        result = this.form.get('name').valid &&
+                 this.form.get('subscriptionId').valid &&
+                 this.form.get('tenantId').valid &&
+                 this.form.get('azureLocation').valid;
+        break;
+    }
+    return result;
   }
 
   /**
@@ -214,7 +249,13 @@ export class CreateDialogComponent implements OnInit {
    *
    */
   openAccessStrategyDocumentation() {
-    this.appService.openExternalUrl('https://github.com/Noovolari/leapp/wiki');
+    let url = 'https://docs.leapp.cloud/configuring-session/configure-aws-iam-role-federated/';
+    if(this.provider === SessionType.awsIamRoleChained) {
+      url = 'https://docs.leapp.cloud/configuring-session/configure-aws-iam-role-chained/';
+    } else if(this.provider === SessionType.awsIamUser) {
+      url = 'https://docs.leapp.cloud/configuring-session/configure-aws-iam-user/';
+    }
+    this.appService.openExternalUrl(url);
   }
 
   /**
@@ -222,7 +263,8 @@ export class CreateDialogComponent implements OnInit {
    *
    */
   goToAwsSso() {
-    this.router.navigate(['/', 'integration']).then(_ => {});
+    this.appService.closeModal();
+    this.bsModalService.show(OptionsDialogComponent, { animated: false, class: 'option-modal', initialState: { selectedIndex: 3 }});
   }
 
   /**
@@ -254,56 +296,65 @@ export class CreateDialogComponent implements OnInit {
     this.appService.closeModal();
   }
 
+  selectedIdpUrlEvent($event: { items: any[]; item: any }) {
+    this.idpUrls = $event.items;
+    this.selectedIdpUrl = $event.item;
+  }
+
   /**
    * Save actual session based on Session Type
    *
    * @private
    */
   private createSession() {
-    switch (this.sessionType) {
-      case (SessionType.awsIamRoleFederated):
-        const awsFederatedAccountRequest: AwsIamRoleFederatedSessionRequest = {
-          accountName: this.form.value.name.trim(),
-          region: this.selectedRegion,
-          idpUrl: this.selectedIdpUrl.value.trim(),
-          idpArn: this.form.value.idpArn.trim(),
-          roleArn: this.form.value.roleArn.trim()
-        };
-        this.awsIamRoleFederatedService.create(awsFederatedAccountRequest, this.selectedProfile.value);
-        break;
-      case (SessionType.awsIamUser):
-        const awsIamUserSessionRequest: AwsIamUserSessionRequest = {
-          accountName: this.form.value.name.trim(),
-          region: this.selectedRegion,
-          accessKey: this.form.value.accessKey.trim(),
-          secretKey: this.form.value.secretKey.trim(),
-          mfaDevice: this.form.value.mfaDevice.trim()
-        };
-        this.awsIamUserService.create(awsIamUserSessionRequest, this.selectedProfile.value);
-        break;
-      case (SessionType.awsIamRoleChained):
-        const awsIamRoleChainedAccountRequest: AwsIamRoleChainedSessionRequest = {
-          accountName: this.form.value.name.trim(),
-          region: this.selectedRegion,
-          roleArn: this.form.value.roleArn.trim(),
-          roleSessionName: this.form.value.roleSessionName.trim(),
-          parentSessionId: this.selectedSession.sessionId
-        };
-        this.awsIamRoleChainedService.create(awsIamRoleChainedAccountRequest, this.selectedProfile.value);
-        break;
-      case (SessionType.azure):
-        const azureSessionRequest: AzureSessionRequest = {
-          region: this.selectedLocation,
-          sessionName: this.form.value.name,
-          subscriptionId: this.form.value.subscriptionId,
-          tenantId: this.form.value.tenantId
-        };
-        this.azureService.create(azureSessionRequest);
-        break;
-    }
+    if(this.form.valid) {
+      switch (this.sessionType) {
+        case (SessionType.awsIamRoleFederated):
+          const awsFederatedAccountRequest: AwsIamRoleFederatedSessionRequest = {
+            accountName: this.form.value.name.trim(),
+            region: this.selectedRegion,
+            idpUrl: this.selectedIdpUrl.value.trim(),
+            idpArn: this.form.value.idpArn.trim(),
+            roleArn: this.form.value.roleArn.trim()
+          };
+          this.awsIamRoleFederatedService.create(awsFederatedAccountRequest, this.selectedProfile.value);
+          break;
+        case (SessionType.awsIamUser):
+          const awsIamUserSessionRequest: AwsIamUserSessionRequest = {
+            accountName: this.form.value.name.trim(),
+            region: this.selectedRegion,
+            accessKey: this.form.value.accessKey.trim(),
+            secretKey: this.form.value.secretKey.trim(),
+            mfaDevice: this.form.value.mfaDevice.trim()
+          };
+          this.awsIamUserService.create(awsIamUserSessionRequest, this.selectedProfile.value);
+          break;
+        case (SessionType.awsIamRoleChained):
+          const awsIamRoleChainedAccountRequest: AwsIamRoleChainedSessionRequest = {
+            accountName: this.form.value.name.trim(),
+            region: this.selectedRegion,
+            roleArn: this.form.value.roleArn.trim(),
+            roleSessionName: this.form.value.roleSessionName.trim(),
+            parentSessionId: this.selectedSession.sessionId
+          };
+          this.awsIamRoleChainedService.create(awsIamRoleChainedAccountRequest, this.selectedProfile.value);
+          break;
+        case (SessionType.azure):
+          const azureSessionRequest: AzureSessionRequest = {
+            region: this.selectedLocation,
+            sessionName: this.form.value.name,
+            subscriptionId: this.form.value.subscriptionId,
+            tenantId: this.form.value.tenantId
+          };
+          this.azureService.create(azureSessionRequest);
+          break;
+      }
 
-    this.appService.toast(`Session: ${this.form.value.name}, created.`, ToastLevel.success, '');
-    this.closeModal();
+      this.appService.toast(`Session: ${this.form.value.name}, created.`, ToastLevel.success, '');
+      this.closeModal();
+    } else {
+      this.appService.toast(`Session is missing some required properties, please fill them.`, ToastLevel.warn, '');
+    }
   }
 
   /**
@@ -339,5 +390,7 @@ export class CreateDialogComponent implements OnInit {
       throw new LeappParseError(this, err.message);
     }
   }
+
+
 }
 

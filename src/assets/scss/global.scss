@@ -32,6 +32,17 @@ $icon-button-height-small: 14px;
 
 $compact-fixed-width: 560px;
 
+:not(input):not(textarea),
+:not(input):not(textarea)::after,
+:not(input):not(textarea)::before {
+  -webkit-user-select: none;
+  user-select: none;
+}
+input, button, textarea, :focus {
+  outline: none; // You should add some other style for :focus to help UX/a11y
+}
+
+
 html, body { height: 100%; }
 
 ::ng-deep {
@@ -84,6 +95,9 @@ html, body { height: 100%; }
   }
   .context-menu-drop-class {
     display: none!important;
+  }
+  .cdk-overlay-container {
+    z-index: 1070!important;
   }
 }
 
@@ -147,6 +161,12 @@ a { text-decoration: none; cursor: pointer; color: $silver-dark; * { cursor: poi
 hr { margin: 5px 0 0 0; display: block; height: 1px; border-top: 1px solid $silver-50; }
 
 .clear { clear: both; }
+
+small.text-error {
+  display: block;
+  text-align: right;
+  color: $danger-color;
+}
 
 .line-start { margin-right: auto; }
 .line-end { margin-left: auto; }

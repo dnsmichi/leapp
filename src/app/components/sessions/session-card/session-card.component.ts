@@ -22,6 +22,7 @@ import {optionBarIds} from '../sessions.component';
 import {MatMenuTrigger} from '@angular/material/menu';
 import {IGlobalColumns} from '../../command-bar/command-bar.component';
 import {EditDialogComponent} from '../../dialogs/edit-dialog/edit-dialog.component';
+import {LeappBaseError} from "../../../errors/leapp-base-error";
 
 @Component({
   // eslint-disable-next-line @angular-eslint/component-selector
@@ -273,10 +274,15 @@ export class SessionCardComponent implements OnInit {
       // Generate valid temporary credentials for the SSM and EC2 client
       const credentials = await (this.sessionService as AwsSessionService).generateCredentials(session.sessionId);
       // Get the instances
-      this.instances = await this.ssmService.getSsmInstances(credentials, this.selectedSsmRegion);
-      this.duplicateInstances = this.instances;
-      this.ssmLoading = false;
-      this.firstTimeSsm = false;
+      try {
+        this.instances = await this.ssmService.getSsmInstances(credentials, this.selectedSsmRegion);
+        this.duplicateInstances = this.instances;
+      } catch(err) {
+        throw new LeappBaseError('SSM Error', this, LoggerLevel.error, err.message);
+      } finally {
+        this.ssmLoading = false;
+        this.firstTimeSsm = false;
+      }
     }
   }
 
@@ -432,12 +438,18 @@ export class SessionCardComponent implements OnInit {
   }
 
   openContextMenu(event, session) {
-    this.trigger.closeMenu()
-    this.menuY = event.layerY - 10;
-    this.menuX = event.layerX - 10;
+    this.appService.closeAllMenuTriggers();
 
-    this.trigger.openMenu();
+    setTimeout(() => {
+      this.menuY = event.layerY - 10;
+      this.menuX = event.layerX - 10;
+
+      this.trigger.openMenu();
+      this.appService.setMenuTrigger(this.trigger);
+    }, 100);
   }
+
+
 
   pinSession(session: Session, event: MouseEvent) {
     event.preventDefault();
