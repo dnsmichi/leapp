@@ -63,14 +63,33 @@ th:nth-child(1) {
   padding-left: 22px;
 }
 
-i.moon-Dropdown {
+i.moon-Dropdown,
+i.moon-Caret-down {
   position: relative;
   top: 3px;
   left: 3px;
   font-size: 16px;
   color: inherit;
-  &.clicked-arrow {
+  opacity: 0;
+  &.ascendent-order-arrow.hidden-arrow {
     display:inline-block;
+    opacity: 0!important;
+  }
+  &.active-arrow.descendent-order-arrow {
+    display:inline-block;
+    opacity: 1!important;
+  }
+  &.hidden-arrow.descendent-order-arrow {
+    display:inline-block;
+    opacity: 1!important;
+    transition: all 0.2s ease;
     transform: rotate(180deg);
+  }
+}
+
+::ng-deep {
+  th:hover i.moon-Dropdown.hidden-arrow.ascendent-order-arrow,
+  th:hover i.moon-Caret-down.hidden-arrow.ascendent-order-arrow {
+    opacity: 1!important;
   }
 }

@@ -11,6 +11,7 @@ import {Session} from '../../models/session';
 import {AppService} from '../../services/app.service';
 import {SessionType} from '../../models/session-type';
 import Segment from '../../models/Segment';
+import {globalOrderingFilter} from "../sessions/sessions.component";
 
 export interface GlobalFilters {
   searchFilter: string;
@@ -71,6 +72,7 @@ export class CommandBarComponent implements OnInit, OnDestroy, AfterContentCheck
   private subscription3;
   private subscription4;
   private subscription5;
+  private subscription6;
 
   private currentSegment: Segment;
 
@@ -135,6 +137,12 @@ export class CommandBarComponent implements OnInit, OnDestroy, AfterContentCheck
         this.applyFiltersToSessions(values, this.workspaceService.sessions);
       }
     });
+
+    //console.log('IN COMMAND BAR ON INIT');
+    //console.log(sessions);
+    this.subscription6 = globalOrderingFilter.subscribe((sessions: Session[]) => {
+      globalFilteredSessions.next(sessions);
+    });
   }
 
   ngOnDestroy(): void {
@@ -143,6 +151,7 @@ export class CommandBarComponent implements OnInit, OnDestroy, AfterContentCheck
     this.subscription3.unsubscribe();
     this.subscription4.unsubscribe();
     this.subscription5.unsubscribe();
+    this.subscription6.unsubscribe();
   }
 
   ngAfterContentChecked(): void {
