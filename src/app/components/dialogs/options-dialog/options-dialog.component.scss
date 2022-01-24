@@ -37,6 +37,38 @@
   }
 }
 
+.hero-unit {
+  height: 136px;
+  margin-top: -68px;
+  position: absolute;
+  top: 50%;
+  width: 99%;
+  display: flex;
+  align-content: space-around;
+  justify-content: center;
+  border-radius: 5px;
+  border: 1px solid $silver-50;
+
+  img {
+    display: inline-flex;
+    justify-self: center;
+  }
+  p {
+    width: 71%;
+    padding: 20px 10px;
+
+    strong {
+      font-weight: 500;
+      font-size: 18px;
+      display: block;
+    }
+    span {
+      display: block;
+      font-size: 16px;
+    }
+  }
+}
+
 .panel{
   animation: fadein .8s;
   overflow-x: hidden;

@@ -26,6 +26,9 @@
     &:hover {
       border: 1px solid $table-text;
     }
+    &.disabled {
+      filter: grayscale(1);
+    }
 
     img {
       margin-right: 15px;
