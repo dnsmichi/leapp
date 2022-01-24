@@ -33,8 +33,10 @@
               <label>Access method</label>
               <ng-select formControlName="selectAccessStrategy"
                          [(ngModel)]="provider"
+                         [bindLabel]="'label'"
+                         [bindValue]="'value'"
                          (change)="setAccessStrategy(provider);"
-                         [items]="[eSessionType.awsIamRoleFederated, eSessionType.awsIamUser, eSessionType.awsIamRoleChained]"
+                         [items]="[{value: eSessionType.awsIamRoleFederated, label: 'AWS IAM Role Federated'}, {value: eSessionType.awsIamUser, label: 'AWS IAM User'}, {value: eSessionType.awsIamRoleChained, label: 'AWS IAM Role Chained'}]"
                          placeholder="Select Session Strategy"
                          [addTag]="false"
               ></ng-select>
@@ -56,14 +58,14 @@
                                 [form]="form"
                                 [placeholder]="'add a new named profile'"
                                 [items]="profiles"
-                                [selectedItem]="selectedProfile"
                                 [dropdownPosition]="'down'"
                                 [whatToAddName]="'Named Profile'"
                                 [defaultNewValue]="addNewUUID"
                                 [bindLabel]="'label'"
                                 [bindValue]="'value'"
-                                (selected)="profiles = $event.items; selectedProfile = $event.selectedItem;"></app-leapp-select>
-              <small class="text-error" *ngIf="(form.controls['awsProfile'].dirty || form.controls['awsProfile'].touched) && form.get('awsProfile').value === undefined">Insert the Named Profile</small>
+                                [uppercased]="false"
+                                (selected)="profiles = $event.items; selectedProfile = $event.item;"></app-leapp-select>
+              <small class="text-error" *ngIf="(form.controls['awsProfile'].dirty || form.controls['awsProfile'].touched) && form.get('awsProfile')?.value === undefined">Insert the Named Profile</small>
             </div>
           </div>
         </ng-container>
@@ -105,13 +107,19 @@
             <!-- ================================================================== -->
             <div class="form-field">
               <label>SAML 2.0 Url</label>
-              <ng-select [items]="idpUrls"
-                         [addTag]="addNewSSO"
-                         formControlName="federationUrl"
-                         placeholder="Single Sign-On url *"
-                         [(ngModel)]="selectedIdpUrl">
-              </ng-select>
-              <small class="text-error" *ngIf="(form.controls['federationUrl'].dirty || form.controls['federationUrl'].touched) && form.get('federationUrl').value === undefined">Insert the SAML 2.0 Url</small>
+              <app-leapp-select [controlName]="'federationUrl'"
+                                [form]="form"
+                                [placeholder]="'Single Sign-On url *'"
+                                [items]="idpUrls"
+                                [dropdownPosition]="'up'"
+                                [whatToAddName]="'SAML 2.0 Url'"
+                                [defaultNewValue]="addNewSSO"
+                                [bindLabel]="'label'"
+                                [bindValue]="'value'"
+                                [uppercased]="false"
+                                (selected)="selectedIdpUrlEvent($event);"></app-leapp-select>
+
+              <small class="text-error" *ngIf="(form.controls['federationUrl'].dirty || form.controls['federationUrl'].touched) && form.get('federationUrl')?.value === undefined">Insert the SAML 2.0 Url</small>
             </div>
 
             <div class="form-field">
@@ -134,7 +142,7 @@
           <!-- ================================================================== -->
           <ng-container *ngIf="sessionType === eSessionType.awsIamUser">
             <div class="form-field">
-              <label style="margin-bottom: 0;">Access Key ID</label>
+              <label>Access Key ID</label>
               <input formControlName="accessKey" type="text" class="form-control" placeholder="Access Key ID *">
             </div>
             <div class="form-field">
@@ -154,7 +162,7 @@
             </div>
             <div class="form-field">
               <label>Assumer Session</label>
-              <ng-select class="mt-2" formControlName="assumerSession" bindLabel="sessionName" bindValue="session" dropdownPosition="top" [items]="assumerAwsSessions" [(ngModel)]="selectedSession" [disabled]="true"></ng-select>
+              <ng-select formControlName="assumerSession" bindLabel="sessionName" bindValue="session" dropdownPosition="top" [items]="assumerAwsSessions" [(ngModel)]="selectedSession" [disabled]="true"></ng-select>
             </div>
           </ng-container>
         </ng-container>
@@ -184,16 +192,11 @@
 
 
 
-
-
-
-
-
       <!-- ================================================================== -->
       <!-- ==                             BUTTONS                          == -->
       <!-- ================================================================== -->
       <br>
-      <button type="button" (click)="saveSession();" [disabled]="!formValid()" *ngIf="sessionType" class="btn-right-margin">Create Session</button>
+      <button type="button" (click)="saveSession();" [disabled]="!formValid()" *ngIf="sessionType" class="btn-right-margin {{formValid() ? '': 'mat-button-disabled'}}">Create Session</button>
       <a (click)="closeModal()">Cancel</a>
     </ng-container>
 

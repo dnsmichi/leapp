@@ -24,6 +24,8 @@
 
 .large {
   width: 84%;
+  padding: 0 10px;
+  overflow-wrap: break-word;
 }
 
 .small {
@@ -36,6 +38,8 @@
   opacity: 1;
   cursor: pointer;
   transition: opacity 0.2s ease;
+  display: inline-flex;
+  justify-content: flex-end;
   &:hover { opacity: 0.6; }
 }
 

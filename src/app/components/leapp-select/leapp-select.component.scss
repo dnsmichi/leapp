@@ -5,10 +5,13 @@
 .create-new {
   border-top: 1px solid $silver-50;
   color: $silver-dark;
-  padding: 5px 0;
+  padding: 10px 10px 0 10px;
 
   i {
     color: $silver-dark;
+    font-size: 20px;
+    position: relative;
+    top: 3px;
   }
 }
 

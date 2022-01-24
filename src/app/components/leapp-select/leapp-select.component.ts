@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, Input, Output, ViewChild} from '@angular/core';
 import {NgSelectComponent} from '@ng-select/ng-select';
 import {FormGroup} from '@angular/forms';
 
@@ -7,7 +7,7 @@ import {FormGroup} from '@angular/forms';
   templateUrl: './leapp-select.component.html',
   styleUrls: ['./leapp-select.component.scss']
 })
-export class LeappSelectComponent implements OnInit {
+export class LeappSelectComponent implements AfterViewInit {
 
   @ViewChild('ngSelectComponent')
   ngSelectComponent: NgSelectComponent;
@@ -31,9 +31,6 @@ export class LeappSelectComponent implements OnInit {
   items: any[];
 
   @Input()
-  selectedItem: any;
-
-  @Input()
   dropdownPosition: string;
 
   @Input()
@@ -42,16 +39,26 @@ export class LeappSelectComponent implements OnInit {
   @Input()
   whatToAddName: string;
 
+  @Input()
+  uppercased: boolean;
+
   @Output()
-  selected = new EventEmitter<{ items: any[]; selectedItem: any }>();
+  selected = new EventEmitter<{ items: any[]; item: any }>();
 
   temporaryName: string;
 
   constructor() {
     this.temporaryName = '';
+    this.uppercased = this.uppercased || true;
   }
 
-  ngOnInit(): void {}
+  private static isFunction(obj) {
+    return !!(obj && obj.constructor && obj.call && obj.apply);
+  }
+
+  ngAfterViewInit(): void {
+    this.ngSelectComponent.handleClearClick();
+  }
 
   setTemporaryName($event: any) {
     this.temporaryName = $event.target.value;
@@ -64,16 +71,20 @@ export class LeappSelectComponent implements OnInit {
   addNewElement(): void {
     const newElement = {};
     newElement[this.bindLabel] = this.temporaryName;
-    newElement[this.bindValue] = this.isFunction(this.defaultNewValue) ? this.defaultNewValue() : this.defaultNewValue;
+    newElement[this.bindValue] = LeappSelectComponent.isFunction(this.defaultNewValue) ? this.defaultNewValue() : this.defaultNewValue;
 
-    this.selectedItem = newElement;
     this.items.push(newElement);
     this.items = [...this.items];
-    this.ngSelectComponent.handleClearClick();
-    this.selected.emit({ items: this.items, selectedItem: this.selectedItem });
+    this.selected.emit({ items: this.items, item: newElement });
   }
 
-  private isFunction(obj) {
-    return !!(obj && obj.constructor && obj.call && obj.apply);
+  change() {
+    if(this.ngSelectComponent.selectedItems[0]?.selected) {
+      this.selected.emit({ items: this.items, item: this.ngSelectComponent.selectedItems[0]?.selected });
+    } else {
+      this.selected.emit({ items: this.items, item: null });
+    }
   }
+
+  reset() {}
 }

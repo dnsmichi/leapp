@@ -83,6 +83,7 @@ form {
 
   .form-field {
     margin-bottom: 7px;
+    position: relative;
     label {
       display: inline-flex;
       font-weight: 500;
@@ -91,11 +92,13 @@ form {
       justify-content: flex-end;
       justify-self: center;
       width: 28%;
-      padding-right: 15px;
+      padding: 15px 15px 0 0;
     }
     ng-select {
       display: inline-flex;
       width: 72%;
+      position: absolute;
+      top: 3px;
     }
     input {
       display: inline-flex;
@@ -142,6 +145,10 @@ form {
     }
   }
 
+  .mat-button-disabled {
+    background: $silver-dark;
+  }
+
   .btn-right-margin {
     margin-right: 20px;
   }
@@ -165,10 +172,10 @@ form {
   .mat-checkbox-checked.mat-accent .mat-checkbox-background {
     background: $black;
   }
-.mat-checkbox-inner-container {
-  width: 18px!important;
-  height: 18px!important;
-}
+  .mat-checkbox-inner-container {
+    width: 18px!important;
+    height: 18px!important;
+  }
 
   .mat-menu-panel {
     width: 300px;
