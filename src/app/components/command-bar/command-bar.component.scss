@@ -121,3 +121,10 @@
   transition: background 0.3s ease!important;
   i { color: #252525!important; }
 }
+
+.moon-Search {
+  left: 10px!important;
+  top: 10px!important;
+  font-size: 20px;
+  color: $search-icon-color;
+}
