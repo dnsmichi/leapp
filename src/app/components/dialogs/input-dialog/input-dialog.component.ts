@@ -18,6 +18,10 @@ export class InputDialogComponent implements OnInit {
   placeholder: string;
   @Input()
   callback: any;
+  @Input()
+  confirmText: string;
+  @Input()
+  cancelText: string;
 
   public form = new FormGroup({
     value: new FormControl('', [Validators.required])

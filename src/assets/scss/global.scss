@@ -159,6 +159,10 @@ a { text-decoration: none; cursor: pointer; color: $silver-dark; * { cursor: poi
 .btn-link { text-decoration: underline; color: $silver-dark; }
 
 hr { margin: 5px 0 0 0; display: block; height: 1px; border-top: 1px solid $silver-50; }
+h5 {
+  font-size: 14px;
+  color: $silver-dark;
+}
 
 .clear { clear: both; }
 
