@@ -1,21 +1,29 @@
-<div class="modal-header">
-  <h4 class="modal-title"><i class="fa fa-stars"></i> New version available</h4>
-  <a class="close pull-right" aria-label="Close" (click)="close();">
-    <span aria-hidden="true"><i class="moon-Close"></i></span>
-  </a>
+<div class="mat-tab-labels updater-header">
+  <div class="modal-title">
+    <div class="modal-title-icon">
+      <i class="moon-Clock"></i>
+    </div>
+    <div class="modal-title-message">
+      <span>New version available</span>
+      <div>{{version}} · {{releaseDate | date }}</div>
+    </div>
+    <div class="modal-title-close">
+      <a class="close pull-right" aria-label="Close" (click)="close();">
+        <span aria-hidden="true"><i class="moon-Close"></i></span>
+      </a>
+    </div>
+  </div>
 </div>
 
 <div class="modal-body text-center updater">
 
-  <h3>Version: <span>{{version}}</span></h3>
-  <h3>Release Date: <span>{{releaseDate | date }}</span></h3>
   <br>
   <div class="html-content" [innerHTML]="releaseNotes" (click)="$event.preventDefault()"></div>
   <br>
 
   <div class="button-equalizer">
-    <button (click)="remindMeLater();" class="disabled">Remind me later</button>
-    <button (click)="goToDownloadPage();">Download Update</button>
+    <button type="button" (click)="goToDownloadPage();" class="enabled">Download Update</button>
+    <button type="button" (click)="remindMeLater();" class="disabled">Remind me later</button>
   </div>
 
 </div>

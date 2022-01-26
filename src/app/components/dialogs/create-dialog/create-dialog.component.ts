@@ -307,7 +307,7 @@ export class CreateDialogComponent implements OnInit {
    * @private
    */
   private createSession() {
-    if(this.form.valid) {
+    if(this.formValid()) {
       switch (this.sessionType) {
         case (SessionType.awsIamRoleFederated):
           const awsFederatedAccountRequest: AwsIamRoleFederatedSessionRequest = {
