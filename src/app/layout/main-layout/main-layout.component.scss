@@ -33,7 +33,9 @@
   width: calc(100% - #{$menubar-width});
   height: calc(100vh - #{$commandbar-height});
   overflow: auto;
-
+  &.filtered {
+    height: calc(100vh - #{$commandbar-height} - 34px);
+  }
   &.compact {
     width: $compact-fixed-width!important;
   }

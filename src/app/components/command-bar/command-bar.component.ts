@@ -2,7 +2,6 @@ import {AfterContentChecked, Component, ElementRef, OnDestroy, OnInit, ViewChild
 import {BsModalService} from 'ngx-bootstrap/modal';
 import {OptionsDialogComponent} from '../dialogs/options-dialog/options-dialog.component';
 import {CreateDialogComponent} from '../dialogs/create-dialog/create-dialog.component';
-import {EditDialogComponent} from '../dialogs/edit-dialog/edit-dialog.component';
 import {SegmentDialogComponent} from '../dialogs/segment-dialog/segment-dialog.component';
 import {WorkspaceService} from '../../services/workspace.service';
 import {FormControl, FormGroup} from '@angular/forms';
@@ -11,7 +10,7 @@ import {Session} from '../../models/session';
 import {AppService} from '../../services/app.service';
 import {SessionType} from '../../models/session-type';
 import Segment from '../../models/Segment';
-import {globalOrderingFilter} from "../sessions/sessions.component";
+import {globalOrderingFilter} from '../sessions/sessions.component';
 
 export interface GlobalFilters {
   searchFilter: string;
@@ -90,6 +89,10 @@ export class CommandBarComponent implements OnInit, OnDestroy, AfterContentCheck
     });
 
     this.setInitialArrayFilters();
+  }
+
+  private static changeSessionsTableHeight() {
+    document.querySelector('.sessions').classList.toggle('filtered');
   }
 
   ngOnInit(): void {
@@ -182,6 +185,7 @@ export class CommandBarComponent implements OnInit, OnDestroy, AfterContentCheck
     this.filterExtended = !this.filterExtended;
     globalHasFilter.next(this.filterExtended);
     this.saveTemporarySegmentAndApply();
+    CommandBarComponent.changeSessionsTableHeight();
   }
 
 
@@ -381,4 +385,6 @@ export class CommandBarComponent implements OnInit, OnDestroy, AfterContentCheck
       globalSegmentFilter.next(this.currentSegment);
     }
   }
+
+
 }
