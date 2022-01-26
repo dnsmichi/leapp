@@ -159,21 +159,50 @@ export class AwsSsoIntegrationService {
     const sessionsNotFlattened = await Promise.all(promiseArray);
     const sessions = sessionsNotFlattened.flat();
 
-    const sessionsToBeRemoved = this.workspaceService.getAwsSsoIntegrationSessions(awsSsoIntegration.id);
+    const persistedSessions = this.workspaceService.getAwsSsoIntegrationSessions(awsSsoIntegration.id);
+    const sessionsToBeDeleted: SsoRoleSession[] = [];
 
-    for (let i = 0; i < sessionsToBeRemoved.length; i++) {
-      const sess = sessionsToBeRemoved[i];
-      const iamRoleChainedSessions = this.awsSsoRoleService.listIamRoleChained(sess);
+    for (let i = 0; i < persistedSessions.length; i++) {
+      const persistedSession = persistedSessions[i];
+      const shouldBeDeleted = sessions.filter(s =>
+        (persistedSession as unknown as SsoRoleSession).sessionName === s.sessionName &&
+        (persistedSession as unknown as SsoRoleSession).roleArn === s.roleArn &&
+        (persistedSession as unknown as SsoRoleSession).email === s.email).length === 0;
 
-      for (let j = 0; j < iamRoleChainedSessions.length; j++) {
-        await this.awsSsoRoleService.delete(iamRoleChainedSessions[j].sessionId);
+      if (shouldBeDeleted) {
+        sessionsToBeDeleted.push(persistedSession as unknown as SsoRoleSession);
+
+        const iamRoleChainedSessions = this.awsSsoRoleService.listIamRoleChained(persistedSession);
+
+        for (let j = 0; j < iamRoleChainedSessions.length; j++) {
+          await this.awsSsoRoleService.delete(iamRoleChainedSessions[j].sessionId);
+        }
+
+        await this.awsSsoRoleService.stop(persistedSession.sessionId);
+        this.workspaceService.removeSession(persistedSession.sessionId);
       }
-
-      await this.awsSsoRoleService.stop(sess.sessionId);
-      this.workspaceService.removeSession(sess.sessionId);
     }
 
-    return sessions;
+    const finalSessions = [];
+
+    for (let j = 0; j < sessions.length; j++) {
+      const session = sessions[j];
+      let found = false;
+      for (let i = 0; i < persistedSessions.length; i++) {
+        const persistedSession = persistedSessions[i];
+        if((persistedSession as unknown as SsoRoleSession).sessionName === session.sessionName &&
+          (persistedSession as unknown as SsoRoleSession).roleArn === session.roleArn &&
+          (persistedSession as unknown as SsoRoleSession).email === session.email) {
+          found = true;
+          break;
+        }
+      }
+      if(!found) {
+        finalSessions.push(session);
+      }
+    }
+
+    return finalSessions;
   }
 
   async getAwsSsoIntegrationTokenInfo(awsSsoIntegrationId: string): Promise<AwsSsoIntegrationTokenInfo> {
