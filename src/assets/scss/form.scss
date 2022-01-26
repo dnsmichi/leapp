@@ -84,7 +84,7 @@ form {
   .form-field {
     margin-bottom: 7px;
     position: relative;
-    label {
+    label:not(.mat-checkbox-layout) {
       display: inline-flex;
       font-weight: 500;
       font-size: 13px;
