@@ -148,14 +148,6 @@ export class CreateDialogComponent implements OnInit {
     });
   }
 
-  /**
-   * Add a new single sing-on url to list
-   *
-   * @param tag
-   */
-  addNewSSO(tag: string): { value: string; label: string } {
-    return { value: uuid.v4(), label: tag };
-  }
 
   /**
    * Add a new UUID
@@ -299,6 +291,7 @@ export class CreateDialogComponent implements OnInit {
   selectedIdpUrlEvent($event: { items: any[]; item: any }) {
     this.idpUrls = $event.items;
     this.selectedIdpUrl = $event.item;
+    console.log($event);
   }
 
   /**
@@ -307,6 +300,9 @@ export class CreateDialogComponent implements OnInit {
    * @private
    */
   private createSession() {
+    console.log(this.selectedProfile);
+    console.log(this.selectedIdpUrl);
+
     if(this.formValid()) {
       switch (this.sessionType) {
         case (SessionType.awsIamRoleFederated):

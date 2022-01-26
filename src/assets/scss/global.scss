@@ -1,5 +1,6 @@
 @import "mixins/palette.scss";
 @import "media-query";
+@import"loader";
 
 $border-radius: 10px;
 $filter-border-radius: 5px;
@@ -43,7 +44,12 @@ input, button, textarea, :focus {
 }
 
 
-html, body { height: 100%; letter-spacing: -.5px; }
+html, body {
+  height: 100%; letter-spacing: -.5px;
+  .stop-showing-on-loaded-app {
+    display: none;
+  }
+}
 
 ::ng-deep {
   .mat-elevation-z4 {

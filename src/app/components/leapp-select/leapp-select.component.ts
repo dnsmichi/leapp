@@ -80,7 +80,7 @@ export class LeappSelectComponent implements AfterViewInit {
 
   change() {
     if(this.ngSelectComponent.selectedItems[0]?.selected) {
-      this.selected.emit({ items: this.items, item: this.ngSelectComponent.selectedItems[0]?.selected });
+      this.selected.emit({ items: this.items, item: { label: this.ngSelectComponent.selectedItems[0].label, value: this.ngSelectComponent.selectedItems[0].value[this.bindValue] }});
     } else {
       this.selected.emit({ items: this.items, item: null });
     }
