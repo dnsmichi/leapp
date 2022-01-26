@@ -145,16 +145,28 @@
 
   <div class="ssm-tray-form">
 
-    <b>Select a Region:</b>
-    <ng-select bindLabel="region" bindValue="region" [items]="awsRegions" [(ngModel)]="selectedSsmRegion" placeholder="Select a Region for finding instances" (change)="changeSsmRegion($event, session);"></ng-select>
+    <div class="form-container">
+      <div class="form-group">
+        <div class="form-field">
+          <div class="form-group">
+            <label>Select a Region</label>
+            <ng-select bindLabel="region" bindValue="region" [items]="awsRegions" [(ngModel)]="selectedSsmRegion" placeholder="Select a Region for finding instances" (change)="changeSsmRegion($event, session);"></ng-select>
+          </div>
+        </div>
+      </div>
 
     <div class="loader" *ngIf="ssmLoading"><i class="fa fa-spinner fa-spin"></i></div>
+
     <div class="list-of-ssm" *ngIf="!ssmLoading">
       <ng-container *ngIf="!ssmLoading && !firstTimeSsm">
-        <br>
-        <b>Select an EC2 Instance:</b>
-        <br>
+        <div class="form-group">
+          <div class="form-field">
+            <div class="form-group">
+        <label>Select an Instance</label>
         <input class="form-control" type="text" placeholder="searchFilter by..." (keyup)="searchSSMInstance($event)" />
+            </div>
+          </div>
+        </div>
       </ng-container>
 
       <ul class="ssm-ul" *ngIf="instances.length > 0">
@@ -169,7 +181,7 @@
         </li>
       </ul>
     </div>
-
+    </div>
   </div>
 </ng-template>
 
@@ -179,10 +191,16 @@
   <h5>{{session | detail }}</h5>
 
   <div class="select-region-form">
-
-    <b>Select a default region for the session:</b>
-    <ng-select bindLabel="{{session.type === eSessionType.azure ? 'location' : 'region'}}" bindValue="{{session.type === eSessionType.azure ? 'location' : 'region'}}" [items]="regionOrLocations" [(ngModel)]="selectedDefaultRegion" placeholder="{{placeholder}}"></ng-select>
-
+    <div class="form-container">
+      <div class="form-group">
+        <div class="form-field">
+          <div class="form-group">
+            <label>Select a region</label>
+            <ng-select bindLabel="{{session.type === eSessionType.azure ? 'location' : 'region'}}" bindValue="{{session.type === eSessionType.azure ? 'location' : 'region'}}" [items]="regionOrLocations" [(ngModel)]="selectedDefaultRegion" placeholder="{{placeholder}}"></ng-select>
+          </div>
+        </div>
+      </div>
+    </div>
     <br>
     <button (click)="changeRegion()" [disabled]="!selectedDefaultRegion" [ngClass]="(!selectedDefaultRegion) ? 'btn-control disabled': 'btn-control'">Select</button>
     <a (click)="goBack()">Cancel</a>
@@ -196,14 +214,20 @@
   <h5>{{session | detail }}</h5>
 
   <div class="named-profile-form">
-
-    <b>Select a profile for the session:</b>
-    <ng-select bindLabel="name"
-               [addTag]="addNewProfile"
-               [items]="profiles"
-               [(ngModel)]="selectedProfile"
-               placeholder="select a profile"></ng-select>
-
+    <div class="form-container">
+      <div class="form-group">
+        <div class="form-field">
+          <div class="form-group">
+            <label>Select a named profile</label>
+            <ng-select bindLabel="name"
+                       [addTag]="addNewProfile"
+                       [items]="profiles"
+                       [(ngModel)]="selectedProfile"
+                       placeholder="select a profile"></ng-select>
+          </div>
+        </div>
+      </div>
+    </div>
     <br>
     <button type="button" (click)="changeProfile();" [disabled]="!selectedProfile" [ngClass]="(!selectedProfile) ? 'btn-control disabled': 'btn-control'">Save Profile</button>
     <a (click)="goBack();">Cancel</a>
