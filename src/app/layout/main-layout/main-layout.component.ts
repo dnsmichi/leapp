@@ -1,6 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {compactMode} from '../../components/command-bar/command-bar.component';
 import {ElectronService} from '../../services/electron.service';
+import {optionBarIds} from '../../components/sessions/sessions.component';
 
 @Component({
   selector: 'app-main-layout',
@@ -24,5 +25,11 @@ export class MainLayoutComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+  }
+
+  clearOptionBarIds() {
+    for (const prop of Object.getOwnPropertyNames(optionBarIds)) {
+      optionBarIds[prop] = false;
+    }
   }
 }

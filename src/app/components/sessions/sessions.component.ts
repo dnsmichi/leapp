@@ -54,10 +54,10 @@ export class SessionsComponent implements OnInit, OnDestroy {
 
   showOnly = 'ALL';
 
-  private subscriptions = [];
-
   // For column ordering
   columnSettings: ArrowSettings[];
+
+  private subscriptions = [];
 
   constructor(
     private router: Router,
@@ -68,9 +68,7 @@ export class SessionsComponent implements OnInit, OnDestroy {
     private appService: AppService
   ) {
 
-    this.columnSettings = Array.from(Array(5)).map((): ArrowSettings => {
-      return { activeArrow: false, orderStyle: false };
-    });
+    this.columnSettings = Array.from(Array(5)).map((): ArrowSettings => ({ activeArrow: false, orderStyle: false }));
     const subscription = globalHasFilter.subscribe(value => {
       this.eGlobalFilterExtended = value;
     });
@@ -151,9 +149,15 @@ export class SessionsComponent implements OnInit, OnDestroy {
     if(!orderStyle) {
       this.columnSettings[1].activeArrow = true;
       globalOrderingFilter.next(JSON.parse(JSON.stringify(this.eGlobalFilteredSessions.sort((a, b) => {
-        if(this.getRole(a) === '') return 1;
-        if(this.getRole(b) === '') return -1;
-        if(this.getRole(a) === this.getRole(b)) return 0;
+        if(this.getRole(a) === '') {
+          return 1;
+        }
+        if(this.getRole(b) === '') {
+          return -1;
+        }
+        if(this.getRole(a) === this.getRole(b)) {
+          return 0;
+        }
         return this.getRole(a) < this.getRole(b) ? -1 : 1;
       }))));
       this.columnSettings[1].orderStyle = !this.columnSettings[1].orderStyle;
@@ -225,15 +229,6 @@ export class SessionsComponent implements OnInit, OnDestroy {
       )));
   }
 
-  private resetArrowsExcept(c) {
-    this.columnSettings.forEach((column, index) => {
-      if(index !== c) {
-        column.orderStyle = false;
-        column.activeArrow = false
-      }
-    });
-  }
-
   getRole(s: Session) {
     switch (s.type) {
       case(SessionType.awsIamRoleFederated):
@@ -251,5 +246,14 @@ export class SessionsComponent implements OnInit, OnDestroy {
       default:
         return '';
     }
+  }
+
+  private resetArrowsExcept(c) {
+    this.columnSettings.forEach((column, index) => {
+      if(index !== c) {
+        column.orderStyle = false;
+        column.activeArrow = false;
+      }
+    });
   }
 }

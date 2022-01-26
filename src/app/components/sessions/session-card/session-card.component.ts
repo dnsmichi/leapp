@@ -127,6 +127,7 @@ export class SessionCardComponent implements OnInit {
   }
 
   openOptionBar(session: Session) {
+
     this.clearOptionIds();
     optionBarIds[session.sessionId] = true;
   }
