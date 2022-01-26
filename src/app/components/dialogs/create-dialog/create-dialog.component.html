@@ -144,10 +144,12 @@
             <div class="form-field">
               <label>Access Key ID</label>
               <input formControlName="accessKey" type="text" class="form-control" placeholder="Access Key ID *">
+              <small class="text-error" *ngIf="(form.controls['accessKey'].dirty || form.controls['accessKey'].touched) && form.controls['accessKey'].errors">Insert the AWS Access Key ID</small>
             </div>
             <div class="form-field">
               <label>Secret Access Key</label>
               <input formControlName="secretKey" type="text" class="form-control" placeholder="Secret Access Key *">
+              <small class="text-error" *ngIf="(form.controls['secretKey'].dirty || form.controls['secretKey'].touched) && form.controls['secretKey'].errors">Insert the AWS Secret Access Key</small>
             </div>
           </ng-container>
 
