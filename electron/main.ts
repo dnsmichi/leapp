@@ -182,7 +182,7 @@ const generateMainWindow = () => {
 
   const createTray = () => {
     if(!taskbar) {
-      taskbar = new Tray(windowDefaultConfig.dir + `/assets/images/LeappMini3.png`);
+      taskbar = new Tray(windowDefaultConfig.dir + `/assets/images/LeappTemplate.png`);
       taskbar.setToolTip('Leapp');
       taskbar.on('click', () => {
         trayOpen = !trayOpen;

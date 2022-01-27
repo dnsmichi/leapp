@@ -133,22 +133,21 @@ export class TrayMenuComponent implements OnInit, OnDestroy {
     }
     this.appService.getMenu().setApplicationMenu(this.appService.getMenu().buildFromTemplate(template));
     // check for dark mode
-    let normalIcon = 'LeappMini';
-    let updateIcon = 'LeappMini2';
-    if (
-      (this.appService.isDarkMode() && this.appService.detectOs() !== Constants.windows) ||
-      this.appService.detectOs() === Constants.linux
-    ) {
+    let normalIcon = 'LeappTemplate';
+    let updateIcon = 'Leapp2Template';
+    if (this.appService.detectOs() === Constants.linux) {
       normalIcon = 'LeappMini3';
-      updateIcon = 'Leappmini4';
+      updateIcon = 'LeappMini4';
     }
     if (!this.currentTray) {
       this.currentTray = new (this.appService.getTray())(__dirname + `/assets/images/${normalIcon}.png`);
+      this.appService.getApp().dock.setBadge('');
     }
-    if (this.updaterService.getSavedVersionComparison() && this.updaterService.isReady()) {
+    if (true || this.updaterService.getSavedVersionComparison() && this.updaterService.isReady()) {
       voices.push({type: 'separator'});
       voices.push({label: 'Check for Updates...', type: 'normal', click: () => this.updaterService.updateDialog()});
       this.currentTray.setImage(__dirname + `/assets/images/${updateIcon}.png`);
+      this.appService.getApp().dock.setBadge('·');
     }
     voices = voices.concat(extraInfo);
     const contextMenu = this.appService.getMenu().buildFromTemplate(voices);

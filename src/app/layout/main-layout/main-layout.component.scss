@@ -33,8 +33,14 @@
   width: calc(100% - #{$menubar-width});
   height: calc(100vh - #{$commandbar-height});
   overflow: auto;
-  &.filtered {
-    height: calc(100vh - #{$commandbar-height} - 34px);
+  &.filtered:not(.option-bar-opened) {
+    height: calc(100vh - #{$commandbar-height} - 51px);
+  }
+  &.option-bar-opened:not(.filtered) {
+    height: calc(100vh - #{$commandbar-height} - 60px);
+  }
+  &.option-bar-opened.filtered {
+    height: calc(100vh - #{$commandbar-height} - 111px);
   }
   &.compact {
     width: $compact-fixed-width!important;
