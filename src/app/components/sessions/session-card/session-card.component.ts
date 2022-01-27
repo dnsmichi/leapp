@@ -127,9 +127,9 @@ export class SessionCardComponent implements OnInit {
   }
 
   openOptionBar(session: Session) {
-
     this.clearOptionIds();
     optionBarIds[session.sessionId] = true;
+    document.querySelector('.sessions').classList.add('option-bar-opened');
   }
 
   /**
@@ -470,6 +470,7 @@ export class SessionCardComponent implements OnInit {
     for (const prop of Object.getOwnPropertyNames(optionBarIds)) {
       optionBarIds[prop] = false;
     }
+    document.querySelector('.sessions').classList.remove('option-bar-opened');
   }
 
   openAmazonConsole(event: MouseEvent, session: Session) {

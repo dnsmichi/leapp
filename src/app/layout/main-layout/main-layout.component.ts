@@ -31,5 +31,6 @@ export class MainLayoutComponent implements OnInit, OnDestroy {
     for (const prop of Object.getOwnPropertyNames(optionBarIds)) {
       optionBarIds[prop] = false;
     }
+    document.querySelector('.sessions').classList.remove('option-bar-opened');
   }
 }
